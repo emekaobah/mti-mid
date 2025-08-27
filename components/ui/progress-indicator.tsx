@@ -6,7 +6,7 @@ import { cn } from "@/lib/utils";
 interface Step {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   conditional?: boolean; // NEW: Flag for conditional steps
 }
 
@@ -35,7 +35,7 @@ export function ProgressIndicator({
         </div>
         <div className="w-full bg-secondary rounded-full h-2">
           <div
-            className="bg-primary h-2 rounded-full transition-all duration-300 ease-out"
+            className="bg-[#074318] h-2 rounded-full transition-all duration-300 ease-out"
             style={{ width: `${((currentStep + 1) / steps.length) * 100}%` }}
           />
         </div>
@@ -48,7 +48,7 @@ export function ProgressIndicator({
           {/* Connecting line background */}
           <div className="absolute top-5 left-0 right-0 h-0.5 bg-muted-foreground/25" />
           <div
-            className="absolute top-5 left-0 h-0.5 bg-primary transition-all duration-300 ease-out"
+            className="absolute top-5 left-0 h-0.5 bg-[#074318] transition-all duration-300 ease-out"
             style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
           />
 
@@ -61,9 +61,9 @@ export function ProgressIndicator({
                 className={cn(
                   "flex h-10 w-10 items-center justify-center rounded-full border-2 transition-colors bg-background",
                   index < currentStep
-                    ? "border-primary bg-primary text-primary-foreground"
+                    ? "border-[#074318] bg-[#074318] text-white"
                     : index === currentStep
-                    ? "border-primary bg-background text-primary"
+                    ? "border-[#074318] bg-[#074318] text-white"
                     : "border-muted-foreground/25 bg-background text-muted-foreground"
                 )}
               >
@@ -99,7 +99,7 @@ export function ProgressIndicator({
           {/* Connecting line background */}
           <div className="absolute top-4 left-0 right-0 h-0.5 bg-muted-foreground/25" />
           <div
-            className="absolute top-4 left-0 h-0.5 bg-primary transition-all duration-300 ease-out"
+            className="absolute top-4 left-0 h-0.5 bg-[#074318] transition-all duration-300 ease-out"
             style={{ width: `${(currentStep / (steps.length - 1)) * 100}%` }}
           />
 
@@ -112,9 +112,9 @@ export function ProgressIndicator({
                 className={cn(
                   "flex h-8 w-8 items-center justify-center rounded-full border-2 transition-colors bg-background",
                   index < currentStep
-                    ? "border-primary bg-primary text-primary-foreground"
+                    ? "border-[#074318] bg-[#074318] text-white"
                     : index === currentStep
-                    ? "border-primary bg-background text-primary"
+                    ? "border-[#074318] bg-[#074318] text-white"
                     : "border-muted-foreground/25 bg-background text-muted-foreground"
                 )}
               >
@@ -147,7 +147,7 @@ export function ProgressIndicator({
               <div
                 className={cn(
                   "flex h-10 w-10 items-center justify-center rounded-full border-2 transition-colors",
-                  "border-primary bg-primary text-primary-foreground"
+                  "border-[#074318] bg-[#074318] text-white"
                 )}
               >
                 <span className="text-sm font-medium">{currentStep + 1}</span>
@@ -175,7 +175,9 @@ export function ProgressIndicator({
                 key={index}
                 className={cn(
                   "h-2 w-2 rounded-full transition-colors duration-300",
-                  index <= currentStep ? "bg-primary" : "bg-muted-foreground/25"
+                  index <= currentStep
+                    ? "bg-[#074318]"
+                    : "bg-muted-foreground/25"
                 )}
               />
             ))}

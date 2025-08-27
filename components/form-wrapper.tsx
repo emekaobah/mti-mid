@@ -13,7 +13,6 @@ import ImportServices, { importServicesSchema } from "./import-services";
 import ExportGoods, { exportGoodsSchema } from "./export-goods";
 import ExportServices, { exportServicesSchema } from "./export-services";
 import ContactInfo, { contactInfoSchema } from "./contact-info";
-import SocialMediaForm, { socialMediaFormSchema } from "./social-media-form";
 
 const fullFormSchema = z.object({
   ...tradeDirectionSchema.shape,
@@ -23,7 +22,6 @@ const fullFormSchema = z.object({
   ...exportGoodsSchema.shape,
   ...exportServicesSchema.shape,
   ...contactInfoSchema.shape,
-  ...socialMediaFormSchema.shape,
 });
 
 type FullFormType = z.infer<typeof fullFormSchema>;
@@ -57,7 +55,6 @@ export default function FormWrapper() {
         <ExportGoods />
         <ExportServices />
         <ContactInfo />
-        <SocialMediaForm />
 
         <div className="pt-6">
           <Button type="submit" className="w-full">

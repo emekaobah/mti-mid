@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { ProgressIndicator } from "@/components/ui/progress-indicator";
-import { ChevronLeft, ChevronRight, Save } from "lucide-react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 // Import existing components
 import RespondentDetails, {
@@ -18,7 +18,6 @@ import ImportServices, { importServicesSchema } from "./import-services";
 import ExportGoods, { exportGoodsSchema } from "./export-goods";
 import ExportServices, { exportServicesSchema } from "./export-services";
 import ContactInfo, { contactInfoSchema } from "./contact-info";
-import SocialMediaForm, { socialMediaFormSchema } from "./social-media-form";
 import ReviewSection from "./review-section";
 
 // Combined schemas for validation
@@ -39,7 +38,6 @@ const fullFormSchema = z.object({
   ...importRequirementsSchema.shape,
   ...exportCapabilitiesSchema.shape,
   ...contactInfoSchema.shape,
-  ...socialMediaFormSchema.shape,
 });
 
 type FullFormType = z.infer<typeof fullFormSchema>;
@@ -48,35 +46,24 @@ const steps = [
   {
     id: "respondent-details",
     name: "Organization Details",
-    description:
-      "Basic information about your organization and trade direction",
   },
   {
     id: "import-requirements",
     name: "Import Requirements",
-    description: "What you'd like to buy from Nigeria",
     conditional: true, // NEW: This step is conditional
   },
   {
     id: "export-capabilities",
     name: "Export Capabilities",
-    description: "What you can sell to Nigeria",
     conditional: true, // NEW: This step is conditional
   },
   {
     id: "contact-information",
     name: "Contact Information",
-    description: "How we can reach you",
-  },
-  {
-    id: "social-media",
-    name: "Additional Information",
-    description: "Social media and preferences",
   },
   {
     id: "review",
     name: "Review & Submit",
-    description: "Review your information",
   },
 ];
 
@@ -144,9 +131,6 @@ export default function MultistepFormWrapper() {
       case 3: // Contact Information
         fieldsToValidate = ["name", "company", "city", "country", "email"];
         break;
-      case 4: // Social Media
-        fieldsToValidate = ["originCountry", "userType"];
-        break;
       default:
         return true;
     }
@@ -208,13 +192,6 @@ export default function MultistepFormWrapper() {
     }
   };
 
-  const handleSaveDraft = () => {
-    const formData = getValues();
-    localStorage.setItem("mti-form-draft", JSON.stringify(formData));
-    // You could show a toast notification here
-    console.log("Draft saved");
-  };
-
   const onSubmit = async (data: FullFormType) => {
     setIsSubmitting(true);
     try {
@@ -262,8 +239,6 @@ export default function MultistepFormWrapper() {
       case 3:
         return <ContactInfo />;
       case 4:
-        return <SocialMediaForm />;
-      case 5:
         return <ReviewSection />;
       default:
         return null;
@@ -272,7 +247,7 @@ export default function MultistepFormWrapper() {
 
   return (
     <FormProvider {...methods}>
-      <div className="w-full max-w-4xl mx-auto bg-card rounded-lg shadow-sm border">
+      <div className="w-full  mx-auto bg-card rounded-lg shadow-sm border">
         <div className="p-6 sm:p-8">
           <ProgressIndicator
             steps={filteredSteps} // Use filtered steps
@@ -288,50 +263,36 @@ export default function MultistepFormWrapper() {
 
           {/* Navigation Controls */}
           <div className="px-6 sm:px-8 py-6 border-t bg-muted/20">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-4">
+            <div className="flex items-center justify-center space-x-4">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={handlePrevious}
+                disabled={currentStep === 0}
+                className="flex items-center space-x-2 rounded-full h-12 min-w-[240px]"
+              >
+                <ChevronLeft className="h-4 w-4" />
+                <span>Previous</span>
+              </Button>
+
+              {currentStep === steps.length - 1 ? (
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex items-center space-x-2 rounded-full h-12 min-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-white"
+                >
+                  {isSubmitting ? "Submitting..." : "Submit Form"}
+                </Button>
+              ) : (
                 <Button
                   type="button"
-                  variant="outline"
-                  onClick={handlePrevious}
-                  disabled={currentStep === 0}
-                  className="flex items-center space-x-2"
+                  onClick={handleNext}
+                  className="flex items-center space-x-2 rounded-full h-12 min-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-white"
                 >
-                  <ChevronLeft className="h-4 w-4" />
-                  <span>Previous</span>
+                  <span>Next</span>
+                  <ChevronRight className="h-4 w-4" />
                 </Button>
-
-                <Button
-                  type="button"
-                  variant="ghost"
-                  onClick={handleSaveDraft}
-                  className="flex items-center space-x-2"
-                >
-                  <Save className="h-4 w-4" />
-                  <span>Save Draft</span>
-                </Button>
-              </div>
-
-              <div>
-                {currentStep === steps.length - 1 ? (
-                  <Button
-                    type="submit"
-                    disabled={isSubmitting}
-                    className="flex items-center space-x-2"
-                  >
-                    {isSubmitting ? "Submitting..." : "Submit Form"}
-                  </Button>
-                ) : (
-                  <Button
-                    type="button"
-                    onClick={handleNext}
-                    className="flex items-center space-x-2"
-                  >
-                    <span>Next</span>
-                    <ChevronRight className="h-4 w-4" />
-                  </Button>
-                )}
-              </div>
+              )}
             </div>
           </div>
         </form>
