@@ -81,17 +81,15 @@ export default function ExportGoods() {
         <div key={field.id} className="border rounded-lg p-6 space-y-6 bg-card">
           <div className="flex items-center justify-between">
             <h4 className="text-base font-medium">Product {index + 1}</h4>
-            {fields.length > 1 && (
-              <Button
-                type="button"
-                variant="ghost"
-                size="sm"
-                onClick={() => remove(index)}
-                className="text-destructive hover:text-destructive"
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            )}
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => remove(index)}
+              className="text-destructive hover:text-destructive hover:bg-destructive/10"
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
           </div>
 
           <FormField
