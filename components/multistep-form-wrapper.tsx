@@ -247,7 +247,7 @@ export default function MultistepFormWrapper() {
 
   return (
     <FormProvider {...methods}>
-      <div className="w-full  mx-auto bg-card rounded-lg shadow-sm border">
+      <div className="w-full  mx-auto bg-card rounded-lg  ">
         <div className="p-6 sm:p-8">
           <ProgressIndicator
             steps={filteredSteps} // Use filtered steps
@@ -263,13 +263,13 @@ export default function MultistepFormWrapper() {
 
           {/* Navigation Controls */}
           <div className="px-6 sm:px-8 py-6 border-t bg-muted/20">
-            <div className="flex items-center justify-center space-x-4">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button
                 type="button"
                 variant="outline"
                 onClick={handlePrevious}
                 disabled={currentStep === 0}
-                className="flex items-center space-x-2 rounded-full h-12 min-w-[240px]"
+                className="flex items-center justify-center space-x-2 rounded-full h-12 w-full max-w-[240px]"
               >
                 <ChevronLeft className="h-4 w-4" />
                 <span>Previous</span>
@@ -279,7 +279,7 @@ export default function MultistepFormWrapper() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="flex items-center space-x-2 rounded-full h-12 min-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-white"
+                  className="flex items-center justify-center space-x-2 rounded-full h-12 w-full max-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-white"
                 >
                   {isSubmitting ? "Submitting..." : "Submit Form"}
                 </Button>
@@ -287,7 +287,7 @@ export default function MultistepFormWrapper() {
                 <Button
                   type="button"
                   onClick={handleNext}
-                  className="flex items-center space-x-2 rounded-full h-12 min-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-white"
+                  className="flex items-center justify-center space-x-2 rounded-full h-12 w-full max-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-white"
                 >
                   <span>Next</span>
                   <ChevronRight className="h-4 w-4" />
