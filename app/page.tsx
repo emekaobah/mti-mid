@@ -93,7 +93,7 @@ export default function Home() {
       {/* Gateway */}
       <div className=" bg-[#FBFFFD] pt-24 pb-16 lg:px-15 px-4 ">
         <h2 className="text-2xl text-center font-semibold text-[#074318]">
-          Nigeria's Gateway to African Markets
+          Nigeria&apos;s Gateway to African Markets
         </h2>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-8 mt-10 ">
           {gatewayCards.map((card) => (

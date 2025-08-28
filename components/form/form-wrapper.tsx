@@ -4,15 +4,16 @@ import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
+
+import ExportGoods, { exportGoodsSchema } from "./export-goods";
+import ExportServices, { exportServicesSchema } from "./export-services";
+import ContactInfo, { contactInfoSchema } from "./contact-info";
 import RespondentDetails, {
   respondentDetailsSchema,
   tradeDirectionSchema,
 } from "./respondent-details";
 import ImportGoods, { importGoodsSchema } from "./import-goods";
 import ImportServices, { importServicesSchema } from "./import-services";
-import ExportGoods, { exportGoodsSchema } from "./form/export-goods";
-import ExportServices, { exportServicesSchema } from "./form/export-services";
-import ContactInfo, { contactInfoSchema } from "./form/contact-info";
 
 const fullFormSchema = z.object({
   ...tradeDirectionSchema.shape,
