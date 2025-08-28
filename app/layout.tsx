@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Onest } from "next/font/google";
 import "./globals.css";
-import SiteHeader from "@/components/admin/site-header";
+import SiteHeader from "@/components/site-header";
+import Footer from "@/components/footer";
 
 const onest = Onest({
   variable: "--font-onest",
@@ -23,6 +24,7 @@ export default function RootLayout({
       <body className={`${onest.variable} antialiased`}>
         <SiteHeader />
         {children}
+        <Footer />
       </body>
     </html>
   );
