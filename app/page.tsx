@@ -3,6 +3,7 @@ import TopRequestedSectorsChart from "@/components/top-requested-sectors-chart";
 import Link from "next/link";
 import Image from "next/image";
 import GatewayCard from "@/components/landing/gateway-card";
+import { FaqItem } from "@/components/faq";
 
 const gatewayCards = [
   {
@@ -35,6 +36,33 @@ const gatewayCards = [
   },
 ];
 
+const faqItems = [
+  {
+    question: "How can I submit a trade request?",
+    answer:
+      "You can submit a trade request through our online form or by contacting our support team.",
+  },
+  {
+    question: "What types of products and services can I offer?",
+    answer:
+      "You can offer any products or services that are legally allowed for export from Nigeria.",
+  },
+  {
+    question: "How do I know if my trade request has been received?",
+    answer:
+      "You will receive a confirmation email once your trade request has been submitted successfully.",
+  },
+  {
+    question: "What should I do if I don't receive a confirmation email?",
+    answer:
+      "If you don't receive a confirmation email, please check your spam folder or contact our support team for assistance.",
+  },
+  {
+    question: "What if I need help with my trade request?",
+    answer:
+      "If you need help with your trade request, please contact our support team for assistance.",
+  },
+];
 export default function Home() {
   return (
     <main className=" bg-[#F9F7F1] ">
@@ -74,13 +102,23 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="bg-[#074318]  flex flex-col lg:flex-row px-4 lg:p-15">
-        <div className="rounded-lg p-12 bg-white w-full">
-          <h3 className="text-3xl font-semibold text-[#074318] max-w-[271px]">
-            Frequently Asked Questions
-          </h3>
+      <div className="bg-[#074318]  flex w-full p-4 lg:p-15">
+        <div className="rounded-lg p-12 bg-white w-full flex flex-col lg:flex-row gap-6 lg:gap-44">
+          <div>
+            <h3 className="text-3xl font-semibold text-[#074318] max-w-[271px]">
+              Frequently Asked Questions
+            </h3>
+          </div>
 
-          <div></div>
+          <div className="max-w-lg">
+            {faqItems.map((item) => (
+              <FaqItem
+                key={item.question}
+                question={item.question}
+                answer={item.answer}
+              />
+            ))}
+          </div>
         </div>
       </div>
 
