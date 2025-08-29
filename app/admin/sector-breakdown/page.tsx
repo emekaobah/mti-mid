@@ -1,0 +1,101 @@
+"use client";
+
+import React from "react";
+import Image from "next/image";
+import logo from "@/public/logo-svg.svg";
+import { MoveLeft } from "lucide-react";
+import { Minus } from "lucide-react";
+import { Graphs } from "@/components/admin/graphs";
+import { DataTable } from "@/components/table/data-table";
+import { columns } from "./column";
+import { dummyTradeData } from "./data";
+import { useRouter } from "next/navigation";
+
+const orgOptions = [
+  { label: "All", value: "all" },
+  { label: "Government", value: "Government" },
+  { label: "Business", value: "Business" },
+  { label: "Association", value: "Association" },
+];
+
+const countryOptions = [
+  { label: "All", value: "all" },
+  { label: "Nigeria", value: "Nigeria" },
+  { label: "Cameroon", value: "Cameroon" },
+  { label: "Uganda", value: "Uganda" },
+  { label: "South Africa", value: "South Africa" },
+  { label: "Tanzania", value: "Tanzania" },
+];
+
+const productOptions = [
+  { label: "All", value: "all" },
+  { label: "Beans", value: "Beans" },
+  { label: "Tobacco", value: "Tobacco" },
+  { label: "Sugar", value: "Sugar" },
+  { label: "Melon", value: "Melon" },
+];
+
+const hsCodes = [
+  { label: "All", value: "all" },
+  { label: "0200-2022E", value: "0200-2022E" },
+  { label: "0200-2023E", value: "0200-2023E" },
+  { label: "0200-2024E", value: "0200-2024E" },
+  { label: "0200-2025E", value: "0200-2025E" },
+];
+
+const SectorBreakdown = () => {
+  const router = useRouter();
+  return (
+    <main className="min-h-screen  bg-[#FCFCFC] lg:px-15 px-4 mx-auto">
+      <div className="flex flex-col my-4 gap-2">
+        {/* <div className="flex gap-4">
+          <p className="text-xs">Powered by</p>
+          <Image src={logo} alt="Access bank logo" />
+        </div> */}
+        <div className="flex items-center gap-3" onClick={() => router.back()}>
+          <MoveLeft />
+          <p className="text-xs">Back</p>
+        </div>
+      </div>
+      <div className=" flex flex-col border-white rounded-md bg-[#f9f9f9]">
+        <div className="rounded-t-md bg-[#F9F7F1] p-6 flex flex-col gap-3">
+          <div className="flex items-center gap-0.5">
+            <h1 className="font-medium text-base">Trade Request Statistics</h1>
+            <Minus color="#F65D2F" className="rotate-90" />
+            <p className="text-sm">Aug 26 - Aug 28</p>
+          </div>
+          <div className="flex items-center gap-3 text-xs">
+            <div className="bg-[#074318] rounded-full h-2 w-2"></div>
+            <p>
+              Product Sector: <span className="font-medium"> Agriculture</span>
+            </p>
+          </div>
+          <div className="flex items-center gap-3 text-xs">
+            <div className="bg-[#074318] rounded-full h-2 w-2"></div>
+            <p>
+              Trade Interest:
+              <span className="font-medium"> Buy from Nigeria</span>
+            </p>
+          </div>
+        </div>
+        <div className="w-full">
+          <Graphs />
+        </div>
+      </div>
+      <div className="mt-10">
+        <DataTable
+          columns={columns}
+          dummyData={dummyTradeData}
+          emptyTableText="No data found"
+          baseUrl=""
+          organizationFilterOptions={orgOptions}
+          countryFilterOptions={countryOptions}
+          productFilterOptions={productOptions}
+          hsCodesFilterOptions={hsCodes}
+        />
+      </div>
+    </main>
+  );
+};
+
+export default SectorBreakdown;
