@@ -1,4 +1,4 @@
-import MultistepFormWrapper from "@/components/multistep-form-wrapper";
+import MultistepFormWrapper from "@/components/form/multistep-form-wrapper";
 import React from "react";
 
 const DataCollectionPage = () => {

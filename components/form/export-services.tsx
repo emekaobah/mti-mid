@@ -17,21 +17,24 @@ import {
 import { Plus, Trash2, Briefcase } from "lucide-react";
 import { z } from "zod";
 
-export const importServicesSchema = z.object({
-  importServices: z
+export const exportServicesSchema = z.object({
+  exportServices: z
     .array(
       z.object({
         sector: z.string().min(1, "Service sector is required"),
+        otherSector: z.string().optional(),
         description: z.string().min(1, "Service description is required"),
       })
     )
     .max(5, "You can only add up to 5 services"),
 });
 
-export type ImportServicesType = z.infer<typeof importServicesSchema>;
+export type ExportServicesType = z.infer<typeof exportServicesSchema>;
 
 const serviceSectors = [
   "Business Services",
+  "Consulting Services",
+  "HR Services",
   "Communication Services",
   "Construction and Related Engineering Services",
   "Distribution Services",
@@ -47,24 +50,22 @@ const serviceSectors = [
   "Other Services: Tell Us!",
 ];
 
-export default function ImportServices() {
-  const { control } = useFormContext<ImportServicesType>();
+export default function ExportServices() {
+  const { control, setValue, getValues } = useFormContext<ExportServicesType>();
   const { fields, append, remove } = useFieldArray({
     control,
-    name: "importServices",
+    name: "exportServices",
   });
 
   return (
     <div className="space-y-8">
       <div className="flex items-center space-x-2">
         <Briefcase className="h-5 w-5 text-primary" />
-        <h3 className="text-lg font-semibold">
-          Services to Import from Nigeria
-        </h3>
+        <h3 className="text-lg font-semibold">Services to Export to Nigeria</h3>
       </div>
       <FormDescription>
-        Tell us about the services your country would like to buy from Nigeria.
-        You can add up to 5 services.
+        Tell us about the services your country can provide to Nigeria. You can
+        add up to 5 services.
       </FormDescription>
 
       {fields.map((field, index) => (
@@ -84,7 +85,7 @@ export default function ImportServices() {
 
           <FormField
             control={control}
-            name={`importServices.${index}.sector`}
+            name={`exportServices.${index}.sector`}
             render={({ field: formField }) => (
               <FormItem>
                 <FormLabel>Service Sector</FormLabel>
@@ -114,19 +115,35 @@ export default function ImportServices() {
                   ))}
                 </div>
                 <FormMessage />
+                {formField.value === "Other Services: Tell Us!" && (
+                  <div className="mt-3">
+                    <Input
+                      placeholder="Please specify other service"
+                      value={
+                        getValues(`exportServices.${index}.otherSector`) || ""
+                      }
+                      onChange={(e) =>
+                        setValue(
+                          `exportServices.${index}.otherSector`,
+                          e.target.value
+                        )
+                      }
+                    />
+                  </div>
+                )}
               </FormItem>
             )}
           />
 
           <FormField
             control={control}
-            name={`importServices.${index}.description`}
+            name={`exportServices.${index}.description`}
             render={({ field: formField }) => (
               <FormItem>
                 <FormLabel>Service Description</FormLabel>
                 <FormControl>
                   <Textarea
-                    placeholder="Describe the specific service you need"
+                    placeholder="Describe the specific service you can provide"
                     {...formField}
                   />
                 </FormControl>

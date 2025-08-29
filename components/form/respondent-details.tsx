@@ -34,7 +34,8 @@ export const respondentDetailsSchema = z.object({
   organizationType: z
     .enum([
       "Government",
-      "Business Association",
+      "Business",
+      "Association",
       "Cooperative/Farmers Association",
       "Other",
     ])
@@ -126,7 +127,8 @@ export default function RespondentDetails() {
               >
                 {[
                   "Government",
-                  "Business Association",
+                  "Business",
+                  "Association",
                   "Cooperative/Farmers Association",
                   "Other",
                 ].map((type) => (
@@ -167,7 +169,7 @@ export default function RespondentDetails() {
         />
       )}
 
-      {orgType === "Business Association" && (
+      {orgType === "Business" && (
         <FormField
           control={control}
           name="businessTypes"
