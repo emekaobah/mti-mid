@@ -67,12 +67,14 @@ const Sectors = () => {
             <div className="flex items-center gap-0.5">
               <h1 className="font-medium text-base">Trade Request</h1>
             </div>
-            <TableFilters
-              // organizationOptions={orgOptions}
-              // countryOptions={countryOptions}
-              productOptions={productOptions}
-              // hsCodeOptions={hsCodes}
-            />
+            <div className="w-full">
+              <TableFilters
+                // organizationOptions={orgOptions}
+                // countryOptions={countryOptions}
+                productOptions={productOptions}
+                // hsCodeOptions={hsCodes}
+              />
+            </div>
           </div>
           <Button
             className="bg-[#074318] rounded-full"

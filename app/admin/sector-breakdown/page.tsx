@@ -82,7 +82,7 @@ const SectorBreakdown = () => {
           <Graphs />
         </div>
       </div>
-      <div className="mt-10 border">
+      <div className="mt-10">
         <DataTable
           columns={columns}
           dummyData={dummyTradeData}

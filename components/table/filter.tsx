@@ -177,7 +177,7 @@ export function TableFilters({
       )}
       {/* Global Search */}
       {!noGlobalSearch && (
-        <div className="flex items-center bg-white rounded-[10px] p-3 w-[150px] focus:ring-white border border-[#E7E7E7]">
+        <div className="flex gap-3 items-center bg-white rounded-[10px] p-3 w-[220px] focus:ring-white border border-[#E7E7E7]">
           <Search className="text-gray-400" size={14} />
           <input
             placeholder={filterPlaceholder}

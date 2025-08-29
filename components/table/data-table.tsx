@@ -181,6 +181,7 @@ export function DataTable<TData, TValue>({
         countryOptions={countryFilterOptions}
         productOptions={productFilterOptions}
         hsCodeOptions={hsCodesFilterOptions}
+        showSubmittedRequests
       />
 
       {/* <TableActions
