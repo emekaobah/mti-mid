@@ -10,9 +10,9 @@ export const columns: ColumnDef<TradeData>[] = [
   {
     header: "S/N.",
     cell: ({ row, table }) => {
-      //@ts-ignore
+      //@ts-expect-error table.options.meta may not be defined
       const currentPage = table.options.meta?.currentPage || 1;
-      //@ts-ignore
+      //@ts-expect-error table.options.meta may not be defined
       const pageSize = table.options.meta?.pageSize || 12;
 
       return (currentPage - 1) * pageSize + row.index + 1;
@@ -48,8 +48,7 @@ export const columns: ColumnDef<TradeData>[] = [
     header: "Action",
     id: "actions",
     enableHiding: false,
-    cell: ({ row }) => {
-      const rowData = row.original;
+    cell: () => {
       return <RequestsColumnAction />;
     },
   },

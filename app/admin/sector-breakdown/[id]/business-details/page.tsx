@@ -51,7 +51,7 @@ const BusinessDetails = () => {
             className="bg-[#074318] rounded-full"
             onClick={() => openModal("requestBuyerModal")}
           >
-            Request Buyer's Contact
+            Request Buyer&apos;s Contact
           </Button>
         </div>
 

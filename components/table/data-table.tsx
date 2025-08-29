@@ -54,7 +54,7 @@ interface DataTableProps<TData, TValue> {
   countryFilterOptions?: { label: string; value: string | number }[];
   productFilterOptions?: { label: string; value: string | number }[];
   hsCodesFilterOptions?: { label: string; value: string | number }[];
-  dummyData?: any[];
+  dummyData?: TData[];
 }
 
 export function DataTable<TData, TValue>({
