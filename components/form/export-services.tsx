@@ -22,6 +22,7 @@ export const exportServicesSchema = z.object({
     .array(
       z.object({
         sector: z.string().min(1, "Service sector is required"),
+        otherSector: z.string().optional(),
         description: z.string().min(1, "Service description is required"),
       })
     )
@@ -32,6 +33,8 @@ export type ExportServicesType = z.infer<typeof exportServicesSchema>;
 
 const serviceSectors = [
   "Business Services",
+  "Consulting Services",
+  "HR Services",
   "Communication Services",
   "Construction and Related Engineering Services",
   "Distribution Services",
@@ -48,7 +51,7 @@ const serviceSectors = [
 ];
 
 export default function ExportServices() {
-  const { control } = useFormContext<ExportServicesType>();
+  const { control, setValue, getValues } = useFormContext<ExportServicesType>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "exportServices",
@@ -112,6 +115,22 @@ export default function ExportServices() {
                   ))}
                 </div>
                 <FormMessage />
+                {formField.value === "Other Services: Tell Us!" && (
+                  <div className="mt-3">
+                    <Input
+                      placeholder="Please specify other service"
+                      value={
+                        getValues(`exportServices.${index}.otherSector`) || ""
+                      }
+                      onChange={(e) =>
+                        setValue(
+                          `exportServices.${index}.otherSector`,
+                          e.target.value
+                        )
+                      }
+                    />
+                  </div>
+                )}
               </FormItem>
             )}
           />

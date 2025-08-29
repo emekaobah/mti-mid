@@ -216,9 +216,13 @@ export default function MultistepFormWrapper() {
         // Only show import if user selected buy_from_nigeria
         if (tradeDirection === "buy_from_nigeria") {
           return (
-            <div className="space-y-8">
-              <ImportGoods />
-              <ImportServices />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+              <div className="space-y-8">
+                <ImportGoods />
+              </div>
+              <div className="space-y-8">
+                <ImportServices />
+              </div>
             </div>
           );
         }
@@ -228,9 +232,13 @@ export default function MultistepFormWrapper() {
         // Only show export if user selected sell_to_nigeria
         if (tradeDirection === "sell_to_nigeria") {
           return (
-            <div className="space-y-8">
-              <ExportGoods />
-              <ExportServices />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
+              <div className="space-y-8">
+                <ExportGoods />
+              </div>
+              <div className="space-y-8">
+                <ExportServices />
+              </div>
             </div>
           );
         }

@@ -17,7 +17,8 @@ export const respondentDetailsSchema = z.object({
     }),
   organizationType: z.enum([
     "Government",
-    "Business Association",
+    "Business",
+    "Association",
     "Cooperative/Farmers Association",
     "Other",
   ]),

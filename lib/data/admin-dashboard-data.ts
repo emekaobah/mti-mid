@@ -3,7 +3,8 @@ export interface FormSubmission {
   id: string;
   organizationType:
     | "Government"
-    | "Business Association"
+    | "Business"
+    | "Association"
     | "Cooperative/Farmers Association"
     | "Other";
   otherOrganization?: string;
@@ -43,7 +44,7 @@ export interface FormSubmission {
 export const dummySubmissions: FormSubmission[] = [
   {
     id: "sub_1703123456789_abc123def",
-    organizationType: "Business Association",
+    organizationType: "Business",
     businessTypes: ["SME Owner", "Distributor/Wholesaler"],
     country: "KE",
     goods: [
@@ -113,7 +114,7 @@ export const dummySubmissions: FormSubmission[] = [
   },
   {
     id: "sub_1703123456791_ghi789jkl",
-    organizationType: "Business Association",
+    organizationType: "Business",
     businessTypes: ["Large Company/Corporation"],
     country: "ZA",
     goods: [
@@ -182,7 +183,7 @@ export const dummySubmissions: FormSubmission[] = [
   },
   {
     id: "sub_1703123456793_mno345pqr",
-    organizationType: "Business Association",
+    organizationType: "Business",
     businessTypes: ["Startup"],
     country: "TZ",
     goods: [],
@@ -259,7 +260,8 @@ export const getCountryDistribution = () => {
 // Organization types data
 export const getOrganizationTypes = () => {
   return [
-    { type: "Business Association", count: 561, percentage: 45 },
+    { type: "Business", count: 480, percentage: 38 },
+    { type: "Association", count: 81, percentage: 7 },
     { type: "Government", count: 312, percentage: 25 },
     { type: "Cooperative/Farmers Association", count: 250, percentage: 20 },
     { type: "Other", count: 124, percentage: 10 },

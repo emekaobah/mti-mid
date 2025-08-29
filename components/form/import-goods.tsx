@@ -68,83 +68,60 @@ export default function ImportGoods() {
   });
 
   return (
-    <div className="space-y-8">
-      <div className="flex items-center space-x-2">
-        <Package className="h-5 w-5 text-primary" />
-        <h3 className="text-lg font-semibold">Goods to Import from Nigeria</h3>
-      </div>
-      <FormDescription>
-        Tell us about the goods your country would like to buy from Nigeria. You
-        can add up to 5 products.
-      </FormDescription>
+    <div className="flex flex-col h-full">
+      <div className="flex-1 space-y-8">
+        <div className="flex items-center space-x-2">
+          <Package className="h-5 w-5 text-primary" />
+          <h3 className="text-lg font-semibold">
+            Goods to Import from Nigeria
+          </h3>
+        </div>
+        <FormDescription>
+          Tell us about the goods your country would like to buy from Nigeria.
+          You can add up to 5 products.
+        </FormDescription>
 
-      {fields.map((field, index) => (
-        <div key={field.id} className="border rounded-lg p-6 space-y-6 bg-card">
-          <div className="flex items-center justify-between">
-            <h4 className="text-base font-medium">Product {index + 1}</h4>
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => remove(index)}
-              className="text-destructive hover:text-destructive hover:bg-destructive/10"
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
-          </div>
+        {fields.map((field, index) => (
+          <div
+            key={field.id}
+            className="border rounded-lg p-6 space-y-6 bg-card"
+          >
+            <div className="flex items-center justify-between">
+              <h4 className="text-base font-medium">Product {index + 1}</h4>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => remove(index)}
+                className="text-destructive hover:text-destructive hover:bg-destructive/10"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
 
-          <FormField
-            control={control}
-            name={`importGoods.${index}.sector`}
-            render={({ field: formField }) => (
-              <FormItem>
-                <FormLabel>Sector</FormLabel>
-                <Select
-                  onValueChange={formField.onChange}
-                  defaultValue={formField.value}
-                >
-                  <FormControl>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a sector" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    {sectors.map((sector) => (
-                      <SelectItem key={sector} value={sector}>
-                        {sector}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={control}
-            name={`importGoods.${index}.product`}
-            render={({ field: formField }) => (
-              <FormItem>
-                <FormLabel>Product Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="Enter product name" {...formField} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <FormField
               control={control}
-              name={`importGoods.${index}.hsCode`}
+              name={`importGoods.${index}.sector`}
               render={({ field: formField }) => (
                 <FormItem>
-                  <FormLabel>HS Code (Optional)</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter HS Code" {...formField} />
-                  </FormControl>
+                  <FormLabel>Sector</FormLabel>
+                  <Select
+                    onValueChange={formField.onChange}
+                    defaultValue={formField.value}
+                  >
+                    <FormControl>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a sector" />
+                      </SelectTrigger>
+                    </FormControl>
+                    <SelectContent>
+                      {sectors.map((sector) => (
+                        <SelectItem key={sector} value={sector}>
+                          {sector}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
                   <FormMessage />
                 </FormItem>
               )}
@@ -152,29 +129,102 @@ export default function ImportGoods() {
 
             <FormField
               control={control}
-              name={`importGoods.${index}.quantity`}
+              name={`importGoods.${index}.product`}
               render={({ field: formField }) => (
                 <FormItem>
-                  <FormLabel>Quantity (Optional)</FormLabel>
+                  <FormLabel>Product Name</FormLabel>
                   <FormControl>
-                    <Input placeholder="Enter quantity" {...formField} />
+                    <Input placeholder="Enter product name" {...formField} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-          </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={control}
+                name={`importGoods.${index}.hsCode`}
+                render={({ field: formField }) => (
+                  <FormItem>
+                    <FormLabel>HS Code (Optional)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter HS Code" {...formField} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={control}
+                name={`importGoods.${index}.quantity`}
+                render={({ field: formField }) => (
+                  <FormItem>
+                    <FormLabel>Quantity (Optional)</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter quantity" {...formField} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={control}
+                name={`importGoods.${index}.unit`}
+                render={({ field: formField }) => (
+                  <FormItem>
+                    <FormLabel>Unit (Optional)</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="e.g., kg, tons, pieces"
+                        {...formField}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={control}
+                name={`importGoods.${index}.frequency`}
+                render={({ field: formField }) => (
+                  <FormItem>
+                    <FormLabel>Frequency (Optional)</FormLabel>
+                    <Select
+                      onValueChange={formField.onChange}
+                      defaultValue={formField.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select frequency" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Monthly">Monthly</SelectItem>
+                        <SelectItem value="Quarterly">Quarterly</SelectItem>
+                        <SelectItem value="Annually">Annually</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+
             <FormField
               control={control}
-              name={`importGoods.${index}.unit`}
+              name={`importGoods.${index}.standards`}
               render={({ field: formField }) => (
                 <FormItem>
-                  <FormLabel>Unit (Optional)</FormLabel>
+                  <FormLabel>Standards & Certifications (Optional)</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="e.g., kg, tons, pieces"
+                    <Textarea
+                      placeholder="Describe any specific standards, certifications, or quality requirements"
                       {...formField}
                     />
                   </FormControl>
@@ -185,66 +235,33 @@ export default function ImportGoods() {
 
             <FormField
               control={control}
-              name={`importGoods.${index}.frequency`}
+              name={`importGoods.${index}.authority`}
               render={({ field: formField }) => (
                 <FormItem>
-                  <FormLabel>Frequency (Optional)</FormLabel>
-                  <Select
-                    onValueChange={formField.onChange}
-                    defaultValue={formField.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue placeholder="Select frequency" />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      <SelectItem value="Monthly">Monthly</SelectItem>
-                      <SelectItem value="Quarterly">Quarterly</SelectItem>
-                      <SelectItem value="Annually">Annually</SelectItem>
-                    </SelectContent>
-                  </Select>
+                  <FormLabel>Regulatory Authority (Optional)</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="e.g., FDA, ISO, Local Standards Body"
+                      {...formField}
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
           </div>
+        ))}
 
-          <FormField
-            control={control}
-            name={`importGoods.${index}.standards`}
-            render={({ field: formField }) => (
-              <FormItem>
-                <FormLabel>Standards & Certifications (Optional)</FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Describe any specific standards, certifications, or quality requirements"
-                    {...formField}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={control}
-            name={`importGoods.${index}.authority`}
-            render={({ field: formField }) => (
-              <FormItem>
-                <FormLabel>Regulatory Authority (Optional)</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="e.g., FDA, ISO, Local Standards Body"
-                    {...formField}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-      ))}
+        {fields.length === 0 && (
+          <div className="text-center py-8 text-muted-foreground">
+            <Package className="h-12 w-12 mx-auto mb-4 opacity-50" />
+            <p>
+              No products added yet. Click &ldquo;Add Product&rdquo; to get
+              started.
+            </p>
+          </div>
+        )}
+      </div>
 
       {fields.length < 5 && (
         <Button
