@@ -85,10 +85,10 @@ export function RadialChart() {
         {/* import */}
         <TabsContent value={"import"}>
           <Card className="flex flex-col h-full border-0 shadow-none bg-transparent w-full  ">
-            <CardHeader className="items-center pb-0">
+            {/* <CardHeader className="items-center pb-0">
               <CardTitle>Radial Chart - Label</CardTitle>
               <CardDescription>January - June 2024</CardDescription>
-            </CardHeader>
+            </CardHeader> */}
             <CardContent className="flex-1 pb-0 ">
               <ChartContainer
                 config={chartConfig}
