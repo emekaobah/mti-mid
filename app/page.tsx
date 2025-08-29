@@ -4,6 +4,8 @@ import Link from "next/link";
 import Image from "next/image";
 import GatewayCard from "@/components/landing/gateway-card";
 import { FaqItem } from "@/components/faq";
+import { Co } from "react-flags-select";
+import CountryInsights from "@/components/landing/country-insights";
 
 const gatewayCards = [
   {
@@ -87,6 +89,13 @@ export default function Home() {
           >
             Buy from Nigeria{" "}
           </Link>
+        </div>
+      </div>
+
+      {/* Country Insights */}
+      <div className="bg-[#0A5C21] px-16 pt-16 pb-20">
+        <div className="-mt-36">
+          <CountryInsights />
         </div>
       </div>
 

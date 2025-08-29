@@ -63,12 +63,25 @@
   --border: oklch(0.922 0 0);
   --input: oklch(0.922 0 0);
   --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.646 0.222 41.116);
-  --chart-2: oklch(0.6 0.118 184.704);
-  --chart-3: oklch(0.398 0.07 227.392);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.769 0.188 70.08);
+  /* Chart palette using #074318 with decreasing opacity (innermost -> outermost)
+    --chart-1: 25% alpha
+    --chart-2: 20% alpha
+    --chart-3: 15% alpha
+    --chart-4: 10% alpha
+    --chart-5: 5% alpha */
+  /* Preferred alpha steps (innermost -> outermost) */
+  --chart-1: rgba(7, 67, 24, 0.65);
+  --chart-2: rgba(7, 67, 24, 0.5);
+  --chart-3: rgba(7, 67, 24, 0.35);
+  --chart-4: rgba(7, 67, 24, 0.2);
+  --chart-5: rgba(7, 67, 24, 0.1);
   --sidebar: oklch(0.985 0 0);
+  /* Backwards-compatible color names used by some charts/components */
+  --color-chrome: var(--chart-1);
+  --color-safari: var(--chart-2);
+  --color-firefox: var(--chart-3);
+  --color-edge: var(--chart-4);
+  --color-other: var(--chart-5);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
   --sidebar-primary-foreground: oklch(0.985 0 0);
@@ -97,12 +110,20 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.488 0.243 264.376);
-  --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.769 0.188 70.08);
-  --chart-4: oklch(0.627 0.265 303.9);
-  --chart-5: oklch(0.645 0.246 16.439);
+  /* Dark theme: same base color with same alpha steps so rings keep the same translucency */
+  /* Preferred alpha steps for dark theme */
+  --chart-1: rgba(7, 67, 24, 0.65);
+  --chart-2: rgba(7, 67, 24, 0.5);
+  --chart-3: rgba(7, 67, 24, 0.35);
+  --chart-4: rgba(7, 67, 24, 0.2);
+  --chart-5: rgba(7, 67, 24, 0.1);
   --sidebar: oklch(0.205 0 0);
+  /* Backwards-compatible color names for dark theme */
+  --color-chrome: var(--chart-1);
+  --color-safari: var(--chart-2);
+  --color-firefox: var(--chart-3);
+  --color-edge: var(--chart-4);
+  --color-other: var(--chart-5);
   --sidebar-foreground: oklch(0.985 0 0);
   --sidebar-primary: oklch(0.488 0.243 264.376);
   --sidebar-primary-foreground: oklch(0.985 0 0);
