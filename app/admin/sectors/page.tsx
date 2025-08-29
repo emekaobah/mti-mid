@@ -13,36 +13,18 @@ import SectorCard from "@/components/cards/sectors-cards";
 import { TableFilters } from "@/components/table/filter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-const orgOptions = [
-  { label: "All", value: "all" },
-  { label: "Government", value: "Government" },
-  { label: "Business", value: "Business" },
-  { label: "Association", value: "Association" },
-];
-
-const countryOptions = [
-  { label: "All", value: "all" },
-  { label: "Nigeria", value: "Nigeria" },
-  { label: "Cameroon", value: "Cameroon" },
-  { label: "Uganda", value: "Uganda" },
-  { label: "South Africa", value: "South Africa" },
-  { label: "Tanzania", value: "Tanzania" },
-];
-
 const productOptions = [
   { label: "All", value: "all" },
-  { label: "Beans", value: "Beans" },
-  { label: "Tobacco", value: "Tobacco" },
-  { label: "Sugar", value: "Sugar" },
-  { label: "Melon", value: "Melon" },
+  { label: "Agriculture", value: "Agriculture" },
+  { label: "Chemicals", value: "Chemicals" },
+  { label: "Building Materials", value: "Building Materials" },
 ];
 
-const hsCodes = [
+const serviceOptions = [
   { label: "All", value: "all" },
-  { label: "0200-2022E", value: "0200-2022E" },
-  { label: "0200-2023E", value: "0200-2023E" },
-  { label: "0200-2024E", value: "0200-2024E" },
-  { label: "0200-2025E", value: "0200-2025E" },
+  { label: "Business Service", value: "Business Service" },
+  { label: "HR Services", value: "HR Services" },
+  { label: "Educational Services", value: "Educational Services" },
 ];
 
 const Sectors = () => {
@@ -69,10 +51,8 @@ const Sectors = () => {
             </div>
             <div className="w-full">
               <TableFilters
-                // organizationOptions={orgOptions}
-                // countryOptions={countryOptions}
-                productOptions={productOptions}
-                // hsCodeOptions={hsCodes}
+                productSectorOptions={productOptions}
+                serviceSectorOptions={serviceOptions}
               />
             </div>
           </div>
@@ -84,9 +64,13 @@ const Sectors = () => {
           </Button>
         </div>
         <Tabs defaultValue="buy" className="w-full">
-          <TabsList className="w-full">
-            <TabsTrigger value="buy">Buy From Nigeria (4)</TabsTrigger>
-            <TabsTrigger value="sell">Sell to Nigeria (6)</TabsTrigger>
+          <TabsList className="w-full bg-[#F9F7F1]">
+            <TabsTrigger value="buy" className="bg-[#F9F7F1]">
+              Buy From Nigeria (4)
+            </TabsTrigger>
+            <TabsTrigger value="sell" className="bg-[#F9F7F1]">
+              Sell to Nigeria (6)
+            </TabsTrigger>
           </TabsList>
           <TabsContent value="buy">
             <div className="grid grid-cols-4 p-6 gap-6">

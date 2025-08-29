@@ -38,6 +38,8 @@ interface TableFiltersProps {
   productOptions?: FilterOption[];
   hsCodeOptions?: FilterOption[];
   showSubmittedRequests?: boolean;
+  productSectorOptions?: FilterOption[];
+  serviceSectorOptions?: FilterOption[];
 }
 
 export function TableFilters({
@@ -61,6 +63,8 @@ export function TableFilters({
   productOptions,
   hsCodeOptions,
   showSubmittedRequests,
+  productSectorOptions,
+  serviceSectorOptions,
 }: TableFiltersProps) {
   const {
     globalFilter,
@@ -73,6 +77,10 @@ export function TableFilters({
     setHsCodesFilterValue,
     productFilterValue,
     setProductFilterValue,
+    productSectorFilterValue,
+    serviceSectorFilterValue,
+    setProductSectorFilterValue,
+    setServiceSectorFilterValue,
   } = useFilterStore();
 
   return (
@@ -139,7 +147,7 @@ export function TableFilters({
         <Select
           value={productFilterValue}
           onValueChange={(value) =>
-            setCountryFilterValue(value === "all" ? "all" : value)
+            setProductFilterValue(value === "all" ? "all" : value)
           }
         >
           <SelectTrigger className="w-[150px] bg-white outline-none focus:ring-white border border-[#E7E7E7] text-[10px] text-[rgba(58,58,58,0.6)] p-3 rounded-[10px]">
@@ -160,7 +168,7 @@ export function TableFilters({
         <Select
           value={hsCodesFilterValue}
           onValueChange={(value) =>
-            setCountryFilterValue(value === "all" ? "all" : value)
+            setHsCodesFilterValue(value === "all" ? "all" : value)
           }
         >
           <SelectTrigger className="w-[150px] bg-white outline-none focus:ring-white border border-[#E7E7E7] text-[10px] text-[rgba(58,58,58,0.6)] p-3 rounded-[10px]">
@@ -175,6 +183,49 @@ export function TableFilters({
           </SelectContent>
         </Select>
       )}
+
+      {/* ProductSector */}
+      {productSectorOptions && productSectorOptions.length > 0 && (
+        <Select
+          value={productSectorFilterValue}
+          onValueChange={(value) =>
+            setProductSectorFilterValue(value === "all" ? "all" : value)
+          }
+        >
+          <SelectTrigger className="w-[150px] bg-white outline-none focus:ring-white border border-[#E7E7E7] text-[10px] text-[rgba(58,58,58,0.6)] p-3 rounded-[10px]">
+            <SelectValue placeholder="Product Sectors" />
+          </SelectTrigger>
+          <SelectContent>
+            {productSectorOptions.map((option) => (
+              <SelectItem key={option.value} value={option.value.toString()}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
+
+      {/* Service Sector */}
+      {serviceSectorOptions && serviceSectorOptions.length > 0 && (
+        <Select
+          value={serviceSectorFilterValue}
+          onValueChange={(value) =>
+            setServiceSectorFilterValue(value === "all" ? "all" : value)
+          }
+        >
+          <SelectTrigger className="w-[150px] bg-white outline-none focus:ring-white border border-[#E7E7E7] text-[10px] text-[rgba(58,58,58,0.6)] p-3 rounded-[10px]">
+            <SelectValue placeholder="Service Sectors" />
+          </SelectTrigger>
+          <SelectContent>
+            {serviceSectorOptions.map((option) => (
+              <SelectItem key={option.value} value={option.value.toString()}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      )}
+
       {/* Global Search */}
       {!noGlobalSearch && (
         <div className="flex gap-3 items-center bg-white rounded-[10px] p-3 w-[220px] focus:ring-white border border-[#E7E7E7]">
