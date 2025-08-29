@@ -1,6 +1,9 @@
 import { create } from "zustand";
 
-type ModalName = "requestBuyerModal" | "verifyBvnModal";
+type ModalName =
+  | "requestBuyerModal"
+  | "verifyBvnModal"
+  | "verifyMailandCountry";
 
 interface ModalState {
   activeModal: ModalName | null;
