@@ -12,6 +12,7 @@ const state = {
   hsCodesFilterValue: "",
   productSectorFilterValue: "",
   serviceSectorFilterValue: "",
+  tradeType: "",
 };
 
 interface FilterActions {
@@ -22,6 +23,7 @@ interface FilterActions {
   hsCodesFilterValue: string;
   productSectorFilterValue: string;
   serviceSectorFilterValue: string;
+  tradeType: string | number;
   setGlobalFilter: (value: string) => void;
   setOrganizationFilterValue: (value: string) => void;
   setCountryFilterValue: (value: string) => void;
@@ -29,6 +31,7 @@ interface FilterActions {
   setHsCodesFilterValue: (value: string) => void;
   setProductSectorFilterValue: (value: string) => void;
   setServiceSectorFilterValue: (value: string) => void;
+  setTradeType: (value: string | number) => void;
   reset: () => void;
 }
 
@@ -46,6 +49,7 @@ const useFilterStore = create<FilterActions>()(
         set({ productSectorFilterValue: value }),
       setServiceSectorFilterValue: (value) =>
         set({ serviceSectorFilterValue: value }),
+      setTradeType: (value) => set({ tradeType: value }),
       reset: () => set({ ...state }),
     }),
     {

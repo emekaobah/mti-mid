@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import React from "react";
 import Image from "next/image";
 import logo from "@/public/logo-svg.svg";
@@ -12,6 +13,8 @@ import { useRouter } from "next/navigation";
 import SectorCard from "@/components/cards/sectors-cards";
 import { TableFilters } from "@/components/table/filter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import useFilterStore from "@/hooks/store/useFilterStore";
+import { useTableQueryParams } from "@/hooks/custom-hooks/useTableQueryParams";
 
 const productOptions = [
   { label: "All", value: "all" },
@@ -30,6 +33,15 @@ const serviceOptions = [
 const Sectors = () => {
   const { openModal } = useModalStore();
   const router = useRouter();
+  const { setTradeType } = useFilterStore();
+
+  const { finalUrl } = useTableQueryParams({
+    baseUrl: "",
+    // institutiionId: tableFilter.institutionId,
+    // globalFilter: tableFilter.globalFilter,
+    // dateRange: tableFilter.dateRange,
+    tradeType: "",
+  });
 
   return (
     <main className="min-h-screen  bg-[#FCFCFC] lg:px-15 px-4 mx-auto">
@@ -65,10 +77,18 @@ const Sectors = () => {
         </div>
         <Tabs defaultValue="buy" className="w-full">
           <TabsList className="w-full bg-[#F9F7F1]">
-            <TabsTrigger value="buy" className="bg-[#F9F7F1]">
+            <TabsTrigger
+              value="buy"
+              className="bg-[#F9F7F1]"
+              onClick={() => setTradeType(1)}
+            >
               Buy From Nigeria (4)
             </TabsTrigger>
-            <TabsTrigger value="sell" className="bg-[#F9F7F1]">
+            <TabsTrigger
+              value="sell"
+              className="bg-[#F9F7F1] "
+              onClick={() => setTradeType(2)}
+            >
               Sell to Nigeria (6)
             </TabsTrigger>
           </TabsList>
