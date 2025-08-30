@@ -1,10 +1,6 @@
-import TradeRequestsChart from "@/components/trade-requests-chart";
-import TopRequestedSectorsChart from "@/components/top-requested-sectors-chart";
 import Link from "next/link";
-import Image from "next/image";
 import GatewayCard from "@/components/landing/gateway-card";
 import { FaqItem } from "@/components/faq";
-import { Co } from "react-flags-select";
 import CountryInsights from "@/components/landing/country-insights";
 
 const gatewayCards = [
