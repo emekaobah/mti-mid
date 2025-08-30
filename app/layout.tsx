@@ -3,6 +3,7 @@ import { Onest } from "next/font/google";
 import "./globals.css";
 import SiteHeader from "@/components/site-header";
 import Footer from "@/components/footer";
+import QueryProvider from "@/lib/providers/query-provider";
 
 const onest = Onest({
   variable: "--font-onest",
@@ -22,9 +23,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${onest.variable} antialiased`}>
-        <SiteHeader />
-        {children}
-        <Footer />
+        <QueryProvider>
+          <SiteHeader />
+          {children}
+          <Footer />
+        </QueryProvider>
       </body>
     </html>
   );

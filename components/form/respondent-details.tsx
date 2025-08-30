@@ -15,6 +15,7 @@ import {
   FormDescription,
 } from "@/components/ui/form";
 import ReactFlagsSelect from "react-flags-select";
+import { useOrganizationTypes } from "@/hooks/api/catalog/use-organization-types";
 
 export const tradeDirectionSchema = z.object({
   tradeDirection: z
@@ -56,6 +57,9 @@ export default function RespondentDetails() {
   const { control, watch } = useFormContext<RespondentDetailsType>();
   const orgType = watch("organizationType");
   const tradeDirection = watch("tradeDirection");
+
+  const { data: organizationTypes } = useOrganizationTypes();
+  console.log("these are organization types", organizationTypes);
 
   return (
     <div className="space-y-8">
