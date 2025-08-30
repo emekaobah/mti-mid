@@ -1,0 +1,37 @@
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { service } from "@/lib/custom-apis/apis";
+import { useRouter } from "next/navigation";
+import { verifyBvnResponse } from "@/lib/custom-apis/types";
+import { toast } from "sonner";
+
+export const useVerifyBvn = () => {
+  const router = useRouter();
+
+  return useMutation({
+    mutationFn: (bvn: string) => service.verifyBvn(bvn),
+    onSuccess: (res: verifyBvnResponse) => {
+      console.log(res);
+
+      if (res.valid === true) {
+        toast.success("Success", {
+          description: "Verification successful",
+          style: {
+            background: "green",
+            color: "white",
+          },
+        });
+        router.push("/admin/sector-breakdown");
+      } else
+        toast.error("Invalid BVN", {
+          description: "Kindly enter a valid BVN to proceed",
+          style: {
+            background: "red",
+            color: "white",
+          },
+        });
+    },
+    onError: () => {
+      toast.error("Something went wrong");
+    },
+  });
+};

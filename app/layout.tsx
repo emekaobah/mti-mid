@@ -4,6 +4,7 @@ import "./globals.css";
 import SiteHeader from "@/components/site-header";
 import Footer from "@/components/footer";
 import QueryProvider from "@/lib/providers/query-provider";
+import { Toaster } from "@/components/ui/sonner";
 
 const onest = Onest({
   variable: "--font-onest",
@@ -26,6 +27,7 @@ export default function RootLayout({
         <QueryProvider>
           <SiteHeader />
           {children}
+          <Toaster />
           <Footer />
         </QueryProvider>
       </body>

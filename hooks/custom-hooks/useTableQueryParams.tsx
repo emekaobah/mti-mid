@@ -56,6 +56,7 @@ export const useTableQueryParams = ({
     if (countryFilter) {
       url.searchParams.append(countryFilterLabel ?? "Country", countryFilter);
     }
+
     if (tradeType) {
       url.searchParams.append("tradeType", tradeType.toString());
     }
@@ -75,8 +76,8 @@ export const useTableQueryParams = ({
       );
     }
 
-    url.searchParams.append("PageSize", pageSize.toString());
-    url.searchParams.append("PageNumber", pageNumber.toString());
+    // url.searchParams.append("PageSize", pageSize.toString());
+    // url.searchParams.append("PageNumber", pageNumber.toString());
 
     return url.toString();
   }, [baseUrl, debouncedGlobalFilter, pageNumber, pageSize, searchQueryLabel]);
