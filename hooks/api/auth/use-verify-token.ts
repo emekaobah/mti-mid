@@ -2,6 +2,7 @@ import { useApiQuery } from "@/lib/api-hooks";
 
 export interface VerifyTokenRequest {
   token: string;
+  email: string;
 }
 
 export interface VerifyTokenResponse {
@@ -17,7 +18,7 @@ export interface VerifyTokenResponse {
 
 export const useVerifyToken = (params?: VerifyTokenRequest) => {
   return useApiQuery<"/api/Auth/verify">("/api/Auth/verify", params, {
-    enabled: !!params?.token,
+    enabled: !!params?.token && !!params?.email,
   });
 };
 
@@ -26,7 +27,7 @@ export const useVerifyTokenWithOptions = (
   options?: Parameters<typeof useApiQuery<"/api/Auth/verify">>[2]
 ) => {
   return useApiQuery<"/api/Auth/verify">("/api/Auth/verify", params, {
-    enabled: !!params?.token,
+    enabled: !!params?.token && !!params?.email,
     ...options,
   });
 };

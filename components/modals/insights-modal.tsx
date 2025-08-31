@@ -9,7 +9,10 @@ import { Input } from "@/components/ui/input";
 import ReactFlagsSelect from "react-flags-select";
 import { useState } from "react";
 import { useCountries } from "@/hooks/api/catalog/use-countries";
-import { useAuthenticate } from "@/hooks/api/auth/use-authenticate";
+import {
+  useAuthenticate,
+  useRequestEmailLink,
+} from "@/hooks/api/auth/use-authenticate";
 import { useAuth } from "@/hooks/useAuth";
 import type { EmailVerificationResponse } from "@/hooks/api/shared/types";
 
@@ -18,13 +21,14 @@ export function InsightsModal() {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [verificationStatus, setVerificationStatus] = useState<
-    "idle" | "success" | "link-sent" | "error"
+    "idle" | "success" | "link-sent" | "error" | "verifying"
   >("idle");
   const [statusMessage, setStatusMessage] = useState("");
 
   const { data: countries, isLoading: isCountriesLoading } = useCountries();
   const { login } = useAuth();
   const authenticate = useAuthenticate();
+  const requestEmailLink = useRequestEmailLink();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,11 +67,41 @@ export function InsightsModal() {
           }, 2000);
         }
       } else if (response.code === "99") {
-        // New user - link sent
-        setVerificationStatus("link-sent");
-        setStatusMessage(
-          "Verification link sent to your email. Please check your inbox and verify your email address."
-        );
+        // New user - need to send verification email
+        setVerificationStatus("verifying");
+        setStatusMessage("User not found. Sending verification email...");
+
+        try {
+          // Call the request-email-link endpoint to actually send the email
+          const emailResponse = (await requestEmailLink.mutateAsync({
+            email,
+            countryCode: selectedCountry,
+          })) as {
+            success: boolean;
+            message: string;
+            tokenId: string;
+          };
+
+          // Handle the email response
+          if (emailResponse.success) {
+            setVerificationStatus("link-sent");
+            setStatusMessage(
+              emailResponse.message ||
+                "Verification link sent to your email. Please check your inbox and verify your email address."
+            );
+          } else {
+            setVerificationStatus("error");
+            setStatusMessage(
+              "Failed to send verification email. Please try again or contact support."
+            );
+          }
+        } catch (emailError) {
+          setVerificationStatus("error");
+          setStatusMessage(
+            "Failed to send verification email. Please try again or contact support."
+          );
+          console.error("Email sending failed:", emailError);
+        }
       } else {
         // Other error cases
         setVerificationStatus("error");
@@ -93,6 +127,7 @@ export function InsightsModal() {
       success: "text-green-600 bg-green-50 border border-green-200",
       "link-sent": "text-blue-600 bg-blue-50 border border-blue-200",
       error: "text-red-600 bg-red-50 border border-red-200",
+      verifying: "text-blue-600 bg-blue-50 border border-blue-200",
     };
 
     const className = statusClasses[verificationStatus] || statusClasses.error;

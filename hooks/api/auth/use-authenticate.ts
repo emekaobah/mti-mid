@@ -23,6 +23,24 @@ export const useAuthenticateWithOptions = (
   );
 };
 
-// Keep the old name for backward compatibility
-export const useRequestEmailLink = useAuthenticate;
-export const useRequestEmailLinkWithOptions = useAuthenticateWithOptions;
+// Hook for the actual request-email-link endpoint
+export const useRequestEmailLink = () => {
+  return useApiMutation<
+    "/api/Auth/request-email-link",
+    EmailVerificationRequest
+  >("/api/Auth/request-email-link", "post");
+};
+
+export const useRequestEmailLinkWithOptions = (
+  options?: Parameters<
+    typeof useApiMutation<
+      "/api/Auth/request-email-link",
+      EmailVerificationRequest
+    >
+  >[2]
+) => {
+  return useApiMutation<
+    "/api/Auth/request-email-link",
+    EmailVerificationRequest
+  >("/api/Auth/request-email-link", "post", options);
+};

@@ -19,20 +19,21 @@ export const VerifyPageContent = () => {
 
   const { login } = useAuth();
 
-  // Extract token from URL query parameters
+  // Extract both token and email from URL query parameters
   const token = searchParams.get("token");
+  const email = searchParams.get("email");
 
   const {
     data: response,
     error,
     isLoading,
-  } = useVerifyToken(token ? { token } : undefined);
+  } = useVerifyToken(token && email ? { token, email } : undefined);
 
   useEffect(() => {
-    if (!token) {
+    if (!token || !email) {
       setVerificationStatus("error");
       setStatusMessage(
-        "No verification token found. Please check your email for the correct link."
+        "Missing verification token or email. Please check your email for the correct link."
       );
       return;
     }
@@ -95,7 +96,7 @@ export const VerifyPageContent = () => {
         );
       }
     }
-  }, [response, error, isLoading, token, login, router]);
+  }, [response, error, isLoading, token, email, login, router]);
 
   const renderContent = () => {
     switch (verificationStatus) {

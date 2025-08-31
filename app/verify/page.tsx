@@ -2,7 +2,6 @@
 
 import React, { Suspense } from "react";
 import { VerifyPageContent } from "./verify-page-content";
-
 const VerificationPage = () => {
   return (
     <Suspense
