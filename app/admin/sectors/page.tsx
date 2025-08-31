@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import React from "react";
 import Image from "next/image";
 import logo from "@/public/logo-svg.svg";
@@ -10,8 +11,15 @@ import { Button } from "@/components/ui/button";
 import useModalStore from "@/hooks/store/useModalStore";
 import { useRouter } from "next/navigation";
 import SectorCard from "@/components/cards/sectors-cards";
+import SectorCardSkeleton from "@/components/cards/sectors-cards/skeleton";
 import { TableFilters } from "@/components/table/filter";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import useFilterStore from "@/hooks/store/useFilterStore";
+import { useTableQueryParams } from "@/hooks/custom-hooks/useTableQueryParams";
+// import { useSectorCountNew } from "@/hooks/api";
+import Configs from "@/lib/configs";
+import { useApiQueryNew } from "@/hooks/api";
+import { useSectorCount } from "@/hooks/api";
 
 const productOptions = [
   { label: "All", value: "all" },
@@ -30,6 +38,26 @@ const serviceOptions = [
 const Sectors = () => {
   const { openModal } = useModalStore();
   const router = useRouter();
+  const { setTradeType, tradeType } = useFilterStore();
+  const tableFilter = useFilterStore((state) => state);
+
+  // Create skeleton array for consistent loading state
+  const skeletonArray = Array.from({ length: 4 }, (_, i) => i);
+
+  useEffect(() => {
+    setTradeType(1);
+  }, []);
+
+  const { finalUrl } = useTableQueryParams({
+    baseUrl: `${Configs.baseUrl}/api/TradeInterest/sector-count`,
+    tradeType: tableFilter.tradeType,
+  });
+
+  const { data: sectors, isLoading } = useSectorCount({
+    tradeType: tradeType === 1 ? 1 : 2,
+  });
+
+  console.log(sectors, "This is sectors");
 
   return (
     <main className="min-h-screen  bg-[#FCFCFC] lg:px-15 px-4 mx-auto">
@@ -65,72 +93,54 @@ const Sectors = () => {
         </div>
         <Tabs defaultValue="buy" className="w-full">
           <TabsList className="w-full bg-[#F9F7F1]">
-            <TabsTrigger value="buy" className="bg-[#F9F7F1]">
+            <TabsTrigger
+              value="buy"
+              className="bg-[#F9F7F1]"
+              onClick={() => setTradeType(1)}
+            >
               Buy From Nigeria (4)
             </TabsTrigger>
-            <TabsTrigger value="sell" className="bg-[#F9F7F1]">
+            <TabsTrigger
+              value="sell"
+              className="bg-[#F9F7F1] "
+              onClick={() => setTradeType(2)}
+            >
               Sell to Nigeria (6)
             </TabsTrigger>
           </TabsList>
           <TabsContent value="buy">
             <div className="grid grid-cols-4 p-6 gap-6">
-              <SectorCard
-                sector="Agriculture"
-                date="Aug 26 - Aug 28"
-                request="50"
-                onClick={() => openModal("verifyBvnModal")}
-              />
-              <SectorCard
-                sector="Chemicals"
-                date="Aug 26 - Aug 28"
-                request="50"
-              />
-              <SectorCard
-                sector="Food & Beverages"
-                date="Aug 26 - Aug 28"
-                request="50"
-              />
-              <SectorCard
-                sector="HR Services"
-                date="Aug 26 - Aug 28"
-                request="50"
-              />
+              {isLoading
+                ? // Show skeleton loading state
+                  skeletonArray.map((_, i) => <SectorCardSkeleton key={i} />)
+                : // Show actual sector cards
+                  sectors?.map((x, i) => (
+                    <SectorCard
+                      sector={x.sectorName}
+                      date="Aug 26 - Aug 28"
+                      request={x.count}
+                      key={i}
+                      onClick={() => openModal("verifyBvnModal")}
+                    />
+                  ))}
             </div>
           </TabsContent>
           <TabsContent value="sell">
             {/* <ProductsGraph /> */}
             <div className="grid grid-cols-4 p-6 gap-6">
-              <SectorCard
-                sector="Financial Services"
-                date="Aug 26 - Aug 28"
-                request="50"
-                onClick={() => openModal("verifyBvnModal")}
-              />
-              <SectorCard
-                sector="Educational Services"
-                date="Aug 26 - Aug 28"
-                request="50"
-              />
-              <SectorCard
-                sector="Food & Beverages"
-                date="Aug 26 - Aug 28"
-                request="50"
-              />
-              <SectorCard
-                sector="Paper & Packaging"
-                date="Aug 26 - Aug 28"
-                request="50"
-              />
-              <SectorCard
-                sector="Environmental Goods"
-                date="Aug 26 - Aug 28"
-                request="50"
-              />
-              <SectorCard
-                sector="Building Materials"
-                date="Aug 26 - Aug 28"
-                request="50"
-              />
+              {isLoading
+                ? // Show skeleton loading state
+                  skeletonArray.map((_, i) => <SectorCardSkeleton key={i} />)
+                : // Show actual sector cards
+                  sectors?.map((x, i) => (
+                    <SectorCard
+                      sector={x.sectorName}
+                      date="Aug 26 - Aug 28"
+                      request={x.count}
+                      key={i}
+                      onClick={() => openModal("verifyBvnModal")}
+                    />
+                  ))}
             </div>
           </TabsContent>
         </Tabs>

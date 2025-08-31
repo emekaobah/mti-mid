@@ -4,17 +4,18 @@ import usePaginationStore from "../store/usePaginationStore";
 
 interface UseTableQueryParams {
   baseUrl: string;
-  globalFilter: string;
+  globalFilter?: string;
   pageSize?: number;
   searchQueryLabel?: string;
-  organizationFilter: string;
-  organizationFilterLabel: string | undefined;
-  countryFilter: string;
-  countryFilterLabel: string | undefined;
-  productFilter: string;
-  productFilterLabel: string | undefined;
-  hsCodesFilter: string;
-  hsCodesFilterLabel: string | undefined;
+  organizationFilter?: string;
+  organizationFilterLabel?: string | undefined;
+  countryFilter?: string;
+  countryFilterLabel?: string | undefined;
+  productFilter?: string;
+  productFilterLabel?: string | undefined;
+  hsCodesFilter?: string;
+  hsCodesFilterLabel?: string | undefined;
+  tradeType?: string | number;
 }
 
 export const useTableQueryParams = ({
@@ -30,6 +31,7 @@ export const useTableQueryParams = ({
   productFilterLabel,
   hsCodesFilter,
   hsCodesFilterLabel,
+  tradeType,
 }: UseTableQueryParams) => {
   const [debouncedGlobalFilter] = useDebounce(globalFilter, 300);
 
@@ -55,6 +57,10 @@ export const useTableQueryParams = ({
       url.searchParams.append(countryFilterLabel ?? "Country", countryFilter);
     }
 
+    if (tradeType) {
+      url.searchParams.append("tradeType", tradeType.toString());
+    }
+
     if (productFilter) {
       url.searchParams.append(productFilterLabel ?? "Product", productFilter);
     }
@@ -70,8 +76,8 @@ export const useTableQueryParams = ({
       );
     }
 
-    url.searchParams.append("PageSize", pageSize.toString());
-    url.searchParams.append("PageNumber", pageNumber.toString());
+    // url.searchParams.append("PageSize", pageSize.toString());
+    // url.searchParams.append("PageNumber", pageNumber.toString());
 
     return url.toString();
   }, [baseUrl, debouncedGlobalFilter, pageNumber, pageSize, searchQueryLabel]);

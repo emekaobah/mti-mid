@@ -110,3 +110,24 @@ export const useApiMutation = <T extends keyof ApiPaths, TData = unknown>(
 //   useApiMutation(`/api/users/${id}` as keyof ApiPaths, 'delete')
 
 // Add your actual endpoints after checking the generated types file
+
+// For Strings
+export const useApiQueryString = <T extends keyof ApiPaths>(
+  endpoint: string,
+  params?: string | number,
+  options?: Omit<
+    UseQueryOptions<ResponseData<GetEndpoint<T>>>,
+    "queryKey" | "queryFn"
+  >
+) => {
+  type Response = ResponseData<GetEndpoint<T>>;
+
+  return useQuery<Response>({
+    queryKey: [endpoint, params],
+    queryFn: async () => {
+      const response = await axiosClient.get(endpoint as string);
+      return response.data;
+    },
+    ...options,
+  });
+};
