@@ -1,5 +1,5 @@
 import MultistepFormWrapper from "@/components/form/multistep-form-wrapper";
-import React from "react";
+import React, { Suspense } from "react";
 
 const DataCollectionPage = () => {
   return (
@@ -15,7 +15,9 @@ const DataCollectionPage = () => {
               connect you win.
             </p>
           </div>
-          <MultistepFormWrapper />
+          <Suspense fallback={<div>Loading form...</div>}>
+            <MultistepFormWrapper />
+          </Suspense>
         </div>
       </div>
     </main>

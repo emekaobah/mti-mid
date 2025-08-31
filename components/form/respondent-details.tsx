@@ -52,9 +52,7 @@ export default function RespondentDetails() {
   const { control, watch } = useFormContext<RespondentDetailsType>();
   const orgType = watch("organizationType");
   const tradeDirection = watch("tradeDirection");
-  const { data: sectors, isLoading: sectorsLoading } = useSectorCount({
-    tradeType: 1,
-  });
+
   const { data: organizationTypes, isLoading } = useOrganizationTypes();
   const { data: organizationSubtypes, isLoading: isSubtypesLoading } =
     useOrganizationSubtypes("ORGTYPE_002");
@@ -84,7 +82,7 @@ export default function RespondentDetails() {
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
-                defaultValue={field.value || "buy_from_nigeria"}
+                defaultValue={field.value}
                 className="grid gap-3"
               >
                 <div className="flex items-center space-x-3">

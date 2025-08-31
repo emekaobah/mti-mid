@@ -75,13 +75,13 @@ export default function Home() {
         </p>
         <div className="flex flex-col md:flex-row  gap-6 mt-8">
           <Link
-            href="/form"
+            href="/form?tradeDirection=sell_to_nigeria"
             className="flex items-center justify-center space-x-2 rounded-full h-12 w-full min-w-[240px] bg-[#DCF5EA] hover:bg-[#DCF5EA]/90 text-[#074318] text-base font-semibold"
           >
             Sell to Nigeria
           </Link>
           <Link
-            href="/form"
+            href="/form?tradeDirection=buy_from_nigeria"
             className="flex items-center justify-center space-x-2 rounded-full h-12 w-full min-w-[240px] bg-[#DCF5EA] hover:bg-[#DCF5EA]/90 text-[#074318] text-base font-semibold"
           >
             Buy from Nigeria{" "}
@@ -90,7 +90,7 @@ export default function Home() {
       </div>
 
       {/* Country Insights */}
-      <div className="bg-[#0A5C21] px-16 pt-16 pb-20">
+      <div className="bg-[#0A5C21]  px-4 lgpx-16 pt-16 pb-20">
         <div className="-mt-36">
           <CountryInsights />
         </div>
@@ -109,7 +109,7 @@ export default function Home() {
       </div>
 
       <div className="bg-[#074318]  flex w-full p-4 lg:p-15">
-        <div className="rounded-lg p-12 bg-white w-full flex flex-col lg:flex-row gap-6 lg:gap-44">
+        <div className="rounded-lg lg:p-12 p-4 bg-white w-full flex flex-col lg:flex-row gap-6 lg:gap-44">
           <div>
             <h3 className="text-3xl font-semibold text-[#074318] max-w-[271px]">
               Frequently Asked Questions

@@ -37,10 +37,10 @@ export function InsightsModal() {
           Explore Insights
         </Button>
       </DialogTrigger>
-      <DialogContent className=" sm:max-w-[818px] pt-24 pb-36 flex flex-col items-center justify-center px-36 rounded-2xl border-0 shadow-xl">
+      <DialogContent className=" sm:max-w-[818px] pt-10 lg:pt-24 pb-10 lg:pb-36 flex flex-col items-center justify-center px-4 lg:px-36 rounded-2xl border-0 shadow-xl">
         <DialogClose asChild></DialogClose>
 
-        <form onSubmit={handleSubmit} className="w-full">
+        <form onSubmit={handleSubmit} className="w-full ">
           <div className="space-y-6">
             <div className="space-y-2">
               <h2 className="text-[22px] font-semibold text-[#074318] text-center">
