@@ -14,14 +14,7 @@ import { useCountries } from "@/hooks/api/catalog/use-countries";
 
 export function InsightsModal() {
   const [selectedCountry, setSelectedCountry] = useState("");
-
-  const countries = [
-    { country: "NG", label: "Nigeria" },
-    { country: "ZA", label: "South Africa" },
-    { country: "TZ", label: "Tanzania" },
-    { country: "UG", label: "Uganda" },
-    { country: "CM", label: "Cameroon" },
-  ];
+  const { data: countries, isLoading: isCountriesLoading } = useCountries();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,18 +51,35 @@ export function InsightsModal() {
                 <label className="text-sm font-medium text-gray-700 hidden">
                   Select your country
                 </label>
-                <ReactFlagsSelect
-                  selected={selectedCountry}
-                  onSelect={(code) => setSelectedCountry(code)}
-                  countries={countries.map((c) => c.country)}
-                  customLabels={countries.reduce((acc, c) => {
-                    acc[c.country] = c.label;
-                    return acc;
-                  }, {} as Record<string, string>)}
-                  placeholder="Select your country"
-                  className="!border-gray-300 !rounded-lg"
-                  selectButtonClassName="!border-gray-300 !rounded-lg !bg-white !text-gray-500 !h-15"
-                />
+                {isCountriesLoading ? (
+                  <div className="text-sm text-gray-500 text-center py-4">
+                    Loading countries...
+                  </div>
+                ) : (
+                  <ReactFlagsSelect
+                    selected={selectedCountry}
+                    onSelect={(code) => setSelectedCountry(code)}
+                    countries={
+                      countries
+                        ?.map((country) => country.code)
+                        .filter(
+                          (code): code is string =>
+                            code !== null && code !== undefined
+                        ) || []
+                    }
+                    customLabels={
+                      countries?.reduce((acc, country) => {
+                        if (country.code && country.name) {
+                          acc[country.code] = country.name;
+                        }
+                        return acc;
+                      }, {} as Record<string, string>) || {}
+                    }
+                    placeholder="Select your country"
+                    className="!border-gray-300 !rounded-lg"
+                    selectButtonClassName="!border-gray-300 !rounded-lg !bg-white !text-gray-500 !h-15"
+                  />
+                )}
               </div>
 
               <div className="space-y-2">
