@@ -18,6 +18,7 @@ import ReactFlagsSelect from "react-flags-select";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { z } from "zod";
+import { useCountries } from "@/hooks/api/catalog/use-countries";
 
 export const contactInfoSchema = z.object({
   name: z.string().min(1, "Full name is required"),
@@ -36,62 +37,7 @@ const contactMethods = ["WhatsApp", "Email", "Phone"];
 
 export default function ContactInfo() {
   const { control } = useFormContext<ContactInfoType>();
-
-  const countries = [
-    "NG",
-    "ZA",
-    "KE",
-    "GH",
-    "CM",
-    "UG",
-    "TZ",
-    "ET",
-    "EG",
-    "MA",
-    "DZ",
-    "TN",
-    "LY",
-    "SD",
-    "TD",
-    "NE",
-    "ML",
-    "BF",
-    "CI",
-    "SN",
-    "GN",
-    "SL",
-    "LR",
-    "TG",
-    "BJ",
-    "GW",
-    "CV",
-    "GM",
-    "MR",
-    "DJ",
-    "SO",
-    "ER",
-    "CF",
-    "CG",
-    "CD",
-    "GA",
-    "GQ",
-    "ST",
-    "AO",
-    "ZM",
-    "ZW",
-    "BW",
-    "NA",
-    "SZ",
-    "LS",
-    "MG",
-    "MU",
-    "SC",
-    "KM",
-    "BI",
-    "RW",
-    "MW",
-    "MZ",
-  ];
+  const { data: countries, isLoading: isCountriesLoading } = useCountries();
 
   return (
     <div className="space-y-8">
@@ -161,67 +107,33 @@ export default function ContactInfo() {
               </FormLabel>
               <FormControl>
                 <div className="w-full">
-                  <ReactFlagsSelect
-                    selected={field.value}
-                    onSelect={field.onChange}
-                    searchable
-                    countries={countries}
-                    customLabels={{
-                      NG: "Nigeria",
-                      ZA: "South Africa",
-                      KE: "Kenya",
-                      GH: "Ghana",
-                      CM: "Cameroon",
-                      UG: "Uganda",
-                      TZ: "Tanzania",
-                      ET: "Ethiopia",
-                      EG: "Egypt",
-                      MA: "Morocco",
-                      DZ: "Algeria",
-                      TN: "Tunisia",
-                      LY: "Libya",
-                      SD: "Sudan",
-                      TD: "Chad",
-                      NE: "Niger",
-                      ML: "Mali",
-                      BF: "Burkina Faso",
-                      CI: "Ivory Coast",
-                      SN: "Senegal",
-                      GN: "Guinea",
-                      SL: "Sierra Leone",
-                      LR: "Liberia",
-                      TG: "Togo",
-                      BJ: "Benin",
-                      GW: "Guinea-Bissau",
-                      CV: "Cape Verde",
-                      GM: "Gambia",
-                      MR: "Mauritania",
-                      DJ: "Djibouti",
-                      SO: "Somalia",
-                      ER: "Eritrea",
-                      CF: "Central African Republic",
-                      CG: "Republic of Congo",
-                      CD: "Democratic Republic of Congo",
-                      GA: "Gabon",
-                      GQ: "Equatorial Guinea",
-                      ST: "São Tomé and Príncipe",
-                      AO: "Angola",
-                      ZM: "Zambia",
-                      ZW: "Zimbabwe",
-                      BW: "Botswana",
-                      NA: "Namibia",
-                      SZ: "Eswatini",
-                      LS: "Lesotho",
-                      MG: "Madagascar",
-                      MU: "Mauritius",
-                      SC: "Seychelles",
-                      KM: "Comoros",
-                      BI: "Burundi",
-                      RW: "Rwanda",
-                      MW: "Malawi",
-                      MZ: "Mozambique",
-                    }}
-                  />
+                  {isCountriesLoading ? (
+                    <div className="text-sm text-gray-500">
+                      Loading countries...
+                    </div>
+                  ) : (
+                    <ReactFlagsSelect
+                      selected={field.value}
+                      onSelect={field.onChange}
+                      searchable
+                      countries={
+                        countries
+                          ?.map((country) => country.code)
+                          .filter(
+                            (code): code is string =>
+                              code !== null && code !== undefined
+                          ) || []
+                      }
+                      customLabels={
+                        countries?.reduce((acc, country) => {
+                          if (country.code && country.name) {
+                            acc[country.code] = country.name;
+                          }
+                          return acc;
+                        }, {} as Record<string, string>) || {}
+                      }
+                    />
+                  )}
                 </div>
               </FormControl>
               <FormMessage />
