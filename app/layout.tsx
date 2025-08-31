@@ -28,7 +28,6 @@ export default function RootLayout({
           <SiteHeader />
           {children}
           <Toaster />
-          <Footer />
         </QueryProvider>
       </body>
     </html>

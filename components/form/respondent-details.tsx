@@ -62,6 +62,8 @@ export default function RespondentDetails() {
   console.log("these are organization subtypes", organizationSubtypes);
   // Find the selected organization type name for display purposes
   const selectedOrgType = organizationTypes?.find((org) => org.id === orgType);
+
+  console.log(countries, "This is countryData");
   return (
     <div className="space-y-8">
       {/* NEW: Trade Direction as first question */}
