@@ -1,5 +1,5 @@
 import React from "react";
-import { RadialChart } from "../charts/radial-chart";
+import { InsightsRadialChart } from "../charts/radial-chart";
 import { InsightsBarChart } from "../charts/bar-chart";
 
 const Chart = () => {
@@ -11,7 +11,7 @@ const Chart = () => {
           <InsightsBarChart />
         </div>
         <div className="w-[40%]">
-          <RadialChart />
+          <InsightsRadialChart />
         </div>
       </div>
     </div>
