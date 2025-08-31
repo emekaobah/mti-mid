@@ -1,5 +1,6 @@
 import { useApiQuery } from "@/lib/api-hooks";
 import type { TopSectorsInsight, TradeType } from "../shared/types";
+import { SectorsResponse } from "./types";
 
 export interface UseTopSectorsParams {
   direction?: TradeType;

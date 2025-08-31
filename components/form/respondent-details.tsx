@@ -15,7 +15,12 @@ import {
   FormDescription,
 } from "@/components/ui/form";
 import ReactFlagsSelect from "react-flags-select";
-import { useOrganizationTypes } from "@/hooks/api/catalog/use-organization-types";
+import {
+  useOrganizationSubtypes,
+  useOrganizationTypes,
+} from "@/hooks/api/catalog/use-organization-types";
+import { useCountries } from "@/hooks/api/catalog/use-countries";
+import { useSectorCount } from "@/hooks/api";
 
 export const tradeDirectionSchema = z.object({
   tradeDirection: z
@@ -32,17 +37,7 @@ export const respondentDetailsSchema = z.object({
     .refine((val) => val !== undefined, {
       message: "Please select your trade direction",
     }),
-  organizationType: z
-    .enum([
-      "Government",
-      "Business",
-      "Association",
-      "Cooperative/Farmers Association",
-      "Other",
-    ])
-    .refine((val) => val !== undefined, {
-      message: "Please select your organization type",
-    }),
+  organizationType: z.string().min(1, "Please select your organization type"),
   otherOrganization: z.string().optional(),
   businessTypes: z
     .array(z.string())
@@ -57,13 +52,22 @@ export default function RespondentDetails() {
   const { control, watch } = useFormContext<RespondentDetailsType>();
   const orgType = watch("organizationType");
   const tradeDirection = watch("tradeDirection");
-
-  const { data: organizationTypes } = useOrganizationTypes();
+  const { data: sectors, isLoading: sectorsLoading } = useSectorCount({
+    tradeType: 1,
+  });
+  const { data: organizationTypes, isLoading } = useOrganizationTypes();
+  const { data: organizationSubtypes, isLoading: isSubtypesLoading } =
+    useOrganizationSubtypes("ORGTYPE_002");
+  const { data: countries, isLoading: isCountriesLoading } = useCountries();
+  console.log("these are countries", countries);
   console.log("these are organization types", organizationTypes);
-
+  console.log("these are organization subtypes", organizationSubtypes);
+  // Find the selected organization type name for display purposes
+  const selectedOrgType = organizationTypes?.find((org) => org.id === orgType);
   return (
     <div className="space-y-8">
       {/* NEW: Trade Direction as first question */}
+
       <FormField
         control={control}
         name="tradeDirection"
@@ -124,36 +128,39 @@ export default function RespondentDetails() {
               <span className="text-red-500">*</span>
             </FormLabel>
             <FormControl>
-              <RadioGroup
-                onValueChange={field.onChange}
-                defaultValue={field.value}
-                className="grid gap-3"
-              >
-                {[
-                  "Government",
-                  "Business",
-                  "Association",
-                  "Cooperative/Farmers Association",
-                  "Other",
-                ].map((type) => (
-                  <div key={type} className="flex items-center space-x-3">
-                    <RadioGroupItem value={type} id={type} />
-                    <Label
-                      htmlFor={type}
-                      className="text-sm font-normal cursor-pointer"
+              {isLoading ? (
+                <div className="text-sm text-gray-500">
+                  Loading organization types...
+                </div>
+              ) : (
+                <RadioGroup
+                  onValueChange={field.onChange}
+                  defaultValue={field.value}
+                  className="grid gap-3"
+                >
+                  {organizationTypes?.map((orgType) => (
+                    <div
+                      key={orgType.id}
+                      className="flex items-center space-x-3"
                     >
-                      {type}
-                    </Label>
-                  </div>
-                ))}
-              </RadioGroup>
+                      <RadioGroupItem value={orgType.id!} id={orgType.id!} />
+                      <Label
+                        htmlFor={orgType.id!}
+                        className="text-sm font-normal cursor-pointer"
+                      >
+                        {orgType.name}
+                      </Label>
+                    </div>
+                  ))}
+                </RadioGroup>
+              )}
             </FormControl>
             <FormMessage />
           </FormItem>
         )}
       />
 
-      {orgType === "Other" && (
+      {selectedOrgType?.name === "Other (Please Specify)" && (
         <FormField
           control={control}
           name="otherOrganization"
@@ -173,7 +180,7 @@ export default function RespondentDetails() {
         />
       )}
 
-      {orgType === "Business" && (
+      {selectedOrgType?.name === "Business Association" && (
         <FormField
           control={control}
           name="businessTypes"

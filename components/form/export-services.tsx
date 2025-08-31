@@ -2,7 +2,6 @@
 
 import { useFieldArray, useFormContext } from "react-hook-form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -16,6 +15,7 @@ import {
 } from "@/components/ui/form";
 import { Plus, Trash2, Briefcase } from "lucide-react";
 import { z } from "zod";
+import { useServiceSectors } from "@/hooks/api/catalog/use-service-sectors";
 
 export const exportServicesSchema = z.object({
   exportServices: z
@@ -31,24 +31,7 @@ export const exportServicesSchema = z.object({
 
 export type ExportServicesType = z.infer<typeof exportServicesSchema>;
 
-const serviceSectors = [
-  "Business Services",
-  "Consulting Services",
-  "HR Services",
-  "Communication Services",
-  "Construction and Related Engineering Services",
-  "Distribution Services",
-  "Educational Services",
-  "Environmental Services",
-  "Financial Services",
-  "Health-Related and Social Services",
-  "Tourism and Travel-Related Services",
-  "Recreational, Cultural and Sporting Services",
-  "Transport Services",
-  "Creative Services",
-  "Software/Technology Services",
-  "Other Services: Tell Us!",
-];
+// Service sectors will be fetched from API
 
 export default function ExportServices() {
   const { control, setValue, getValues } = useFormContext<ExportServicesType>();
@@ -56,7 +39,8 @@ export default function ExportServices() {
     control,
     name: "exportServices",
   });
-
+  const { data: sectors, isLoading: sectorsLoading } = useServiceSectors();
+  console.log("these are the service sectors", sectors);
   return (
     <div className="space-y-8">
       <div className="flex items-center space-x-2">
@@ -93,26 +77,46 @@ export default function ExportServices() {
                   Select the service sector that best describes this service.
                 </FormDescription>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  {serviceSectors.map((sector) => (
-                    <FormItem
-                      key={sector}
-                      className="flex flex-row items-start space-x-3 space-y-0"
-                    >
-                      <FormControl>
-                        <Checkbox
-                          checked={formField.value === sector}
-                          onCheckedChange={(checked) => {
-                            if (checked) {
-                              formField.onChange(sector);
-                            }
-                          }}
-                        />
-                      </FormControl>
-                      <FormLabel className="text-sm font-normal cursor-pointer">
-                        {sector}
-                      </FormLabel>
-                    </FormItem>
-                  ))}
+                  {sectorsLoading ? (
+                    <div className="col-span-full text-center py-4 text-muted-foreground">
+                      Loading service sectors...
+                    </div>
+                  ) : (
+                    sectors
+                      ?.filter(
+                        (sector: {
+                          id?: string | null;
+                          name?: string | null;
+                          isActive?: boolean;
+                        }) => sector.isActive
+                      )
+                      .map(
+                        (sector: {
+                          id?: string | null;
+                          name?: string | null;
+                          isActive?: boolean;
+                        }) => (
+                          <FormItem
+                            key={sector.id}
+                            className="flex flex-row items-start space-x-3 space-y-0"
+                          >
+                            <FormControl>
+                              <Checkbox
+                                checked={formField.value === sector.name}
+                                onCheckedChange={(checked) => {
+                                  if (checked) {
+                                    formField.onChange(sector.name);
+                                  }
+                                }}
+                              />
+                            </FormControl>
+                            <FormLabel className="text-sm font-normal cursor-pointer">
+                              {sector.name}
+                            </FormLabel>
+                          </FormItem>
+                        )
+                      )
+                  )}
                 </div>
                 <FormMessage />
                 {formField.value === "Other Services: Tell Us!" && (

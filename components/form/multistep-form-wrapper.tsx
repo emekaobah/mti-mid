@@ -7,6 +7,8 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { ProgressIndicator } from "@/components/ui/progress-indicator";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { useCreateTradeInterest } from "@/hooks/api/trade-interest/use-create-trade-interest";
+import type { CreateTradeInterestRequest } from "@/hooks/api/shared/types";
 
 // Import existing components
 import RespondentDetails, {
@@ -70,6 +72,12 @@ const steps = [
 export default function MultistepFormWrapper() {
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submissionMessage, setSubmissionMessage] = useState<{
+    type: "success" | "error";
+    message: string;
+  } | null>(null);
+
+  const createTradeInterestMutation = useCreateTradeInterest();
 
   const methods = useForm<FullFormType>({
     resolver: zodResolver(fullFormSchema),
@@ -142,6 +150,9 @@ export default function MultistepFormWrapper() {
   const handleNext = async () => {
     const isValid = await validateCurrentStep();
     if (isValid && currentStep < steps.length - 1) {
+      // Clear any previous submission messages
+      setSubmissionMessage(null);
+
       // Find next available step
       let nextStep = currentStep + 1;
       while (nextStep < steps.length) {
@@ -168,6 +179,9 @@ export default function MultistepFormWrapper() {
 
   const handlePrevious = () => {
     if (currentStep > 0) {
+      // Clear any previous submission messages
+      setSubmissionMessage(null);
+
       // Find previous available step
       let prevStep = currentStep - 1;
       while (prevStep >= 0) {
@@ -194,14 +208,120 @@ export default function MultistepFormWrapper() {
 
   const onSubmit = async (data: FullFormType) => {
     setIsSubmitting(true);
+    setSubmissionMessage(null);
+
     try {
-      console.log("Form submitted:", data);
-      // TODO: Send data to backend or API
+      // Transform form data to match API schema
+      const transformedData: CreateTradeInterestRequest = {
+        countryCode: data.country,
+        orgId: data.organizationType,
+        tradeType: data.tradeDirection === "buy_from_nigeria" ? 1 : 2, // 1 for import, 2 for export
+        notes: "", // Optional field, can be added later if needed
+        contact: {
+          fullName: data.name,
+          email: data.email,
+          phone: data.phone || null,
+          gender:
+            data.gender === "Male"
+              ? 1
+              : data.gender === "Female"
+              ? 2
+              : undefined,
+          channel: 1, // Default to email (1), can be made configurable
+          company: data.company || null,
+          city: data.city || null,
+          countryCode: data.country,
+        },
+        goodsItems:
+          data.tradeDirection === "buy_from_nigeria"
+            ? data.importGoods?.map((item) => ({
+                sectorId: item.sector || null,
+                productId: item.productId || null,
+                productName: item.product || null,
+                hsCode: item.hsCode || null,
+                quantity: item.quantity ? parseFloat(item.quantity) : null,
+                unitCode: item.unit || null,
+                frequency:
+                  item.frequency === "Monthly"
+                    ? 1
+                    : item.frequency === "Quarterly"
+                    ? 2
+                    : 3, // 1=Monthly, 2=Quarterly, 3=Annually
+                standardsAndCerts: item.standards || null,
+                regulatoryAuthority: item.authority || null,
+              })) || null
+            : data.exportGoods?.map((item) => ({
+                sectorId: item.sector || null,
+                productId: null, // Export goods don't have productId
+                productName: item.product || null,
+                hsCode: item.hsCode || null,
+                quantity: item.quantity ? parseFloat(item.quantity) : null,
+                unitCode: item.unit || null,
+                frequency:
+                  item.frequency === "Monthly"
+                    ? 1
+                    : item.frequency === "Quarterly"
+                    ? 2
+                    : 3,
+                standardsAndCerts: null, // Export goods don't have standards
+                regulatoryAuthority: null, // Export goods don't have authority
+              })) || null,
+        serviceItems:
+          data.tradeDirection === "buy_from_nigeria"
+            ? data.importServices?.map((item) => ({
+                serviceSectorId: item.sector,
+                description: item.description || null,
+              })) || null
+            : data.exportServices?.map((item) => ({
+                serviceSectorId: item.sector,
+                description: item.description || null,
+              })) || null,
+      };
+
+      console.log("Transformed data for API:", transformedData);
+
+      // Submit to backend
+      const response = await createTradeInterestMutation.mutateAsync(
+        transformedData
+      );
+
+      console.log("API Response:", response);
+
+      setSubmissionMessage({
+        type: "success",
+        message:
+          "Your trade interest has been successfully submitted! We'll get back to you soon.",
+      });
 
       // Clear draft after successful submission
       localStorage.removeItem("mti-form-draft");
-    } catch (error) {
+
+      // Reset form after successful submission
+      methods.reset();
+      setCurrentStep(0);
+    } catch (error: unknown) {
       console.error("Submission error:", error);
+
+      // Try to extract more specific error message from the API response
+      let errorMessage =
+        "Failed to submit your trade interest. Please try again or contact support if the problem persists.";
+
+      if (error && typeof error === "object" && "response" in error) {
+        const apiError = error as {
+          response?: { data?: { message?: string } };
+        };
+        if (apiError.response?.data?.message) {
+          errorMessage = apiError.response.data.message;
+        }
+      } else if (error && typeof error === "object" && "message" in error) {
+        const errorWithMessage = error as { message: string };
+        errorMessage = errorWithMessage.message;
+      }
+
+      setSubmissionMessage({
+        type: "error",
+        message: errorMessage,
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -262,6 +382,22 @@ export default function MultistepFormWrapper() {
             currentStep={currentFilteredStep} // Use filtered step index
             className="mb-8"
           />
+
+          {/* Submission Message */}
+          {submissionMessage && (
+            <div
+              className={`mb-6 p-4 rounded-lg ${
+                submissionMessage.type === "success"
+                  ? "bg-green-50 border border-green-200 text-green-800"
+                  : "bg-red-50 border border-red-200 text-red-800"
+              }`}
+            >
+              <p className="font-medium">
+                {submissionMessage.type === "success" ? "Success!" : "Error"}
+              </p>
+              <p className="text-sm mt-1">{submissionMessage.message}</p>
+            </div>
+          )}
         </div>
 
         <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-8">
@@ -286,10 +422,14 @@ export default function MultistepFormWrapper() {
               {currentStep === steps.length - 1 ? (
                 <Button
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={
+                    isSubmitting || createTradeInterestMutation.isPending
+                  }
                   className="flex items-center justify-center space-x-2 rounded-full h-12 w-full max-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-white"
                 >
-                  {isSubmitting ? "Submitting..." : "Submit Form"}
+                  {isSubmitting || createTradeInterestMutation.isPending
+                    ? "Submitting..."
+                    : "Submit Form"}
                 </Button>
               ) : (
                 <Button

@@ -21,14 +21,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const description = "A bar chart";
 
-const chartData = [
-  { country: "Cameroon", desktop: 186 },
-  { country: "South Africa", desktop: 305 },
-  { country: "Tanzania", desktop: 237 },
-  { country: "Uganda", desktop: 73 },
-  { country: "Nigeria", desktop: 209 },
-];
-
 const chartConfig = {
   desktop: {
     label: "requests",
@@ -36,11 +28,27 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function InsightsBarChart() {
+interface InsightsBarChartProps {
+  title?: string;
+  importData?: {
+    key?: string | null;
+    value?: number | undefined;
+  }[];
+
+  exportData?: {
+    key?: string | null;
+    value?: number | undefined;
+  }[];
+}
+export function InsightsBarChart({
+  title,
+  importData,
+  exportData,
+}: InsightsBarChartProps) {
   return (
     <Card className="flex flex-col h-full  border-0 shadow-none pb-0 w-full bg-[#F9F7F1]  ">
       <CardHeader className=" pb-0 flex flex-row justify-between">
-        <CardDescription>Top Requested Sectors</CardDescription>
+        <CardDescription>{title || "Chart Title"}</CardDescription>
         <CardDescription>Last Update: 26/08/25, 08:44PM</CardDescription>
       </CardHeader>
       <Tabs defaultValue="import" className=" h-full">
@@ -63,10 +71,10 @@ export function InsightsBarChart() {
           <Card className="flex flex-col h-full border-0 shadow-none  w-full bg-transparent ">
             <CardContent className="mt-auto ">
               <ChartContainer config={chartConfig} className="h-full   ">
-                <BarChart accessibilityLayer data={chartData}>
+                <BarChart accessibilityLayer data={importData}>
                   <CartesianGrid vertical={false} />
                   <XAxis
-                    dataKey="country"
+                    dataKey="key"
                     tickLine={false}
                     tickMargin={10}
                     axisLine={false}
@@ -76,7 +84,7 @@ export function InsightsBarChart() {
                     content={<ChartTooltipContent hideLabel />}
                   />
                   <Bar
-                    dataKey="desktop"
+                    dataKey="value"
                     fill="var(--color-desktop)"
                     radius={30}
                     barSize={40}
@@ -91,10 +99,10 @@ export function InsightsBarChart() {
           <Card className="flex flex-col h-full border-0 shadow-none  w-full  bg-transparent ">
             <CardContent className="mt-auto ">
               <ChartContainer config={chartConfig} className="h-full   ">
-                <BarChart accessibilityLayer data={chartData}>
+                <BarChart accessibilityLayer data={exportData}>
                   <CartesianGrid vertical={false} />
                   <XAxis
-                    dataKey="country"
+                    dataKey="key"
                     tickLine={false}
                     tickMargin={10}
                     axisLine={false}
@@ -104,7 +112,7 @@ export function InsightsBarChart() {
                     content={<ChartTooltipContent hideLabel />}
                   />
                   <Bar
-                    dataKey="desktop"
+                    dataKey="value"
                     fill="var(--color-desktop)"
                     radius={30}
                     barSize={40}

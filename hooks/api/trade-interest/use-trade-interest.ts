@@ -1,5 +1,6 @@
 import { useApiQuery } from "@/lib/api-hooks";
 import type { TradeType } from "../shared/types";
+import type { ApiResponse, SectorCount } from "./types";
 
 // Get trade interest by country
 export interface UseTradeInterestByCountryParams {
@@ -23,10 +24,15 @@ export interface UseSectorCountParams {
 }
 
 export const useSectorCount = (params?: UseSectorCountParams) => {
-  return useApiQuery<"/api/TradeInterest/sector-count">(
+  const result = useApiQuery<"/api/TradeInterest/sector-count">(
     "/api/TradeInterest/sector-count",
     params
   );
+
+  const apiResponse = result.data as ApiResponse<SectorCount[]> | undefined;
+  const sectorsData = apiResponse?.data || [];
+
+  return { ...result, data: sectorsData };
 };
 
 // Get trade interest by ID

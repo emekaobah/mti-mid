@@ -12,7 +12,13 @@ const SiteHeader = () => {
   return (
     <div className="px-4 lg:px-15 pt-8 bg-[#F9F7F1] flex flex-col sm:flex-row items-center sm:justify-between gap-4">
       <Link href="/">
-        <Image src="/mti-logo.svg" alt="logo" width={160} height={45} />
+        <Image
+          src="/mti-logo.svg"
+          alt="logo"
+          width={160}
+          height={45}
+          priority
+        />
       </Link>
       {/* <Button
         // href="/form"

@@ -59,11 +59,53 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function RadialChart() {
+// Transform data to include fill property for colors using original chart colors
+const transformData = (data: { key: string; value: number }[]) => {
+  if (!data || data.length === 0) return [];
+
+  return data.map((item, index) => ({
+    browser: item.key,
+    visitors: item.value,
+    fill: chartData[index]?.fill || chartData[0]?.fill || "var(--color-chrome)",
+  }));
+};
+
+// Fallback data for when no data is provided
+const fallbackData = [
+  { browser: "No Data", visitors: 1, fill: "var(--color-chrome)" },
+];
+
+interface InsightsRadialChartProps {
+  title?: string;
+  importData?: {
+    key?: string | null;
+    value?: number | undefined;
+  }[];
+  exportData?: {
+    key?: string | null;
+    value?: number | undefined;
+  }[];
+}
+
+export function InsightsRadialChart({
+  title,
+  importData,
+  exportData,
+}: InsightsRadialChartProps) {
+  // Transform and validate data
+  const transformedImportData =
+    importData && importData.length > 0
+      ? transformData(importData as { key: string; value: number }[])
+      : fallbackData;
+
+  const transformedExportData =
+    exportData && exportData.length > 0
+      ? transformData(exportData as { key: string; value: number }[])
+      : fallbackData;
   return (
     <Card className="flex flex-col h-full border-0 shadow-none bg-[#0A5C21]/[.03] w-full  ">
       <CardHeader className=" pb-0 flex flex-row justify-between">
-        <CardDescription>Top Requested Sectors</CardDescription>
+        <CardDescription>{title || "Chart Titles"}</CardDescription>
         <CardDescription>Last Update: 26/08/25, 08:44PM</CardDescription>
       </CardHeader>
       <Tabs defaultValue="import">
@@ -102,7 +144,7 @@ export function RadialChart() {
                       <ChartTooltipContent hideLabel nameKey="browser" />
                     }
                   />
-                  {chartData.map((d, i) => {
+                  {transformedImportData.map((d, i) => {
                     const thickness = 24; // px per ring
                     const inner = i * thickness; // innermost ring has inner=0 (filled)
                     const outer = inner + thickness;
@@ -133,7 +175,7 @@ export function RadialChart() {
 
               <div className="mt-4">
                 <ul className="space-y-3">
-                  {chartData.map((d) => (
+                  {transformedImportData.map((d) => (
                     <li key={d.browser} className="flex items-center gap-3">
                       {/* rectangular swatch */}
                       <span
@@ -174,7 +216,7 @@ export function RadialChart() {
                       <ChartTooltipContent hideLabel nameKey="browser" />
                     }
                   />
-                  {chartData.map((d, i) => {
+                  {transformedExportData.map((d, i) => {
                     const thickness = 24; // px per ring
                     const inner = i * thickness; // innermost ring has inner=0 (filled)
                     const outer = inner + thickness;
@@ -205,7 +247,7 @@ export function RadialChart() {
 
               <div className="mt-auto">
                 <ul className="space-y-3">
-                  {chartData.map((d) => (
+                  {transformedExportData.map((d) => (
                     <li key={d.browser} className="flex items-center gap-3">
                       {/* rectangular swatch */}
                       <span
