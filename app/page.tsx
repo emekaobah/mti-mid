@@ -2,6 +2,7 @@ import Link from "next/link";
 import GatewayCard from "@/components/landing/gateway-card";
 import { FaqItem } from "@/components/faq";
 import CountryInsights from "@/components/landing/country-insights";
+import Footer from "@/components/footer";
 
 const gatewayCards = [
   {
@@ -133,6 +134,7 @@ export default function Home() {
           <TopRequestedSectorsChart />
         </div>
       </div> */}
+      <Footer />
     </main>
   );
 }
