@@ -1,49 +1,34 @@
-// Authentication configuration for prototyping
-export const AUTH_CONFIG = {
-  // Set to true to use hardcoded token for prototyping
-  USE_HARDCODED_TOKEN: true,
+import { authStorage } from "./auth-storage";
+import type { AuthenticatedUser } from "./auth-storage";
 
-  // Your hardcoded authentication token from email verification
-  HARDCODED_TOKEN:
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJlbWVrYW9iYWhAZ21haWwuY29tIiwiY291bnRyeSI6IlVTIiwianRpIjoiZWFiMmZkOTctMTQxZS00YmRiLWJiMmEtOTIzOWFkODFmY2RkIiwiaWF0IjoxNzU2NjUyNDMwLCJleHAiOjE3NTY3Mzg4MzAsImlzcyI6IklkZW50aXR5IiwiYXVkIjoiSWRlbnRpdHlVc2VyIn0.3n7rjRTKdC15v_F8uXoewym1ieXgY9A7pJacs8Hf53c",
-  // User information from the auth response
-  HARDCODED_USER: {
-    email: "emekaobah@gmail.com",
-    userId: "USER_01K3V7MR0VAM376WZCQFPM8EA2",
-    country: "US",
-  },
+// Remove hardcoded authentication configuration
+export const AUTH_CONFIG = {
+  // Set to false to use localStorage instead of hardcoded token
+  USE_HARDCODED_TOKEN: false,
 };
 
 // Utility function to get the current authentication token
 export const getAuthToken = (): string | null => {
-  if (AUTH_CONFIG.USE_HARDCODED_TOKEN) {
-    return AUTH_CONFIG.HARDCODED_TOKEN;
-  }
-
-  // For production, get from localStorage
-  if (typeof window !== "undefined") {
-    return localStorage.getItem("token");
-  }
-
-  return null;
+  return authStorage.getToken();
 };
 
 // Utility function to get user information
-export const getCurrentUser = () => {
-  if (AUTH_CONFIG.USE_HARDCODED_TOKEN) {
-    return AUTH_CONFIG.HARDCODED_USER;
-  }
-
-  // For production, get from localStorage
-  if (typeof window !== "undefined") {
-    const userStr = localStorage.getItem("user");
-    return userStr ? JSON.parse(userStr) : null;
-  }
-
-  return null;
+export const getCurrentUser = (): AuthenticatedUser | null => {
+  return authStorage.getUser();
 };
 
 // Utility function to check if user is authenticated
 export const isAuthenticated = (): boolean => {
-  return !!getAuthToken();
+  return authStorage.isAuthenticated();
+};
+
+// Utility function to set authentication data
+export const setAuthData = (user: AuthenticatedUser) => {
+  authStorage.setToken(user.accessToken);
+  authStorage.setUser(user);
+};
+
+// Utility function to clear authentication data
+export const clearAuthData = () => {
+  authStorage.clearAuth();
 };

@@ -82,6 +82,99 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/Auth/authenticate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["EmailVerificationRequest"];
+                    "text/json": components["schemas"]["EmailVerificationRequest"];
+                    "application/*+json": components["schemas"]["EmailVerificationRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Auth/validate-bvn": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["BVNRequest"];
+                    "text/json": components["schemas"]["BVNRequest"];
+                    "application/*+json": components["schemas"]["BVNRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["BvnValidationResponse"];
+                        "application/json": components["schemas"]["BvnValidationResponse"];
+                        "text/json": components["schemas"]["BvnValidationResponse"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProblemDetails"];
+                        "application/json": components["schemas"]["ProblemDetails"];
+                        "text/json": components["schemas"]["ProblemDetails"];
+                    };
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/Catalog/countries": {
         parameters: {
             query?: never;
@@ -747,7 +840,9 @@ export interface paths {
             parameters: {
                 query?: {
                     tradeType?: components["schemas"]["TradeType"];
-                    countryCodes?: string[];
+                    sectorIds?: string[];
+                    serviceSectorIds?: string[];
+                    searchTerm?: string;
                 };
                 header?: never;
                 path?: never;
@@ -761,6 +856,182 @@ export interface paths {
                         [name: string]: unknown;
                     };
                     content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/TradeInterest/organization-chart": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query: {
+                    tradeType: components["schemas"]["TradeType"];
+                    sectorId?: string;
+                    serviceSectorId?: string;
+                    countryCodes?: string[];
+                    hsCode?: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["OrganizationChartDto"][];
+                        "application/json": components["schemas"]["OrganizationChartDto"][];
+                        "text/json": components["schemas"]["OrganizationChartDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/TradeInterest/organization-breakdown": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query: {
+                    tradeType: components["schemas"]["TradeType"];
+                    sectorId?: string;
+                    serviceSectorId?: string;
+                    countryCodes?: string[];
+                    hsCode?: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["OrganizationBreakdownDto"];
+                        "application/json": components["schemas"]["OrganizationBreakdownDto"];
+                        "text/json": components["schemas"]["OrganizationBreakdownDto"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/TradeInterest/product-chart": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query: {
+                    tradeType: components["schemas"]["TradeType"];
+                    sectorId?: string;
+                    serviceSectorId?: string;
+                    countryCodes?: string[];
+                    organizationType?: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProductChartDto"][];
+                        "application/json": components["schemas"]["ProductChartDto"][];
+                        "text/json": components["schemas"]["ProductChartDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/TradeInterest/submissions-table": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query: {
+                    tradeType: components["schemas"]["TradeType"];
+                    sectorId?: string;
+                    serviceSectorId?: string;
+                    countryCodes?: string[];
+                    hsCode?: string;
+                    organizationType?: string;
+                    productSearch?: string;
+                    page?: number;
+                    pageSize?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["TradeSubmissionDto"];
+                        "application/json": components["schemas"]["TradeSubmissionDto"];
+                        "text/json": components["schemas"]["TradeSubmissionDto"];
+                    };
                 };
             };
         };
@@ -888,12 +1159,42 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        BVNRequest: {
+            /** Format: string */
+            bvn: string;
+        };
         BusinessTypeData: {
             businessTypeName?: string | null;
             /** Format: int32 */
             count?: number;
             /** Format: double */
             percentage?: number;
+        };
+        BvnValidationResponse: {
+            responseCode?: string | null;
+            firstName?: string | null;
+            middleName?: string | null;
+            lastName?: string | null;
+            dateOfBirth?: string | null;
+            registrationDate?: string | null;
+            enrollmentBank?: string | null;
+            enrollmentBranch?: string | null;
+            email?: string | null;
+            gender?: string | null;
+            levelOfAccount?: string | null;
+            lgaOfOrigin?: string | null;
+            lgaOfResidence?: string | null;
+            maritalStatus?: string | null;
+            nin?: string | null;
+            nameOnCard?: string | null;
+            nationality?: string | null;
+            phoneNumber1?: string | null;
+            phoneNumber2?: string | null;
+            residentialAddress?: string | null;
+            stateOfOrigin?: string | null;
+            stateOfResidence?: string | null;
+            watchListed?: string | null;
+            base64Image?: string | null;
         };
         /**
          * Format: int32
@@ -943,6 +1244,21 @@ export interface components {
             count?: number;
             productName?: string | null;
         };
+        OrganizationBreakdownDto: {
+            /** Format: int32 */
+            totalRequests?: number;
+            organizations?: components["schemas"]["OrganizationBreakdownItemDto"][] | null;
+        };
+        OrganizationBreakdownItemDto: {
+            organizationType?: string | null;
+            /** Format: int32 */
+            count?: number;
+        };
+        OrganizationChartDto: {
+            organizationType?: string | null;
+            /** Format: int32 */
+            count?: number;
+        };
         OrganizationTypeData: {
             organizationTypeId?: string | null;
             organizationTypeName?: string | null;
@@ -974,6 +1290,11 @@ export interface components {
             instance?: string | null;
         } & {
             [key: string]: unknown;
+        };
+        ProductChartDto: {
+            productName?: string | null;
+            /** Format: int32 */
+            count?: number;
         };
         ProductResponse: {
             id?: string | null;
@@ -1044,6 +1365,17 @@ export interface components {
         TradeServiceItemDto: {
             serviceSectorId: string;
             description?: string | null;
+        };
+        TradeSubmissionDto: {
+            tradeInterestId?: string | null;
+            organizationType?: string | null;
+            country?: string | null;
+            productName?: string | null;
+            hsCode?: string | null;
+            /** Format: double */
+            quantity?: number | null;
+            unit?: string | null;
+            frequency?: string | null;
         };
         /**
          * Format: int32

@@ -37,6 +37,12 @@ axiosClient.interceptors.response.use(
     // Handle 401 Unauthorized errors centrally
     if (status === 401) {
       console.log("[Auth Error] 401 Unauthorized");
+      // Token expired, clear auth data
+      import("./auth-config").then(({ clearAuthData }) => {
+        clearAuthData();
+        console.log("[Auth] Cleared expired token");
+        // Optionally redirect to login or show login modal
+      });
     }
 
     return Promise.reject(error);

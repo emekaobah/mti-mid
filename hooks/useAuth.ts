@@ -1,23 +1,46 @@
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
 import {
   getCurrentUser,
   isAuthenticated,
-  AUTH_CONFIG,
+  setAuthData,
+  clearAuthData,
 } from "../lib/auth-config";
+import type { AuthenticatedUser } from "../lib/auth-storage";
 
 export const useAuth = () => {
-  const user = useMemo(() => getCurrentUser(), []);
-  const authenticated = useMemo(() => isAuthenticated(), []);
+  const [user, setUser] = useState<AuthenticatedUser | null>(getCurrentUser());
+  const [authenticated, setAuthenticated] = useState(isAuthenticated());
+
+  const login = (userData: AuthenticatedUser) => {
+    setAuthData(userData);
+    setUser(userData);
+    setAuthenticated(true);
+  };
+
+  const logout = () => {
+    clearAuthData();
+    setUser(null);
+    setAuthenticated(false);
+  };
+
+  // Sync with localStorage changes
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setUser(getCurrentUser());
+      setAuthenticated(isAuthenticated());
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   return {
     user,
     isAuthenticated: authenticated,
-    isUsingHardcodedToken: AUTH_CONFIG.USE_HARDCODED_TOKEN,
-    // Helper method to get user email
+    login,
+    logout,
     userEmail: user?.email,
-    // Helper method to get user ID
     userId: user?.userId,
-    // Helper method to get user country
     userCountry: user?.country,
   };
 };
