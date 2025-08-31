@@ -3,6 +3,7 @@
 
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
+import { SectorCount } from "../api/trade-interest/types";
 
 const state = {
   globalFilter: "",
@@ -13,6 +14,8 @@ const state = {
   productSectorFilterValue: "",
   serviceSectorFilterValue: "",
   tradeType: "",
+  sectorId: "",
+  sector: {} as SectorCount,
 };
 
 interface FilterActions {
@@ -23,7 +26,9 @@ interface FilterActions {
   hsCodesFilterValue: string;
   productSectorFilterValue: string;
   serviceSectorFilterValue: string;
+  sectorId: string | number;
   tradeType: string | number;
+  sector: SectorCount;
   setGlobalFilter: (value: string) => void;
   setOrganizationFilterValue: (value: string) => void;
   setCountryFilterValue: (value: string) => void;
@@ -32,6 +37,8 @@ interface FilterActions {
   setProductSectorFilterValue: (value: string) => void;
   setServiceSectorFilterValue: (value: string) => void;
   setTradeType: (value: string | number) => void;
+  setSectorId: (value: string | number) => void;
+  setSector: (value: SectorCount) => void;
   reset: () => void;
 }
 
@@ -50,6 +57,8 @@ const useFilterStore = create<FilterActions>()(
       setServiceSectorFilterValue: (value) =>
         set({ serviceSectorFilterValue: value }),
       setTradeType: (value) => set({ tradeType: value }),
+      setSectorId: (value) => set({ sectorId: value }),
+      setSector: (value) => set({ sector: value }),
       reset: () => set({ ...state }),
     }),
     {

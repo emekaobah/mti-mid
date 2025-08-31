@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import logo from "@/public/logo-svg.svg";
 import { MoveLeft } from "lucide-react";
@@ -10,16 +10,18 @@ import { DataTable } from "@/components/table/data-table";
 import { columns } from "./column";
 import { dummyTradeData } from "./data";
 import { useRouter } from "next/navigation";
+import Configs from "@/lib/configs";
+import useFilterStore from "@/hooks/store/useFilterStore";
 
 const orgOptions = [
-  { label: "All", value: "all" },
+  // { label: "All", value: "all" },
   { label: "Government", value: "Government" },
   { label: "Business", value: "Business" },
   { label: "Association", value: "Association" },
 ];
 
 const countryOptions = [
-  { label: "All", value: "all" },
+  // { label: "All", value: "all" },
   { label: "Nigeria", value: "Nigeria" },
   { label: "Cameroon", value: "Cameroon" },
   { label: "Uganda", value: "Uganda" },
@@ -28,7 +30,7 @@ const countryOptions = [
 ];
 
 const productOptions = [
-  { label: "All", value: "all" },
+  // { label: "All", value: "all" },
   { label: "Beans", value: "Beans" },
   { label: "Tobacco", value: "Tobacco" },
   { label: "Sugar", value: "Sugar" },
@@ -45,6 +47,21 @@ const hsCodes = [
 
 const SectorBreakdown = () => {
   const router = useRouter();
+  const {
+    sector,
+    tradeType,
+    setHsCodesFilterValue,
+    setOrganizationFilterValue,
+    setCountryFilterValue,
+    setProductFilterValue,
+  } = useFilterStore();
+
+  useEffect(() => {
+    setHsCodesFilterValue(""),
+      setOrganizationFilterValue(""),
+      setCountryFilterValue(""),
+      setProductFilterValue("");
+  }, []);
   return (
     <main className="min-h-screen  bg-[#FCFCFC] lg:px-15 px-4 mx-auto">
       <div className="flex flex-col my-4 gap-2">
@@ -67,14 +84,17 @@ const SectorBreakdown = () => {
           <div className="flex items-center gap-3 text-xs">
             <div className="bg-[#074318] rounded-full h-2 w-2"></div>
             <p>
-              Product Sector: <span className="font-medium"> Agriculture</span>
+              Product Sector:{" "}
+              <span className="font-medium"> {sector.sectorName}</span>
             </p>
           </div>
           <div className="flex items-center gap-3 text-xs">
             <div className="bg-[#074318] rounded-full h-2 w-2"></div>
             <p>
               Trade Interest:
-              <span className="font-medium"> Buy from Nigeria</span>
+              <span className="font-medium">
+                {tradeType === 1 ? "  Buy from Nigeria" : "  Sell to Nigeria"}
+              </span>
             </p>
           </div>
         </div>
@@ -85,9 +105,9 @@ const SectorBreakdown = () => {
       <div className="mt-10">
         <DataTable
           columns={columns}
-          dummyData={dummyTradeData}
+          // dummyData={dummyTradeData}
           emptyTableText="No data found"
-          baseUrl=""
+          baseUrl={`${Configs.baseUrl}/api/TradeInterest/submissions-table`}
           organizationFilterOptions={orgOptions}
           countryFilterOptions={countryOptions}
           productFilterOptions={productOptions}

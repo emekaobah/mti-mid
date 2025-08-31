@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { service } from "@/lib/custom-apis/apis";
 
-export const useFetchTableData = (url: string) => {
+export const useFetchOrgCharts = (url: string) => {
   const { data, isLoading } = useQuery({
     queryKey: [url],
     queryFn: () => {

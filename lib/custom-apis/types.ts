@@ -32,3 +32,33 @@ export interface verifyBvnResponse {
   bvn: string;
   valid: boolean;
 }
+
+export interface TradeInterestQuery {
+  tradeType: string | number;
+  sectorId: string;
+  serviceSectorId: string;
+  countryCodes: string;
+  hsCode: string;
+}
+export interface TradeInterestTable {
+  tradeType?: string | number;
+  sectorId?: string;
+  serviceSectorId?: string;
+  countryCodes?: string;
+  hsCode?: string;
+  organizationType?: string;
+  productSearch?: string;
+  page?: string | number;
+  pageSize?: string | number;
+}
+
+export interface TradeSubmissions {
+  tradeInterestId: string;
+  organizationType: string;
+  country: string;
+  productName: string;
+  hsCode: string;
+  quantity: string | number;
+  unit: string | number;
+  frequency: string;
+}

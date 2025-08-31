@@ -13,13 +13,19 @@ import { useRouter } from "next/navigation";
 import SectorCard from "@/components/cards/sectors-cards";
 import SectorCardSkeleton from "@/components/cards/sectors-cards/skeleton";
 import { TableFilters } from "@/components/table/filter";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs2";
 import useFilterStore from "@/hooks/store/useFilterStore";
 import { useTableQueryParams } from "@/hooks/custom-hooks/useTableQueryParams";
 // import { useSectorCountNew } from "@/hooks/api";
 import Configs from "@/lib/configs";
 import { useApiQueryNew } from "@/hooks/api";
 import { useSectorCount } from "@/hooks/api";
+import { SectorCount } from "@/hooks/api/trade-interest/types";
 
 const productOptions = [
   { label: "All", value: "all" },
@@ -38,7 +44,7 @@ const serviceOptions = [
 const Sectors = () => {
   const { openModal } = useModalStore();
   const router = useRouter();
-  const { setTradeType, tradeType } = useFilterStore();
+  const { setTradeType, tradeType, setSector } = useFilterStore();
   const tableFilter = useFilterStore((state) => state);
 
   // Create skeleton array for consistent loading state
@@ -58,6 +64,15 @@ const Sectors = () => {
   });
 
   console.log(sectors, "This is sectors");
+
+  const handleSectorClick = (sector: SectorCount) => {
+    setSector(sector);
+    openModal("verifyBvnModal");
+  };
+
+  const handleTabChange = () => {
+    setSector({} as SectorCount);
+  };
 
   return (
     <main className="min-h-screen  bg-[#FCFCFC] lg:px-15 px-4 mx-auto">
@@ -96,14 +111,20 @@ const Sectors = () => {
             <TabsTrigger
               value="buy"
               className="bg-[#F9F7F1]"
-              onClick={() => setTradeType(1)}
+              onClick={() => {
+                handleTabChange();
+                setTradeType(1);
+              }}
             >
               Buy From Nigeria (4)
             </TabsTrigger>
             <TabsTrigger
               value="sell"
               className="bg-[#F9F7F1] "
-              onClick={() => setTradeType(2)}
+              onClick={() => {
+                handleTabChange();
+                setTradeType(2);
+              }}
             >
               Sell to Nigeria (6)
             </TabsTrigger>
@@ -120,7 +141,7 @@ const Sectors = () => {
                       date="Aug 26 - Aug 28"
                       request={x.count}
                       key={i}
-                      onClick={() => openModal("verifyBvnModal")}
+                      onClick={() => handleSectorClick(x)}
                     />
                   ))}
             </div>
@@ -138,7 +159,7 @@ const Sectors = () => {
                       date="Aug 26 - Aug 28"
                       request={x.count}
                       key={i}
-                      onClick={() => openModal("verifyBvnModal")}
+                      onClick={() => handleSectorClick(x)}
                     />
                   ))}
             </div>

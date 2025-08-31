@@ -38,6 +38,7 @@ interface TableFiltersProps {
   productOptions?: FilterOption[];
   hsCodeOptions?: FilterOption[];
   showSubmittedRequests?: boolean;
+  noBackground?: boolean;
   productSectorOptions?: FilterOption[];
   serviceSectorOptions?: FilterOption[];
 }
@@ -65,6 +66,7 @@ export function TableFilters({
   showSubmittedRequests,
   productSectorOptions,
   serviceSectorOptions,
+  noBackground,
 }: TableFiltersProps) {
   const {
     globalFilter,
@@ -87,8 +89,12 @@ export function TableFilters({
     <div
       className={cn(
         `grid grid-cols-2 ${
-          showSubmittedRequests ? "bg-[#07431810]" : "bg-[#8A38F505]"
-        } p-3 ${
+          showSubmittedRequests
+            ? "bg-[#07431810]"
+            : !noBackground
+            ? "bg-[#8A38F505]"
+            : ""
+        } ${!noBackground && "p-3"} ${
           showSubmittedRequests ? "rounded-t-2xl" : "rounded-2xl"
         } md:flex items-center gap-2 md:gap-6 overflow-x-auto thin-scrollbar`,
         className

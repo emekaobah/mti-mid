@@ -16,12 +16,14 @@ interface UseTableQueryParams {
   hsCodesFilter?: string;
   hsCodesFilterLabel?: string | undefined;
   tradeType?: string | number;
+  sectorId?: string | number;
+  page?: string | number;
 }
 
 export const useTableQueryParams = ({
   baseUrl,
   globalFilter,
-  pageSize = 12,
+  pageSize = 10,
   searchQueryLabel,
   organizationFilter,
   organizationFilterLabel,
@@ -32,6 +34,8 @@ export const useTableQueryParams = ({
   hsCodesFilter,
   hsCodesFilterLabel,
   tradeType,
+  page,
+  sectorId,
 }: UseTableQueryParams) => {
   const [debouncedGlobalFilter] = useDebounce(globalFilter, 300);
 
@@ -54,7 +58,7 @@ export const useTableQueryParams = ({
     }
 
     if (countryFilter) {
-      url.searchParams.append(countryFilterLabel ?? "Country", countryFilter);
+      url.searchParams.append(countryFilterLabel ?? "country", countryFilter);
     }
 
     if (tradeType) {
@@ -71,16 +75,34 @@ export const useTableQueryParams = ({
 
     if (debouncedGlobalFilter) {
       url.searchParams.append(
-        searchQueryLabel || "Query",
+        searchQueryLabel || "productSearch",
         debouncedGlobalFilter.trim()
       );
     }
-
-    // url.searchParams.append("PageSize", pageSize.toString());
-    // url.searchParams.append("PageNumber", pageNumber.toString());
+    if (pageSize) {
+      url.searchParams.append("pageSize", pageSize.toString());
+    }
+    if (page) {
+      url.searchParams.append("page", pageNumber.toString());
+    }
+    if (sectorId) {
+      url.searchParams.append("sectorId", sectorId.toString());
+    }
 
     return url.toString();
-  }, [baseUrl, debouncedGlobalFilter, pageNumber, pageSize, searchQueryLabel]);
+  }, [
+    baseUrl,
+    debouncedGlobalFilter,
+    pageNumber,
+    pageSize,
+    searchQueryLabel,
+    organizationFilter,
+    countryFilter,
+    productFilter,
+    hsCodesFilter,
+    tradeType,
+    sectorId,
+  ]);
 
   return {
     finalUrl,

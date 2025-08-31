@@ -34,6 +34,10 @@ export const columns: ColumnDef<TradeData>[] = [
 
   {
     accessorKey: "quantity",
+    header: "Quantity",
+  },
+  {
+    accessorKey: "hsCode",
     header: "HS Code",
   },
   {

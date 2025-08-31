@@ -9,10 +9,12 @@ import { Graphs } from "@/components/admin/graphs";
 import { Button } from "@/components/ui/button";
 import useModalStore from "@/hooks/store/useModalStore";
 import { useRouter } from "next/navigation";
+import useFilterStore from "@/hooks/store/useFilterStore";
 
 const BusinessDetails = () => {
   const { openModal } = useModalStore();
   const router = useRouter();
+  const { sector, tradeType } = useFilterStore();
 
   return (
     <main className="min-h-screen  bg-[#FCFCFC] lg:px-15 px-4 mx-auto">
@@ -36,14 +38,17 @@ const BusinessDetails = () => {
               <div className="bg-[#074318] rounded-full h-2 w-2"></div>
               <p>
                 Product Sector:{" "}
-                <span className="font-medium"> Agriculture</span>
+                <span className="font-medium"> {sector.sectorName}</span>
               </p>
             </div>
             <div className="flex items-center gap-3 text-xs">
               <div className="bg-[#074318] rounded-full h-2 w-2"></div>
               <p>
                 Trade Interest:
-                <span className="font-medium"> Buy from Nigeria</span>
+                <span className="font-medium">
+                  {" "}
+                  {tradeType === 1 ? "  Buy from Nigeria" : "  Sell to Nigeria"}
+                </span>
               </p>
             </div>
           </div>

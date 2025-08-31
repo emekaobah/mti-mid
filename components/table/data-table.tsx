@@ -13,15 +13,15 @@ import {
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "../ui/button";
-// import { useFetchTableData } from "@/hooks/fetchers/useFetchTableData";
+import { useFetchTableData } from "@/hooks/fetchers/useFetchTableData";
 import usePaginationStore from "@/hooks/store/usePaginationStore";
 import { useTableQueryParams } from "@/hooks/custom-hooks/useTableQueryParams";
 import { usePaginationControls } from "@/hooks/custom-hooks/useTablePaginationControls";
-// import { useDownloadData } from "@/hooks/custom-hook/useDownloadTableData";
 import { useTableInstance } from "@/hooks/custom-hooks/useTableInstance";
 import useFilterStore from "@/hooks/store/useFilterStore";
 import { TableFilters } from "./filter";
-// import { TableActions } from "./table-action";
+import Image from "next/image";
+import EmptyIcon from "@/public/empty-table-icon.svg";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -34,7 +34,7 @@ interface DataTableProps<TData, TValue> {
   statusFilterPlaceholder?: string;
   isExportable?: boolean;
   dateFilterPlaceholder?: string;
-  baseUrl?: string;
+  baseUrl: string;
   createData?: React.ReactNode;
   btnTheme?: "outline" | "default";
   noDateFilter?: boolean;
@@ -87,70 +87,67 @@ export function DataTable<TData, TValue>({
   countryFilterOptions,
   productFilterOptions,
   hsCodesFilterOptions,
-  dummyData,
 }: DataTableProps<TData, TValue>) {
   const [url, setUrl] = useState<string>("");
-  const [isLoading, setIsloading] = useState<string>("");
   const pageNumber = usePaginationStore((state) => state.pageNumber);
   const setPageNumber = usePaginationStore((state) => state.setPageNumber);
   const pageSize = 12;
   const tableFilter = useFilterStore((state) => state);
 
+  // useEffect(() => {
+  //   console.log(tableFilter);
+  // }, [tableFilter]);
+
   //   url and query params
-  // const { finalUrl, debouncedGlobalFilter } = useTableQueryParams({
-  //   baseUrl,
-  //   // statusFilter: tableFilter.filteredStatusValue,
-  //   // pendingValidationFilter: tableFilter.pendingValidationValue,
-  //   // ninFilterValidationValue: tableFilter.ninFilterValidationValue,
-  //   // approvalFilterValue: tableFilter.approvalFilterValue,
-  //   globalFilter: tableFilter.globalFilter,
-  //   // dateRange: tableFilter.dateRange,
-  //   pageSize,
-  //   // validationStateValue: tableFilter.validationStateValue,
-  //   // statusfilterLabel,
-  //   searchQueryLabel,
-  //   // userRegistrationStatusValue: tableFilter.userRegistrationStatusValue,
-  //   // isUser,
-  //   organizationFilter: tableFilter.organizationFilterValue,
-  //   organizationFilterLabel,
-  //   countryFilter: tableFilter.countryFilterValue,
-  //   countryFilterLabel,
-  //   productFilter: tableFilter.productFilterValue,
-  //   productFilterLabel,
-  //   hsCodesFilter: tableFilter.hsCodesFilterValue,
-  //   hsCodesFilterLabel,
-  // });
+  const { finalUrl, debouncedGlobalFilter } = useTableQueryParams({
+    baseUrl,
+    tradeType: tableFilter.tradeType,
+    globalFilter: tableFilter.globalFilter,
+    pageSize,
+    searchQueryLabel,
+    organizationFilter: tableFilter.organizationFilterValue,
+    countryFilter: tableFilter.countryFilterValue,
+    productFilter: tableFilter.productFilterValue,
+    hsCodesFilter: tableFilter.hsCodesFilterValue,
+    page: pageNumber,
+    sectorId: tableFilter.sector.sectorId,
+  });
+
+  useEffect(() => {
+    console.log(finalUrl);
+  }, [finalUrl]);
 
   useEffect(() => {
     setPageNumber(pageNumber);
   }, [pageNumber, setPageNumber]);
 
-  //   Please don't touch this below
-  // useEffect(() => {
-  //   setUrl(finalUrl);
-  // }, [finalUrl]);
+  // Please don't touch this below
+  useEffect(() => {
+    setUrl(finalUrl);
+  }, [finalUrl]);
 
   // Fetch data with the updated URL
-  // const { data, isLoading, error, response } =
-  //   useFetchTableData<TData[]>(finalUrl);
+  const { data, isLoading } = useFetchTableData(finalUrl);
+
+  console.log(data);
 
   //page  --meta
-  // const pageMeta = response?.data?.pageMeta || {
-  //   pageNumber: 1,
-  //   pageSize: 12,
-  //   totalPages: 1,
-  //   totalRecords: 0,
-  // };
+  const pageMeta = data?.pageMeta || {
+    pageNumber: 1,
+    pageSize: 12,
+    totalPages: 1,
+    totalRecords: 0,
+  };
 
   const table = useTableInstance<TData>({
-    data: dummyData as TData[],
+    data: data?.data.data as unknown as TData[],
     columns,
-    // pageMeta,
+    pageMeta,
   });
 
   // Pagination
-  // const { handleNextPage, handlePreviousPage, fetchedRecords } =
-  //   usePaginationControls(pageMeta, setPageNumber);
+  const { handleNextPage, handlePreviousPage, fetchedRecords } =
+    usePaginationControls(pageMeta, setPageNumber);
 
   //   // Download table data
   //   const downloadData = useDownloadData({
@@ -311,30 +308,17 @@ export function DataTable<TData, TValue>({
         </>
       ) : (
         <div className="flex flex-col items-center justify-center py-20 rounded-[15px] bg-white mb-10">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-16 w-16 text-gray-400 mb-4"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 17v-2m0 0a3 3 0 006 0v2m-6-2a3 3 0 100-6 3 3 0 000 6zm-7-2a9 9 0 1118 0A9 9 0 012 15z"
-            />
-          </svg>
+          <Image src={EmptyIcon} alt="Empty table"></Image>
           <p className="text-gray-600 text-sm mb-6">
             {/* {response?.data?.message ?? emptyTableText} */}
             {emptyTableText}
           </p>
-          <Button
+          {/* <Button
             onClick={() => window.location.reload()}
             className="px-8 py-2 rounded-[12px]"
           >
             Refresh
-          </Button>
+          </Button> */}
         </div>
       )}
     </>
