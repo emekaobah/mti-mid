@@ -27,8 +27,8 @@ export const useTradeInterestByCountry = (
 export interface UseSectorCountParams {
   tradeType?: TradeType;
   countryCodes?: string[];
-  sectorIds?: string[];
-  serviceSectorIds?: string[];
+  sectorIds?: string;
+  serviceSectorIds?: string;
   searchTerm?: string;
 }
 
@@ -72,10 +72,11 @@ export const useTradeInterests = (params?: UseTradeInterestsParams) => {
 // Get product chart
 export interface UseProductChartParams {
   tradeType: TradeType;
-  countryCodes?: string[];
+  countryCodes?: string;
   sectorId?: string;
   serviceSectorIds?: string;
   organizationType?: string;
+  hsCode?: string;
 }
 
 export const useProductChart = (params?: UseProductChartParams) => {
@@ -105,8 +106,10 @@ export const useOrgChart = (params?: UseOrgChartParams) => {
     params
   );
 
-  const apiResponse = result.data as ApiResponse<OrgChart[]> | undefined;
-  const productData = apiResponse?.data || [];
+  const apiResponse = result.data as ApiResponse<OrgChart> | undefined;
+
+  // Return null or undefined instead of empty array
+  const productData = apiResponse?.data || null;
 
   return { ...result, data: productData };
 };
@@ -127,8 +130,8 @@ export const useOrgBreakdown = (params?: UseOrgBreakdownParams) => {
     params
   );
 
-  const apiResponse = result.data as ApiResponse<OrgBreakdown[]> | undefined;
-  const productData = apiResponse?.data || [];
+  const apiResponse = result.data as ApiResponse<OrgBreakdown> | undefined;
+  const productData = apiResponse?.data || null;
 
   return { ...result, data: productData };
 };

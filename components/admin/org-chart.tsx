@@ -13,15 +13,15 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { ProductChart } from "@/hooks/api/trade-interest/types";
+import { OrgChart } from "@/hooks/api/trade-interest/types";
 
-interface ProductData {
-  productName: string;
+interface ChartData {
+  organization: string;
   count: number;
 }
 
-interface ProductsGraphProps {
-  data: ProductChart[];
+interface OrganizationGraphProps {
+  data: OrgChart | null; // Allow null
 }
 
 export const description = "A bar chart";
@@ -33,22 +33,37 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const ProductsGraph: React.FC<ProductsGraphProps> = ({ data }) => {
-  // Transform the data to match the chart's expected format
-  const chartData = data.map((item) => ({
-    product: item.productName,
+const OrgGraph: React.FC<OrganizationGraphProps> = ({ data }) => {
+  // Guard against null/undefined data or missing organizationCounts
+  if (
+    !data ||
+    !data.organizationCounts ||
+    !Array.isArray(data.organizationCounts)
+  ) {
+    return (
+      <Card>
+        <CardContent className="flex items-center justify-center h-[300px]">
+          <div>Loading organization data...</div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  // Transform the organizationCounts array to match the chart's expected format
+  const chartData: ChartData[] = data.organizationCounts.map((item) => ({
+    organization: item.organizationType,
     count: item.count,
   }));
 
-  // Calculate total requests for display
-  const totalRequests = data.reduce((sum, item) => sum + item.count, 0);
+  // Use the totalRequests from the data object
+  const totalRequests = data.totalRequests;
 
   return (
     <div>
       <Card>
         <CardHeader>
           <CardDescription className="flex items-center gap-3 text-xs">
-            All Countries
+            All Organizations
             <div className="bg-[#074318] rounded-full h-2 w-2"></div>
             {totalRequests} Requests
           </CardDescription>
@@ -58,7 +73,7 @@ const ProductsGraph: React.FC<ProductsGraphProps> = ({ data }) => {
             <BarChart accessibilityLayer data={chartData}>
               <CartesianGrid vertical={false} />
               <XAxis
-                dataKey="product"
+                dataKey="organization"
                 tickLine={false}
                 tickMargin={10}
                 axisLine={false}
@@ -83,4 +98,4 @@ const ProductsGraph: React.FC<ProductsGraphProps> = ({ data }) => {
   );
 };
 
-export default ProductsGraph;
+export default OrgGraph;

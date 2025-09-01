@@ -52,13 +52,16 @@ export const useTableQueryParams = ({
 
     if (organizationFilter) {
       url.searchParams.append(
-        organizationFilterLabel ?? "OrganizationType",
+        organizationFilterLabel ?? "organizationType",
         organizationFilter
       );
     }
 
     if (countryFilter) {
-      url.searchParams.append(countryFilterLabel ?? "country", countryFilter);
+      url.searchParams.append(
+        countryFilterLabel ?? "countryCodes",
+        countryFilter
+      );
     }
 
     if (tradeType) {
@@ -70,7 +73,7 @@ export const useTableQueryParams = ({
     }
 
     if (hsCodesFilter) {
-      url.searchParams.append(hsCodesFilterLabel ?? "HsCodes", hsCodesFilter);
+      url.searchParams.append(hsCodesFilterLabel ?? "hsCode", hsCodesFilter);
     }
 
     if (debouncedGlobalFilter) {

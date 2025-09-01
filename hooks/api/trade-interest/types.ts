@@ -8,8 +8,13 @@ export interface ProductChart {
   count: number;
 }
 export interface OrgChart {
-  organizationType: string;
-  count: number;
+  totalRequests: number;
+  organizationCounts: [
+    {
+      organizationType: string;
+      count: 1;
+    }
+  ];
 }
 export interface OrgBreakdown {
   totalRequests: number;

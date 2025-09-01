@@ -55,10 +55,10 @@ const Sectors = () => {
   const { data: sectors, isLoading } = useSectorCount({
     tradeType: tradeType === 1 ? 1 : 2,
     ...(tableFilter.productSectorFilterValue !== "" && {
-      sectorIds: [tableFilter.productSectorFilterValue],
+      sectorIds: tableFilter.productSectorFilterValue,
     }),
     ...(tableFilter.serviceSectorFilterValue !== "" && {
-      serviceSectorIds: [tableFilter.serviceSectorFilterValue],
+      serviceSectorIds: tableFilter.serviceSectorFilterValue,
     }),
     ...(tableFilter.globalFilter !== "" && {
       searchTerm: tableFilter.globalFilter,
@@ -128,7 +128,7 @@ const Sectors = () => {
           </div>
           <Button
             className="bg-[#074318] rounded-full"
-            // onClick={() => openModal("requestBuyerModal")}
+            onClick={() => router.push("/trade-insights")}
           >
             Trade Request Insights
           </Button>

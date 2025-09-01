@@ -15,6 +15,16 @@ import {
 } from "@/components/ui/chart";
 import { OrgChart, OrgBreakdown } from "@/hooks/api/trade-interest/types";
 
+interface ProductData {
+  productName: string;
+  count: number;
+}
+
+interface OrganizationData {
+  productName: string;
+  count: number;
+}
+
 interface OrganizationGraphProps {
   productsData: OrgChart[];
   organizationsData: OrgBreakdown[];
@@ -41,62 +51,30 @@ const OrganizationGraph: React.FC<OrganizationGraphProps> = ({
   organizationsData,
 }) => {
   // Transform products data for the first chart
-  const yChartData = (productsData || []).map((item) => ({
+  const yChartData = productsData.map((item) => ({
     product: item.organizationType,
     quantity: item.count,
   }));
 
-  // Debug logging to see what we're receiving
-  console.log("organizationsData type:", typeof organizationsData);
-  console.log("organizationsData value:", organizationsData);
-  console.log("is Array:", Array.isArray(organizationsData));
-
-  // Ensure we have arrays to work with
-  const safeOrganizationsData = Array.isArray(organizationsData)
-    ? organizationsData
-    : [];
-  const safeProductsData = Array.isArray(productsData) ? productsData : [];
-
-  // Transform products data for the first chart
-  const xChartData = safeProductsData.map((item) => ({
-    product: item.organizationType,
-    quantity: item.count,
+  // Transform organizations data for the second chart
+  const chartData = organizationsData.map((item) => ({
+    month: item.organizations[0].organizationType, // Using productName as the category name
+    quantity: item.organizations[0].count,
   }));
-
-  // Flatten and transform organizations data for the second chart
-  const chartData = safeOrganizationsData.flatMap((breakdown) =>
-    Array.isArray(breakdown?.organizations)
-      ? breakdown.organizations.map((org) => ({
-          month: org.organizationType,
-          quantity: org.count,
-        }))
-      : []
-  );
 
   // Calculate totals for each chart
-  const productsTotal = safeProductsData.reduce(
-    (sum, item) => sum + (item?.count || 0),
+  const productsTotal = productsData.reduce((sum, item) => sum + item.count, 0);
+  const organizationsTotal = organizationsData.reduce(
+    (sum, item) => sum + item.organizations[0].count,
     0
   );
-
-  // Calculate total from all organizations in all breakdowns
-  const organizationsTotal = safeOrganizationsData.reduce((sum, breakdown) => {
-    if (!Array.isArray(breakdown?.organizations)) return sum;
-    return (
-      sum +
-      breakdown.organizations.reduce(
-        (orgSum, org) => orgSum + (org?.count || 0),
-        0
-      )
-    );
-  }, 0);
 
   return (
     <div className="flex gap-6">
       <Card className="w-full">
         <CardHeader>
           <CardDescription className="flex items-center gap-3 text-xs">
-            All Organizations
+            All Countries
             <div className="bg-[#074318] rounded-full h-2 w-2"></div>
             {productsTotal} Requests
           </CardDescription>
@@ -116,12 +94,7 @@ const OrganizationGraph: React.FC<OrganizationGraphProps> = ({
                 cursor={false}
                 content={<ChartTooltipContent hideLabel />}
               />
-              <Bar
-                dataKey="quantity"
-                fill="#074318"
-                radius={8}
-                maxBarSize={30}
-              />
+              <Bar dataKey="quantity" fill="#074318" radius={8} />
             </BarChart>
           </ChartContainer>
         </CardContent>

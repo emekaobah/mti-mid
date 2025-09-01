@@ -1,10 +1,10 @@
 import axiosClient from "../axios";
 import {
-  ApiResponse,
   verifyBvnResponse,
   TradeInterestQuery,
   TradeSubmissions,
 } from "./types";
+import { ApiResponse } from "@/hooks/api/trade-interest/types";
 
 interface PaginatedResponse<T> {
   data: T[];
@@ -15,8 +15,8 @@ interface PaginatedResponse<T> {
 }
 
 export const service = {
-  async verifyBvn(bvn: string): Promise<verifyBvnResponse> {
-    const response = await axiosClient.post<verifyBvnResponse>(
+  async verifyBvn(bvn: string): Promise<ApiResponse<verifyBvnResponse>> {
+    const response = await axiosClient.post<ApiResponse<verifyBvnResponse>>(
       `api/Auth/validate-bvn`,
       {
         bvn: bvn,
