@@ -154,7 +154,7 @@ export default function MultistepFormWrapper() {
         }
         break;
       case 3: // Contact Information
-        fieldsToValidate = ["name", "company", "city", "email"];
+        fieldsToValidate = ["name", "company", "city"];
         break;
       default:
         return true;
@@ -230,13 +230,13 @@ export default function MultistepFormWrapper() {
     try {
       // Transform form data to match API schema
       const transformedData: CreateTradeInterestRequest = {
-        countryCode: data.country,
+        countryCode: "NG", // Default to Nigeria since country field was removed
         orgId: data.organizationType,
         tradeType: data.tradeDirection === "buy_from_nigeria" ? 1 : 2, // 1 for import, 2 for export
         notes: "", // Optional field, can be added later if needed
         contact: {
           fullName: data.name,
-          email: data.email,
+          email: "", // Default empty email since email field was removed
           phone: data.phone || null,
           gender:
             data.gender === "Male"
@@ -247,7 +247,7 @@ export default function MultistepFormWrapper() {
           channel: 1, // Default to email (1), can be made configurable
           company: data.company || null,
           city: data.city || null,
-          countryCode: data.country,
+          countryCode: "NG", // Default to Nigeria since country field was removed
         },
         goodsItems:
           data.tradeDirection === "buy_from_nigeria"
