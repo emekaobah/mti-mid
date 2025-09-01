@@ -15,18 +15,15 @@ import {
 } from "@/hooks/api/auth/use-authenticate";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import { useAuthModal } from "@/contexts/auth-modal-context";
 import type { EmailVerificationResponse } from "@/hooks/api/shared/types";
 
 interface AuthModalProps {
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
   trigger?: React.ReactNode;
-  redirectTo?: string; // New prop for redirect after successful auth
+  redirectTo?: string;
 }
 
 export function AuthModal({
-  open,
-  onOpenChange,
   trigger,
   redirectTo = "/trade-insights",
 }: AuthModalProps) {
@@ -43,6 +40,7 @@ export function AuthModal({
   const authenticate = useAuthenticate();
   const requestEmailLink = useRequestEmailLink();
   const router = useRouter();
+  const { isOpen, closeModal } = useAuthModal();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -136,15 +134,15 @@ export function AuthModal({
 
   // Handle successful authentication
   useEffect(() => {
-    if (verificationStatus === "success" && onOpenChange) {
+    if (verificationStatus === "success") {
       // Close modal after short delay
       setTimeout(() => {
-        onOpenChange(false);
+        closeModal();
         // Navigate to insights page after successful auth
         router.push(redirectTo);
       }, 2000);
     }
-  }, [verificationStatus, onOpenChange, router, redirectTo]);
+  }, [verificationStatus, closeModal, router, redirectTo]);
 
   const renderStatusMessage = () => {
     if (!statusMessage) return null;
@@ -165,13 +163,13 @@ export function AuthModal({
     );
   };
 
-  // If controlled mode (with open/onOpenChange props)
-  if (open !== undefined && onOpenChange) {
+  // If trigger is provided, use it
+  if (trigger) {
     return (
-      <Dialog open={open} onOpenChange={onOpenChange}>
+      <Dialog>
+        <DialogTrigger asChild>{trigger}</DialogTrigger>
         <DialogContent className="sm:max-w-[818px] pt-10 lg:pt-24 pb-10 lg:pb-36 flex flex-col items-center justify-center px-4 lg:px-36 rounded-2xl border-0 shadow-xl">
           <DialogClose asChild></DialogClose>
-
           <form onSubmit={handleSubmit} className="w-full">
             <div className="space-y-6">
               <div className="space-y-2">
@@ -254,22 +252,11 @@ export function AuthModal({
     );
   }
 
-  // Default mode with trigger (for backward compatibility)
+  // Default mode - controlled by context
   return (
-    <Dialog>
-      <DialogTrigger asChild>
-        {trigger || (
-          <Button
-            variant="default"
-            className="flex items-center justify-center space-x-2 rounded-full h-12 w-full sm:w-auto max-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-base text-white font-semibold px-6 text-center"
-          >
-            Explore Insights
-          </Button>
-        )}
-      </DialogTrigger>
+    <Dialog open={isOpen} onOpenChange={closeModal}>
       <DialogContent className="sm:max-w-[818px] pt-10 lg:pt-24 pb-10 lg:pb-36 flex flex-col items-center justify-center px-4 lg:px-36 rounded-2xl border-0 shadow-xl">
         <DialogClose asChild></DialogClose>
-
         <form onSubmit={handleSubmit} className="w-full">
           <div className="space-y-6">
             <div className="space-y-2">

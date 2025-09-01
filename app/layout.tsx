@@ -5,6 +5,7 @@ import SiteHeader from "@/components/site-header";
 import Footer from "@/components/footer";
 import QueryProvider from "@/lib/providers/query-provider";
 import { Toaster } from "@/components/ui/sonner";
+import { AuthModalProvider } from "@/contexts/auth-modal-context";
 
 const onest = Onest({
   variable: "--font-onest",
@@ -25,9 +26,11 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${onest.variable} antialiased`}>
         <QueryProvider>
-          <SiteHeader />
-          {children}
-          <Toaster />
+          <AuthModalProvider>
+            <SiteHeader />
+            {children}
+            <Toaster />
+          </AuthModalProvider>
         </QueryProvider>
       </body>
     </html>

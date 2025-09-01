@@ -1,16 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import InsightsButton from "./insights-button";
 import { AuthModal } from "./modals/auth-modal";
+import { useAuthModal } from "@/contexts/auth-modal-context";
 
 const SiteHeader = () => {
-  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const { openModal } = useAuthModal();
 
   const handleOpenAuthModal = () => {
-    setIsAuthModalOpen(true);
+    openModal();
   };
 
   return (
@@ -27,7 +28,7 @@ const SiteHeader = () => {
 
       <InsightsButton onOpenAuthModal={handleOpenAuthModal} />
 
-      <AuthModal open={isAuthModalOpen} onOpenChange={setIsAuthModalOpen} />
+      <AuthModal />
     </div>
   );
 };
