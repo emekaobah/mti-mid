@@ -16,7 +16,10 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { useAuthModal } from "@/contexts/auth-modal-context";
-import type { EmailVerificationResponse } from "@/hooks/api/shared/types";
+import type {
+  EmailVerificationResultResponse,
+  EmailVerificationResponseResponse,
+} from "@/hooks/api/shared/types";
 
 interface AuthModalProps {
   trigger?: React.ReactNode;
@@ -49,11 +52,20 @@ export function AuthModal({
     setStatusMessage("");
 
     try {
-      const response = (await authenticate.mutateAsync({
+      const apiResponse = (await authenticate.mutateAsync({
         email,
         countryCode: selectedCountry,
-      })) as EmailVerificationResponse;
+      })) as EmailVerificationResultResponse;
 
+      // Extract the actual response data from the nested structure
+      const response = apiResponse.data;
+
+      if (!response) {
+        setVerificationStatus("error");
+        setStatusMessage("Invalid response from server. Please try again.");
+        return;
+      }
+      console.log("api response from authenticate", response);
       if (response.success && response.code === "00") {
         // Existing user - log them in
         if (
@@ -85,14 +97,19 @@ export function AuthModal({
 
         try {
           // Call the request-email-link endpoint to actually send the email
-          const emailResponse = (await requestEmailLink.mutateAsync({
+          const emailApiResponse = (await requestEmailLink.mutateAsync({
             email,
             countryCode: selectedCountry,
-          })) as {
-            success: boolean;
-            message: string;
-            tokenId: string;
-          };
+          })) as EmailVerificationResponseResponse;
+
+          // Extract the actual response data from the nested structure
+          const emailResponse = emailApiResponse.data;
+
+          if (!emailResponse) {
+            setVerificationStatus("error");
+            setStatusMessage("Invalid response from server. Please try again.");
+            return;
+          }
 
           // Handle the email response
           if (emailResponse.success) {
@@ -104,7 +121,8 @@ export function AuthModal({
           } else {
             setVerificationStatus("error");
             setStatusMessage(
-              "Failed to send verification email. Please try again or contact support."
+              emailResponse.message ||
+                "Failed to send verification email. Please try again or contact support."
             );
           }
         } catch (emailError) {
@@ -205,22 +223,23 @@ export function AuthModal({
                     <ReactFlagsSelect
                       selected={selectedCountry}
                       onSelect={(code) => setSelectedCountry(code)}
-                      // countries={
-                      //   countries
-                      //     ?.map((country) => country.code)
-                      //     .filter(
-                      //       (code): code is string =>
-                      //         code !== null && code !== undefined
-                      //     ) || []
-                      // }
-                      // customLabels={
-                      //   countries?.reduce((acc, country) => {
-                      //     if (country.code && country.name) {
-                      //       acc[country.code] = country.name;
-                      //     }
-                      //     return acc;
-                      //   }, {} as Record<string, string>) || {}
-                      // }
+                      searchable
+                      countries={
+                        countries?.data
+                          ?.map((country) => country.code)
+                          .filter(
+                            (code): code is string =>
+                              code !== null && code !== undefined
+                          ) || []
+                      }
+                      customLabels={
+                        countries?.data?.reduce((acc, country) => {
+                          if (country.code && country.name) {
+                            acc[country.code] = country.name;
+                          }
+                          return acc;
+                        }, {} as Record<string, string>) || {}
+                      }
                       placeholder="Select your country"
                       className="!border-gray-300 !rounded-lg"
                       selectButtonClassName="!border-gray-300 !rounded-lg !bg-white !text-gray-500 !h-15"
@@ -292,22 +311,23 @@ export function AuthModal({
                   <ReactFlagsSelect
                     selected={selectedCountry}
                     onSelect={(code) => setSelectedCountry(code)}
-                    // countries={
-                    //   countries
-                    //     ?.map((country) => country.code)
-                    //     .filter(
-                    //       (code): code is string =>
-                    //         code !== null && code !== undefined
-                    //     ) || []
-                    // }
-                    // customLabels={
-                    //   countries?.reduce((acc, country) => {
-                    //     if (country.code && country.name) {
-                    //       acc[country.code] = country.name;
-                    //     }
-                    //     return acc;
-                    //   }, {} as Record<string, string>) || {}
-                    // }
+                    searchable
+                    countries={
+                      countries?.data
+                        ?.map((country) => country.code)
+                        .filter(
+                          (code): code is string =>
+                            code !== null && code !== undefined
+                        ) || []
+                    }
+                    customLabels={
+                      countries?.data?.reduce((acc, country) => {
+                        if (country.code && country.name) {
+                          acc[country.code] = country.name;
+                        }
+                        return acc;
+                      }, {} as Record<string, string>) || {}
+                    }
                     placeholder="Select your country"
                     className="!border-gray-300 !rounded-lg"
                     selectButtonClassName="!border-gray-300 !rounded-lg !bg-white !text-gray-500 !h-15"

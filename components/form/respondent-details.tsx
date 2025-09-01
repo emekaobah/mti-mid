@@ -14,12 +14,10 @@ import {
   FormMessage,
   FormDescription,
 } from "@/components/ui/form";
-import ReactFlagsSelect from "react-flags-select";
 import {
   useOrganizationSubtypes,
   useOrganizationTypes,
 } from "@/hooks/api/catalog/use-organization-types";
-import { useSectorCount } from "@/hooks/api";
 
 export const tradeDirectionSchema = z.object({
   tradeDirection: z
@@ -38,9 +36,9 @@ export const respondentDetailsSchema = z.object({
     }),
   organizationType: z.string().min(1, "Please select your organization type"),
   otherOrganization: z.string().optional(),
-  businessTypes: z
+  organizationSubtypes: z
     .array(z.string())
-    .max(2, "Please select up to 2 business types")
+    .max(2, "Please select up to 2 subtypes")
     .optional(),
 });
 
@@ -49,13 +47,12 @@ export type RespondentDetailsType = z.infer<typeof respondentDetailsSchema>;
 export default function RespondentDetails() {
   const { control, watch } = useFormContext<RespondentDetailsType>();
   const orgType = watch("organizationType");
-  const tradeDirection = watch("tradeDirection");
 
   const { data: organizationTypes, isLoading } = useOrganizationTypes();
   const { data: organizationSubtypes, isLoading: isSubtypesLoading } =
-    useOrganizationSubtypes("ORGTYPE_002");
+    useOrganizationSubtypes(orgType);
 
-  console.log("these are organization types", organizationTypes);
+  console.log("these are organization types", organizationTypes?.data);
   console.log("these are organization subtypes", organizationSubtypes);
   // Find the selected organization type name for display purposes
   const selectedOrgType = organizationTypes?.data?.find(
@@ -177,59 +174,57 @@ export default function RespondentDetails() {
         />
       )}
 
-      {selectedOrgType?.name === "Business Association" && (
+      {selectedOrgType?.hasChildren && (
         <FormField
           control={control}
-          name="businessTypes"
+          name="organizationSubtypes"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base font-medium">
-                What type of business are you?
+                What type of {selectedOrgType?.name?.toLowerCase()} are you?
               </FormLabel>
               <FormDescription>
-                Choose up to 2 business types that best describe your
-                organization.
+                Choose up to 2 subtypes that best describe your organization.
               </FormDescription>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {[
-                  "Individual Buyer/Consumer",
-                  "SME Owner",
-                  "Distributor/Wholesaler",
-                  "Supermarket/Retailer",
-                  "Large Company/Corporation",
-                  "Startup",
-                ].map((type) => (
-                  <FormItem
-                    key={type}
-                    className="flex flex-row items-start space-x-3 space-y-0"
-                  >
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value?.includes(type)}
-                        onCheckedChange={(checked) => {
-                          const currentValues = field.value || [];
-                          if (checked) {
-                            if (currentValues.length < 2) {
-                              field.onChange([...currentValues, type]);
+              {isSubtypesLoading ? (
+                <div className="text-sm text-gray-500">Loading subtypes...</div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {organizationSubtypes?.data?.map((subtype) => (
+                    <FormItem
+                      key={subtype.id}
+                      className="flex flex-row items-start space-x-3 space-y-0"
+                    >
+                      <FormControl>
+                        <Checkbox
+                          checked={field.value?.includes(subtype.id!)}
+                          onCheckedChange={(checked) => {
+                            const currentValues = field.value || [];
+                            if (checked) {
+                              if (currentValues.length < 2) {
+                                field.onChange([...currentValues, subtype.id!]);
+                              }
+                            } else {
+                              field.onChange(
+                                currentValues.filter(
+                                  (value) => value !== subtype.id!
+                                )
+                              );
                             }
-                          } else {
-                            field.onChange(
-                              currentValues.filter((value) => value !== type)
-                            );
+                          }}
+                          disabled={
+                            (field.value?.length ?? 0) >= 2 &&
+                            !field.value?.includes(subtype.id!)
                           }
-                        }}
-                        disabled={
-                          (field.value?.length ?? 0) >= 2 &&
-                          !field.value?.includes(type)
-                        }
-                      />
-                    </FormControl>
-                    <FormLabel className="text-sm font-normal cursor-pointer">
-                      {type}
-                    </FormLabel>
-                  </FormItem>
-                ))}
-              </div>
+                        />
+                      </FormControl>
+                      <FormLabel className="text-sm font-normal cursor-pointer">
+                        {subtype.name}
+                      </FormLabel>
+                    </FormItem>
+                  ))}
+                </div>
+              )}
               <FormMessage />
             </FormItem>
           )}

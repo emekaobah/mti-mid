@@ -29,8 +29,10 @@ const Chart = () => {
 
   console.log(topImportSectors, "This is topImportSectors");
 
-  // console.log(topImportCountries, "This is topImportCountries");
-  // console.log(topExportCountries, "This is topExportCountries");
+  console.log(topImportCountries, "This is topImportCountries");
+  console.log(topExportCountries, "This is topExportCountries");
+  console.log("top Import Countries", topImportCountries?.data?.countries);
+  console.log("top Export Countries", topExportCountries?.data?.countries);
 
   return (
     <div className=" bg-[#FCFCFC] rounded-4xl border-6 border-black p-4 lg:p-10 min-h-[780px] flex flex-col  ">

@@ -417,7 +417,7 @@ export default function MultistepFormWrapper() {
           )}
         </div>
 
-        <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-8">
+        <div className="space-y-8">
           <div className="px-6 sm:px-8">
             <div className="pb-8">{renderCurrentStep()}</div>
           </div>
@@ -437,17 +437,19 @@ export default function MultistepFormWrapper() {
               </Button>
 
               {currentStep === steps.length - 1 ? (
-                <Button
-                  type="submit"
-                  disabled={
-                    isSubmitting || createTradeInterestMutation.isPending
-                  }
-                  className="flex items-center justify-center space-x-2 rounded-full h-12 w-full max-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-white"
-                >
-                  {isSubmitting || createTradeInterestMutation.isPending
-                    ? "Submitting..."
-                    : "Submit Form"}
-                </Button>
+                <form onSubmit={methods.handleSubmit(onSubmit)}>
+                  <Button
+                    type="submit"
+                    disabled={
+                      isSubmitting || createTradeInterestMutation.isPending
+                    }
+                    className="flex items-center justify-center space-x-2 rounded-full h-12 w-full max-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-white"
+                  >
+                    {isSubmitting || createTradeInterestMutation.isPending
+                      ? "Submitting..."
+                      : "Submit Form"}
+                  </Button>
+                </form>
               ) : (
                 <Button
                   type="button"
@@ -460,7 +462,7 @@ export default function MultistepFormWrapper() {
               )}
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </FormProvider>
   );

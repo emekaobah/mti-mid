@@ -111,10 +111,10 @@ export default function ImportServices() {
                             >
                               <FormControl>
                                 <Checkbox
-                                  checked={formField.value === sector.name}
+                                  checked={formField.value === sector.id}
                                   onCheckedChange={(checked) => {
                                     if (checked) {
-                                      formField.onChange(sector.name);
+                                      formField.onChange(sector.id);
                                     }
                                   }}
                                 />
@@ -128,7 +128,8 @@ export default function ImportServices() {
                     )}
                   </div>
                   <FormMessage />
-                  {formField.value === "Other Services: Tell Us!" && (
+                  {importServicesData?.find((s) => s.id === formField.value)
+                    ?.name === "Other Services: Tell Us!" && (
                     <div className="mt-3">
                       <Input
                         placeholder="Please specify other service"
