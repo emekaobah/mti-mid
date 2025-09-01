@@ -55,10 +55,10 @@ const Sectors = () => {
   const { data: sectors, isLoading } = useSectorCount({
     tradeType: tradeType === 1 ? 1 : 2,
     ...(tableFilter.productSectorFilterValue !== "" && {
-      sectorIds: tableFilter.productSectorFilterValue,
+      sectorIds: [tableFilter.productSectorFilterValue],
     }),
     ...(tableFilter.serviceSectorFilterValue !== "" && {
-      serviceSectorIds: tableFilter.serviceSectorFilterValue,
+      serviceSectorIds: [tableFilter.serviceSectorFilterValue],
     }),
     ...(tableFilter.globalFilter !== "" && {
       searchTerm: tableFilter.globalFilter,
@@ -77,7 +77,7 @@ const Sectors = () => {
 
   const productSectors = [
     { label: "All", value: "all" },
-    ...(data
+    ...(data?.data
       ?.map((sector, i) => ({
         label: sector?.name,
         value: sector?.id,
@@ -90,7 +90,7 @@ const Sectors = () => {
 
   const serviceSectors = [
     { label: "All", value: "all" },
-    ...(serviceSectorsData
+    ...(serviceSectorsData?.data
       ?.map((sector, i) => ({
         label: sector?.name,
         value: sector?.id,

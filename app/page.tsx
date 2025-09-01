@@ -98,8 +98,8 @@ export default function Home() {
       </div>
 
       {/* Country Insights */}
-      <div className="bg-[#0A5C21]  px-4 lgpx-16 pt-16 pb-20">
-        <div className="-mt-36">
+      <div className="bg-[#0A5C21]  px-4 lg:px-16 pt-16 pb-20">
+        <div className="-mt-36 ">
           <CountryInsights />
         </div>
       </div>

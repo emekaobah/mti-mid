@@ -27,8 +27,8 @@ export const useTradeInterestByCountry = (
 export interface UseSectorCountParams {
   tradeType?: TradeType;
   countryCodes?: string[];
-  sectorIds?: string;
-  serviceSectorIds?: string;
+  sectorIds?: string[];
+  serviceSectorIds?: string[];
   searchTerm?: string;
 }
 
@@ -111,15 +111,17 @@ export const useOrgChart = (params?: UseOrgChartParams) => {
   return { ...result, data: productData };
 };
 
-export interface UseOrgChartParams {
+// Get org breakdown
+export interface UseOrgBreakdownParams {
   tradeType: TradeType;
-  countryCodes?: string[];
+  parentId: string;
   sectorId?: string;
-  serviceSectorIds?: string;
-  organizationType?: string;
+  serviceSectorId?: string;
+  countryCodes?: string[];
+  hsCode?: string;
 }
 
-export const useOrgBreakdown = (params?: UseOrgChartParams) => {
+export const useOrgBreakdown = (params?: UseOrgBreakdownParams) => {
   const result = useApiQuery<"/api/TradeInterest/organization-breakdown">(
     "/api/TradeInterest/organization-breakdown",
     params

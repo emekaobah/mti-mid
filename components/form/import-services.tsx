@@ -41,6 +41,8 @@ export default function ImportServices() {
   });
   const { data: importServices, isLoading: importServicesLoading } =
     useServiceSectors();
+
+  const importServicesData = importServices?.data;
   console.log("these are the import services", importServices);
   return (
     <div className="flex flex-col h-full">
@@ -84,12 +86,12 @@ export default function ImportServices() {
                     Select the service sector that best describes this service.
                   </FormDescription>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                    {importServicesLoading ? (
+                    {importServicesLoading || !importServicesData ? (
                       <div className="col-span-full text-center py-4 text-muted-foreground">
                         Loading service sectors...
                       </div>
                     ) : (
-                      importServices
+                      importServicesData
                         ?.filter(
                           (sector: {
                             id?: string | null;

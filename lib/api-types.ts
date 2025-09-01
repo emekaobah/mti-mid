@@ -4,1392 +4,1607 @@
  */
 
 export interface paths {
-  "/api/Auth/request-email-link": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    post: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["EmailVerificationRequest"];
-          "text/json": components["schemas"]["EmailVerificationRequest"];
-          "application/*+json": components["schemas"]["EmailVerificationRequest"];
+    "/api/Auth/request-email-link": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-      };
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": string;
-            "application/json": string;
-            "text/json": string;
-          };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["EmailVerificationRequest"];
+                    "text/json": components["schemas"]["EmailVerificationRequest"];
+                    "application/*+json": components["schemas"]["EmailVerificationRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["EmailVerificationResponseResponse"];
+                        "application/json": components["schemas"]["EmailVerificationResponseResponse"];
+                        "text/json": components["schemas"]["EmailVerificationResponseResponse"];
+                    };
+                };
+            };
         };
-      };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/Auth/verify": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: {
-          token?: string;
+    "/api/Auth/verify": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
+        get: {
+            parameters: {
+                query?: {
+                    token?: string;
+                    email?: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["EmailVerificationResultResponse"];
+                        "application/json": components["schemas"]["EmailVerificationResultResponse"];
+                        "text/json": components["schemas"]["EmailVerificationResultResponse"];
+                    };
+                };
+            };
         };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/Auth/authenticate": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    post: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["EmailVerificationRequest"];
-          "text/json": components["schemas"]["EmailVerificationRequest"];
-          "application/*+json": components["schemas"]["EmailVerificationRequest"];
+    "/api/Auth/authenticate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-      };
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["EmailVerificationRequest"];
+                    "text/json": components["schemas"]["EmailVerificationRequest"];
+                    "application/*+json": components["schemas"]["EmailVerificationRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["EmailVerificationResultResponse"];
+                        "application/json": components["schemas"]["EmailVerificationResultResponse"];
+                        "text/json": components["schemas"]["EmailVerificationResultResponse"];
+                    };
+                };
+            };
         };
-      };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/Auth/validate-bvn": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    post: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["BVNRequest"];
-          "text/json": components["schemas"]["BVNRequest"];
-          "application/*+json": components["schemas"]["BVNRequest"];
+    "/api/Auth/validate-bvn": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-      };
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["BvnValidationResponse"];
-            "application/json": components["schemas"]["BvnValidationResponse"];
-            "text/json": components["schemas"]["BvnValidationResponse"];
-          };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["BVNRequest"];
+                    "text/json": components["schemas"]["BVNRequest"];
+                    "application/*+json": components["schemas"]["BVNRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["BvnValidationResponseResponse"];
+                        "application/json": components["schemas"]["BvnValidationResponseResponse"];
+                        "text/json": components["schemas"]["BvnValidationResponseResponse"];
+                    };
+                };
+                /** @description Bad Request */
+                400: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProblemDetails"];
+                        "application/json": components["schemas"]["ProblemDetails"];
+                        "text/json": components["schemas"]["ProblemDetails"];
+                    };
+                };
+            };
         };
-        /** @description Bad Request */
-        400: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Catalog/countries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-      };
-    };
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/Catalog/countries": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["CountryResponse"][];
-            "application/json": components["schemas"]["CountryResponse"][];
-            "text/json": components["schemas"]["CountryResponse"][];
-          };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["CountryResponseIReadOnlyListResponse"];
+                        "application/json": components["schemas"]["CountryResponseIReadOnlyListResponse"];
+                        "text/json": components["schemas"]["CountryResponseIReadOnlyListResponse"];
+                    };
+                };
+            };
         };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/Catalog/sectors": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["SectorResponse"][];
-            "application/json": components["schemas"]["SectorResponse"][];
-            "text/json": components["schemas"]["SectorResponse"][];
-          };
+    "/api/Catalog/sectors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-      };
-    };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/Catalog/service-sectors": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["ServiceSectorResponse"][];
-            "application/json": components["schemas"]["ServiceSectorResponse"][];
-            "text/json": components["schemas"]["ServiceSectorResponse"][];
-          };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["SectorResponseIReadOnlyListResponse"];
+                        "application/json": components["schemas"]["SectorResponseIReadOnlyListResponse"];
+                        "text/json": components["schemas"]["SectorResponseIReadOnlyListResponse"];
+                    };
+                };
+            };
         };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/Catalog/products/{sectorId}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/Catalog/service-sectors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ServiceSectorResponseIReadOnlyListResponse"];
+                        "application/json": components["schemas"]["ServiceSectorResponseIReadOnlyListResponse"];
+                        "text/json": components["schemas"]["ServiceSectorResponseIReadOnlyListResponse"];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path: {
-          sectorId: string;
+    "/api/Catalog/products/{sectorId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["ProductResponse"];
-            "application/json": components["schemas"]["ProductResponse"];
-            "text/json": components["schemas"]["ProductResponse"];
-          };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    sectorId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProductResponseIReadOnlyListResponse"];
+                        "application/json": components["schemas"]["ProductResponseIReadOnlyListResponse"];
+                        "text/json": components["schemas"]["ProductResponseIReadOnlyListResponse"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProblemDetails"];
+                        "application/json": components["schemas"]["ProblemDetails"];
+                        "text/json": components["schemas"]["ProblemDetails"];
+                    };
+                };
+            };
         };
-        /** @description Not Found */
-        404: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
-        };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/Catalog/products/by-hscode/{code}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path: {
-          code: string;
+    "/api/Catalog/products/by-hscode/{code}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["ProductResponse"];
-            "application/json": components["schemas"]["ProductResponse"];
-            "text/json": components["schemas"]["ProductResponse"];
-          };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    code: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProductResponseResponse"];
+                        "application/json": components["schemas"]["ProductResponseResponse"];
+                        "text/json": components["schemas"]["ProductResponseResponse"];
+                    };
+                };
+                /** @description Not Found */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProblemDetails"];
+                        "application/json": components["schemas"]["ProblemDetails"];
+                        "text/json": components["schemas"]["ProblemDetails"];
+                    };
+                };
+            };
         };
-        /** @description Not Found */
-        404: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["ProblemDetails"];
-            "application/json": components["schemas"]["ProblemDetails"];
-            "text/json": components["schemas"]["ProblemDetails"];
-          };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Catalog/products/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-      };
-    };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/Catalog/products/search": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: {
-          q?: string;
-          sectorId?: string;
-          hsPrefix?: string;
-          take?: number;
+        get: {
+            parameters: {
+                query?: {
+                    q?: string;
+                    sectorId?: string;
+                    hsPrefix?: string;
+                    take?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProductSearchResponseResponse"];
+                        "application/json": components["schemas"]["ProductSearchResponseResponse"];
+                        "text/json": components["schemas"]["ProductSearchResponseResponse"];
+                    };
+                };
+            };
         };
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["ProductSearchResponse"];
-            "application/json": components["schemas"]["ProductSearchResponse"];
-            "text/json": components["schemas"]["ProductSearchResponse"];
-          };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/Catalog/organization-types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-      };
-    };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/Catalog/organization-types": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["OrganizationTypeResponse"][];
-            "application/json": components["schemas"]["OrganizationTypeResponse"][];
-            "text/json": components["schemas"]["OrganizationTypeResponse"][];
-          };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["OrganizationTypeResponseIReadOnlyListResponse"];
+                        "application/json": components["schemas"]["OrganizationTypeResponseIReadOnlyListResponse"];
+                        "text/json": components["schemas"]["OrganizationTypeResponseIReadOnlyListResponse"];
+                    };
+                };
+            };
         };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/Catalog/organization-types/{parentId}/subtypes": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path: {
-          parentId: string;
+    "/api/Catalog/organization-types/{parentId}/subtypes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["OrganizationTypeResponse"][];
-            "application/json": components["schemas"]["OrganizationTypeResponse"][];
-            "text/json": components["schemas"]["OrganizationTypeResponse"][];
-          };
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    parentId: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["OrganizationTypeResponseIReadOnlyListResponse"];
+                        "application/json": components["schemas"]["OrganizationTypeResponseIReadOnlyListResponse"];
+                        "text/json": components["schemas"]["OrganizationTypeResponseIReadOnlyListResponse"];
+                    };
+                };
+            };
         };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/MarketInsights/countries": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: {
-          direction?: components["schemas"]["TradeType"];
-          fromDate?: string;
-          toDate?: string;
-          take?: number;
+    "/api/MarketInsights/countries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["TopCountriesInsight"];
-            "application/json": components["schemas"]["TopCountriesInsight"];
-            "text/json": components["schemas"]["TopCountriesInsight"];
-          };
+        get: {
+            parameters: {
+                query?: {
+                    direction?: components["schemas"]["TradeType"];
+                    fromDate?: string;
+                    toDate?: string;
+                    take?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["TopCountriesInsightResponse"];
+                        "application/json": components["schemas"]["TopCountriesInsightResponse"];
+                        "text/json": components["schemas"]["TopCountriesInsightResponse"];
+                    };
+                };
+            };
         };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/MarketInsights/hs-codes": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: {
-          direction?: components["schemas"]["TradeType"];
-          fromDate?: string;
-          toDate?: string;
-          take?: number;
+    "/api/MarketInsights/hs-codes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["PopularHsCodesInsight"];
-            "application/json": components["schemas"]["PopularHsCodesInsight"];
-            "text/json": components["schemas"]["PopularHsCodesInsight"];
-          };
+        get: {
+            parameters: {
+                query?: {
+                    direction?: components["schemas"]["TradeType"];
+                    fromDate?: string;
+                    toDate?: string;
+                    take?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["PopularHsCodesInsightResponse"];
+                        "application/json": components["schemas"]["PopularHsCodesInsightResponse"];
+                        "text/json": components["schemas"]["PopularHsCodesInsightResponse"];
+                    };
+                };
+            };
         };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/MarketInsights/product-sectors": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: {
-          direction?: components["schemas"]["TradeType"];
-          fromDate?: string;
-          toDate?: string;
-          take?: number;
+    "/api/MarketInsights/product-sectors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["TopSectorsInsight"];
-            "application/json": components["schemas"]["TopSectorsInsight"];
-            "text/json": components["schemas"]["TopSectorsInsight"];
-          };
+        get: {
+            parameters: {
+                query?: {
+                    direction?: components["schemas"]["TradeType"];
+                    fromDate?: string;
+                    toDate?: string;
+                    take?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["TopSectorsInsightResponse"];
+                        "application/json": components["schemas"]["TopSectorsInsightResponse"];
+                        "text/json": components["schemas"]["TopSectorsInsightResponse"];
+                    };
+                };
+            };
         };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/MarketInsights/service-sectors": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: {
-          direction?: components["schemas"]["TradeType"];
-          fromDate?: string;
-          toDate?: string;
-          take?: number;
+    "/api/MarketInsights/service-sectors": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["TopSectorsInsight"];
-            "application/json": components["schemas"]["TopSectorsInsight"];
-            "text/json": components["schemas"]["TopSectorsInsight"];
-          };
+        get: {
+            parameters: {
+                query?: {
+                    direction?: components["schemas"]["TradeType"];
+                    fromDate?: string;
+                    toDate?: string;
+                    take?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["TopSectorsInsightResponse"];
+                        "application/json": components["schemas"]["TopSectorsInsightResponse"];
+                        "text/json": components["schemas"]["TopSectorsInsightResponse"];
+                    };
+                };
+            };
         };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/MarketInsights/organization-types": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: {
-          direction?: components["schemas"]["TradeType"];
-          fromDate?: string;
-          toDate?: string;
-          take?: number;
+    "/api/MarketInsights/organization-types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["TopOrganizationsInsight"];
-            "application/json": components["schemas"]["TopOrganizationsInsight"];
-            "text/json": components["schemas"]["TopOrganizationsInsight"];
-          };
+        get: {
+            parameters: {
+                query?: {
+                    direction?: components["schemas"]["TradeType"];
+                    fromDate?: string;
+                    toDate?: string;
+                    take?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["TopOrganizationsInsightResponse"];
+                        "application/json": components["schemas"]["TopOrganizationsInsightResponse"];
+                        "text/json": components["schemas"]["TopOrganizationsInsightResponse"];
+                    };
+                };
+            };
         };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/MarketInsights/business-types": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: {
-          direction?: components["schemas"]["TradeType"];
-          fromDate?: string;
-          toDate?: string;
-          take?: number;
+    "/api/MarketInsights/business-types": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["TopBusinessTypesInsight"];
-            "application/json": components["schemas"]["TopBusinessTypesInsight"];
-            "text/json": components["schemas"]["TopBusinessTypesInsight"];
-          };
+        get: {
+            parameters: {
+                query?: {
+                    direction?: components["schemas"]["TradeType"];
+                    fromDate?: string;
+                    toDate?: string;
+                    take?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["TopBusinessTypesInsightResponse"];
+                        "application/json": components["schemas"]["TopBusinessTypesInsightResponse"];
+                        "text/json": components["schemas"]["TopBusinessTypesInsightResponse"];
+                    };
+                };
+            };
         };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/health": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": string;
-            "application/json": string;
-            "text/json": string;
-          };
+    "/health": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-      };
-    };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/TradeInterest/trade-interest-by-country": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: {
-          tradeType?: components["schemas"]["TradeType"];
-          countryIds?: string[];
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": string;
+                        "application/json": string;
+                        "text/json": string;
+                    };
+                };
+            };
         };
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/TradeInterest/sector-count": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/TradeInterest/trade-interest-by-country": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    tradeType?: components["schemas"]["TradeType"];
+                    countryIds?: string[];
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get: {
-      parameters: {
-        query?: {
-          tradeType?: components["schemas"]["TradeType"];
-          sectorIds?: string;
-          serviceSectorIds?: string;
-          searchTerm?: string;
+    "/api/TradeInterest/sector-count": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
+        get: {
+            parameters: {
+                query?: {
+                    tradeType?: components["schemas"]["TradeType"];
+                    sectorIds?: string[];
+                    serviceSectorIds?: string[];
+                    searchTerm?: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
         };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/TradeInterest/organization-chart": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/TradeInterest/organization-chart": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query: {
+                    tradeType: components["schemas"]["TradeType"];
+                    sectorId?: string;
+                    serviceSectorId?: string;
+                    countryCodes?: string[];
+                    hsCode?: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["OrganizationChartDto"][];
+                        "application/json": components["schemas"]["OrganizationChartDto"][];
+                        "text/json": components["schemas"]["OrganizationChartDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get: {
-      parameters: {
-        query: {
-          tradeType: components["schemas"]["TradeType"];
-          sectorId?: string;
-          serviceSectorId?: string;
-          countryCodes?: string[];
-          hsCode?: string;
+    "/api/TradeInterest/organization-breakdown": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["OrganizationChartDto"][];
-            "application/json": components["schemas"]["OrganizationChartDto"][];
-            "text/json": components["schemas"]["OrganizationChartDto"][];
-          };
+        get: {
+            parameters: {
+                query: {
+                    tradeType: components["schemas"]["TradeType"];
+                    parentId: string;
+                    sectorId?: string;
+                    serviceSectorId?: string;
+                    countryCodes?: string[];
+                    hsCode?: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["OrganizationBreakdownDto"];
+                        "application/json": components["schemas"]["OrganizationBreakdownDto"];
+                        "text/json": components["schemas"]["OrganizationBreakdownDto"];
+                    };
+                };
+            };
         };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/TradeInterest/organization-breakdown": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/TradeInterest/product-chart": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query: {
+                    tradeType: components["schemas"]["TradeType"];
+                    sectorId?: string;
+                    serviceSectorId?: string;
+                    countryCodes?: string[];
+                    organizationType?: string;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["ProductChartDto"][];
+                        "application/json": components["schemas"]["ProductChartDto"][];
+                        "text/json": components["schemas"]["ProductChartDto"][];
+                    };
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get: {
-      parameters: {
-        query: {
-          tradeType: components["schemas"]["TradeType"];
-          sectorId?: string;
-          serviceSectorId?: string;
-          countryCodes?: string[];
-          hsCode?: string;
+    "/api/TradeInterest/submissions-table": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["OrganizationBreakdownDto"];
-            "application/json": components["schemas"]["OrganizationBreakdownDto"];
-            "text/json": components["schemas"]["OrganizationBreakdownDto"];
-          };
+        get: {
+            parameters: {
+                query: {
+                    tradeType: components["schemas"]["TradeType"];
+                    sectorId?: string;
+                    serviceSectorId?: string;
+                    countryCodes?: string[];
+                    hsCode?: string;
+                    organizationType?: string;
+                    productSearch?: string;
+                    page?: number;
+                    pageSize?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "text/plain": components["schemas"]["TradeSubmissionDto"];
+                        "application/json": components["schemas"]["TradeSubmissionDto"];
+                        "text/json": components["schemas"]["TradeSubmissionDto"];
+                    };
+                };
+            };
         };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/TradeInterest/product-chart": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/TradeInterest/create-contact-request": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["ContactRequestDto"];
+                    "text/json": components["schemas"]["ContactRequestDto"];
+                    "application/*+json": components["schemas"]["ContactRequestDto"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get: {
-      parameters: {
-        query: {
-          tradeType: components["schemas"]["TradeType"];
-          sectorId?: string;
-          serviceSectorId?: string;
-          countryCodes?: string[];
-          organizationType?: string;
+    "/api/TradeInterest/create-trade-interest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["ProductChartDto"][];
-            "application/json": components["schemas"]["ProductChartDto"][];
-            "text/json": components["schemas"]["ProductChartDto"][];
-          };
+        get?: never;
+        put?: never;
+        post: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: {
+                content: {
+                    "application/json": components["schemas"]["CreateTradeInterestRequest"];
+                    "text/json": components["schemas"]["CreateTradeInterestRequest"];
+                    "application/*+json": components["schemas"]["CreateTradeInterestRequest"];
+                };
+            };
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
         };
-      };
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/TradeInterest/submissions-table": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
+    "/api/TradeInterest/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: {
+            parameters: {
+                query?: {
+                    asNoTracking?: boolean;
+                };
+                header?: never;
+                path: {
+                    id: string;
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    get: {
-      parameters: {
-        query: {
-          tradeType: components["schemas"]["TradeType"];
-          sectorId?: string;
-          serviceSectorId?: string;
-          countryCodes?: string[];
-          hsCode?: string;
-          organizationType?: string;
-          productSearch?: string;
-          page?: number;
-          pageSize?: number;
+    "/api/TradeInterest": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
         };
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content: {
-            "text/plain": components["schemas"]["TradeSubmissionDto"];
-            "application/json": components["schemas"]["TradeSubmissionDto"];
-            "text/json": components["schemas"]["TradeSubmissionDto"];
-          };
+        get: {
+            parameters: {
+                query?: {
+                    pageNumber?: number;
+                    pageSize?: number;
+                };
+                header?: never;
+                path?: never;
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description OK */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
         };
-      };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
     };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/TradeInterest/create-trade-interest": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    post: {
-      parameters: {
-        query?: never;
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: {
-        content: {
-          "application/json": components["schemas"]["CreateTradeInterestRequest"];
-          "text/json": components["schemas"]["CreateTradeInterestRequest"];
-          "application/*+json": components["schemas"]["CreateTradeInterestRequest"];
-        };
-      };
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-      };
-    };
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/TradeInterest/{id}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: {
-          asNoTracking?: boolean;
-        };
-        header?: never;
-        path: {
-          id: string;
-        };
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-      };
-    };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/api/TradeInterest": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get: {
-      parameters: {
-        query?: {
-          pageNumber?: number;
-          pageSize?: number;
-        };
-        header?: never;
-        path?: never;
-        cookie?: never;
-      };
-      requestBody?: never;
-      responses: {
-        /** @description OK */
-        200: {
-          headers: {
-            [name: string]: unknown;
-          };
-          content?: never;
-        };
-      };
-    };
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    BVNRequest: {
-      /** Format: string */
-      bvn: string;
+    schemas: {
+        BVNRequest: {
+            /** Format: string */
+            bvn: string;
+        };
+        BusinessTypeData: {
+            businessTypeName?: string | null;
+            /** Format: int32 */
+            count?: number;
+            /** Format: double */
+            percentage?: number;
+        };
+        BvnValidationResponse: {
+            responseCode?: string | null;
+            firstName?: string | null;
+            middleName?: string | null;
+            lastName?: string | null;
+            dateOfBirth?: string | null;
+            registrationDate?: string | null;
+            enrollmentBank?: string | null;
+            enrollmentBranch?: string | null;
+            email?: string | null;
+            gender?: string | null;
+            levelOfAccount?: string | null;
+            lgaOfOrigin?: string | null;
+            lgaOfResidence?: string | null;
+            maritalStatus?: string | null;
+            nin?: string | null;
+            nameOnCard?: string | null;
+            nationality?: string | null;
+            phoneNumber1?: string | null;
+            phoneNumber2?: string | null;
+            residentialAddress?: string | null;
+            stateOfOrigin?: string | null;
+            stateOfResidence?: string | null;
+            watchListed?: string | null;
+            base64Image?: string | null;
+        };
+        BvnValidationResponseResponse: {
+            succeeded?: boolean;
+            /** Format: int32 */
+            code?: number;
+            message?: string | null;
+            data?: components["schemas"]["BvnValidationResponse"];
+            pageMeta?: components["schemas"]["PageMeta"];
+            errors?: string[] | null;
+        };
+        /**
+         * Format: int32
+         * @enum {integer}
+         */
+        Channel: 1 | 2 | 3;
+        ContactRequestDto: {
+            tradeInterestId: string | null;
+        };
+        CountryResponse: {
+            code?: string | null;
+            name?: string | null;
+        };
+        CountryResponseIReadOnlyListResponse: {
+            succeeded?: boolean;
+            /** Format: int32 */
+            code?: number;
+            message?: string | null;
+            data?: components["schemas"]["CountryResponse"][] | null;
+            pageMeta?: components["schemas"]["PageMeta"];
+            errors?: string[] | null;
+        };
+        CountrySubmissionData: {
+            countryCode?: string | null;
+            countryName?: string | null;
+            /** Format: int32 */
+            submissionCount?: number;
+            /** Format: double */
+            percentage?: number;
+        };
+        CreateTradeInterestRequest: {
+            countryCode: string;
+            orgId: string;
+            tradeType: components["schemas"]["TradeType"];
+            notes?: string | null;
+            contact: components["schemas"]["TradeInterestContactDto"];
+            goodsItems?: components["schemas"]["TradeGoodsItemDto"][] | null;
+            serviceItems?: components["schemas"]["TradeServiceItemDto"][] | null;
+        };
+        EmailVerificationRequest: {
+            /** Format: string */
+            email: string;
+            /** Format: string */
+            countryCode: string;
+        };
+        EmailVerificationResponse: {
+            success?: boolean;
+            message?: string | null;
+            tokenId?: string | null;
+        };
+        EmailVerificationResponseResponse: {
+            succeeded?: boolean;
+            /** Format: int32 */
+            code?: number;
+            message?: string | null;
+            data?: components["schemas"]["EmailVerificationResponse"];
+            pageMeta?: components["schemas"]["PageMeta"];
+            errors?: string[] | null;
+        };
+        EmailVerificationResult: {
+            success?: boolean;
+            code?: string | null;
+            message?: string | null;
+            email?: string | null;
+            userId?: string | null;
+            accessToken?: string | null;
+            tokenType?: string | null;
+            country?: string | null;
+        };
+        EmailVerificationResultResponse: {
+            succeeded?: boolean;
+            /** Format: int32 */
+            code?: number;
+            message?: string | null;
+            data?: components["schemas"]["EmailVerificationResult"];
+            pageMeta?: components["schemas"]["PageMeta"];
+            errors?: string[] | null;
+        };
+        /**
+         * Format: int32
+         * @enum {integer}
+         */
+        Frequency: 1 | 2 | 3;
+        /**
+         * Format: int32
+         * @enum {integer}
+         */
+        Gender: 1 | 2;
+        HsCodeData: {
+            hsCode?: string | null;
+            /** Format: int32 */
+            count?: number;
+            productName?: string | null;
+        };
+        OrganizationBreakdownDto: {
+            /** Format: int32 */
+            totalRequests?: number;
+            organizations?: components["schemas"]["OrganizationBreakdownItemDto"][] | null;
+        };
+        OrganizationBreakdownItemDto: {
+            organizationType?: string | null;
+            /** Format: int32 */
+            count?: number;
+        };
+        OrganizationChartDto: {
+            /** Format: int32 */
+            totalRequests?: number;
+            organizationCounts?: components["schemas"]["OrganizationTypeCountDto"][] | null;
+        };
+        OrganizationTypeCountDto: {
+            organizationType?: string | null;
+            /** Format: int32 */
+            count?: number;
+        };
+        OrganizationTypeData: {
+            organizationTypeId?: string | null;
+            organizationTypeName?: string | null;
+            /** Format: int32 */
+            count?: number;
+            /** Format: double */
+            percentage?: number;
+        };
+        OrganizationTypeResponse: {
+            id?: string | null;
+            name?: string | null;
+            parentId?: string | null;
+            /** Format: int32 */
+            level?: number;
+            /** Format: int32 */
+            displayOrder?: number;
+            isActive?: boolean;
+            hasChildren?: boolean;
+        };
+        OrganizationTypeResponseIReadOnlyListResponse: {
+            succeeded?: boolean;
+            /** Format: int32 */
+            code?: number;
+            message?: string | null;
+            data?: components["schemas"]["OrganizationTypeResponse"][] | null;
+            pageMeta?: components["schemas"]["PageMeta"];
+            errors?: string[] | null;
+        };
+        PageMeta: {
+            /** Format: int32 */
+            pageNumber?: number;
+            /** Format: int32 */
+            pageSize?: number;
+            /** Format: int32 */
+            totalPages?: number;
+            /** Format: int32 */
+            totalRecords?: number;
+        };
+        PopularHsCodesInsight: {
+            hsCodes?: components["schemas"]["HsCodeData"][] | null;
+        };
+        PopularHsCodesInsightResponse: {
+            succeeded?: boolean;
+            /** Format: int32 */
+            code?: number;
+            message?: string | null;
+            data?: components["schemas"]["PopularHsCodesInsight"];
+            pageMeta?: components["schemas"]["PageMeta"];
+            errors?: string[] | null;
+        };
+        ProblemDetails: {
+            type?: string | null;
+            title?: string | null;
+            /** Format: int32 */
+            status?: number | null;
+            detail?: string | null;
+            instance?: string | null;
+        } & {
+            [key: string]: unknown;
+        };
+        ProductChartDto: {
+            productName?: string | null;
+            /** Format: int32 */
+            count?: number;
+        };
+        ProductResponse: {
+            id?: string | null;
+            name?: string | null;
+            hsCode?: string | null;
+            sectorId?: string | null;
+            sectorName?: string | null;
+            isActive?: boolean;
+        };
+        ProductResponseIReadOnlyListResponse: {
+            succeeded?: boolean;
+            /** Format: int32 */
+            code?: number;
+            message?: string | null;
+            data?: components["schemas"]["ProductResponse"][] | null;
+            pageMeta?: components["schemas"]["PageMeta"];
+            errors?: string[] | null;
+        };
+        ProductResponseResponse: {
+            succeeded?: boolean;
+            /** Format: int32 */
+            code?: number;
+            message?: string | null;
+            data?: components["schemas"]["ProductResponse"];
+            pageMeta?: components["schemas"]["PageMeta"];
+            errors?: string[] | null;
+        };
+        ProductSearchResponse: {
+            items?: components["schemas"]["ProductResponse"][] | null;
+            /** Format: int32 */
+            total?: number;
+        };
+        ProductSearchResponseResponse: {
+            succeeded?: boolean;
+            /** Format: int32 */
+            code?: number;
+            message?: string | null;
+            data?: components["schemas"]["ProductSearchResponse"];
+            pageMeta?: components["schemas"]["PageMeta"];
+            errors?: string[] | null;
+        };
+        SectorData: {
+            sectorId?: string | null;
+            sectorName?: string | null;
+            /** Format: int32 */
+            count?: number;
+            /** Format: double */
+            percentage?: number;
+        };
+        SectorResponse: {
+            id?: string | null;
+            name?: string | null;
+            isActive?: boolean;
+        };
+        SectorResponseIReadOnlyListResponse: {
+            succeeded?: boolean;
+            /** Format: int32 */
+            code?: number;
+            message?: string | null;
+            data?: components["schemas"]["SectorResponse"][] | null;
+            pageMeta?: components["schemas"]["PageMeta"];
+            errors?: string[] | null;
+        };
+        ServiceSectorResponse: {
+            id?: string | null;
+            name?: string | null;
+            isActive?: boolean;
+        };
+        ServiceSectorResponseIReadOnlyListResponse: {
+            succeeded?: boolean;
+            /** Format: int32 */
+            code?: number;
+            message?: string | null;
+            data?: components["schemas"]["ServiceSectorResponse"][] | null;
+            pageMeta?: components["schemas"]["PageMeta"];
+            errors?: string[] | null;
+        };
+        TopBusinessTypesInsight: {
+            businessTypes?: components["schemas"]["BusinessTypeData"][] | null;
+        };
+        TopBusinessTypesInsightResponse: {
+            succeeded?: boolean;
+            /** Format: int32 */
+            code?: number;
+            message?: string | null;
+            data?: components["schemas"]["TopBusinessTypesInsight"];
+            pageMeta?: components["schemas"]["PageMeta"];
+            errors?: string[] | null;
+        };
+        TopCountriesInsight: {
+            countries?: components["schemas"]["CountrySubmissionData"][] | null;
+        };
+        TopCountriesInsightResponse: {
+            succeeded?: boolean;
+            /** Format: int32 */
+            code?: number;
+            message?: string | null;
+            data?: components["schemas"]["TopCountriesInsight"];
+            pageMeta?: components["schemas"]["PageMeta"];
+            errors?: string[] | null;
+        };
+        TopOrganizationsInsight: {
+            organizations?: components["schemas"]["OrganizationTypeData"][] | null;
+        };
+        TopOrganizationsInsightResponse: {
+            succeeded?: boolean;
+            /** Format: int32 */
+            code?: number;
+            message?: string | null;
+            data?: components["schemas"]["TopOrganizationsInsight"];
+            pageMeta?: components["schemas"]["PageMeta"];
+            errors?: string[] | null;
+        };
+        TopSectorsInsight: {
+            sectors?: components["schemas"]["SectorData"][] | null;
+        };
+        TopSectorsInsightResponse: {
+            succeeded?: boolean;
+            /** Format: int32 */
+            code?: number;
+            message?: string | null;
+            data?: components["schemas"]["TopSectorsInsight"];
+            pageMeta?: components["schemas"]["PageMeta"];
+            errors?: string[] | null;
+        };
+        TradeGoodsItemDto: {
+            sectorId?: string | null;
+            productId?: string | null;
+            productName?: string | null;
+            hsCode?: string | null;
+            /** Format: double */
+            quantity?: number | null;
+            unitCode?: string | null;
+            frequency: components["schemas"]["Frequency"];
+            standardsAndCerts?: string | null;
+            regulatoryAuthority?: string | null;
+        };
+        TradeInterestContactDto: {
+            fullName: string;
+            /** Format: email */
+            email: string;
+            phone?: string | null;
+            gender?: components["schemas"]["Gender"];
+            channel: components["schemas"]["Channel"];
+            company?: string | null;
+            city?: string | null;
+            countryCode: string;
+        };
+        TradeServiceItemDto: {
+            serviceSectorId: string;
+            description?: string | null;
+        };
+        TradeSubmissionDto: {
+            tradeInterestId?: string | null;
+            organizationType?: string | null;
+            country?: string | null;
+            productName?: string | null;
+            hsCode?: string | null;
+            /** Format: double */
+            quantity?: number | null;
+            unit?: string | null;
+            frequency?: string | null;
+        };
+        /**
+         * Format: int32
+         * @enum {integer}
+         */
+        TradeType: 1 | 2;
     };
-    BusinessTypeData: {
-      businessTypeName?: string | null;
-      /** Format: int32 */
-      count?: number;
-      /** Format: double */
-      percentage?: number;
-    };
-    BvnValidationResponse: {
-      responseCode?: string | null;
-      firstName?: string | null;
-      middleName?: string | null;
-      lastName?: string | null;
-      dateOfBirth?: string | null;
-      registrationDate?: string | null;
-      enrollmentBank?: string | null;
-      enrollmentBranch?: string | null;
-      email?: string | null;
-      gender?: string | null;
-      levelOfAccount?: string | null;
-      lgaOfOrigin?: string | null;
-      lgaOfResidence?: string | null;
-      maritalStatus?: string | null;
-      nin?: string | null;
-      nameOnCard?: string | null;
-      nationality?: string | null;
-      phoneNumber1?: string | null;
-      phoneNumber2?: string | null;
-      residentialAddress?: string | null;
-      stateOfOrigin?: string | null;
-      stateOfResidence?: string | null;
-      watchListed?: string | null;
-      base64Image?: string | null;
-    };
-    /**
-     * Format: int32
-     * @enum {integer}
-     */
-    Channel: 1 | 2 | 3;
-    CountryResponse: {
-      code?: string | null;
-      name?: string | null;
-    };
-    CountrySubmissionData: {
-      countryCode?: string | null;
-      countryName?: string | null;
-      /** Format: int32 */
-      submissionCount?: number;
-      /** Format: double */
-      percentage?: number;
-    };
-    CreateTradeInterestRequest: {
-      countryCode: string;
-      orgId: string;
-      tradeType: components["schemas"]["TradeType"];
-      notes?: string | null;
-      contact: components["schemas"]["TradeInterestContactDto"];
-      goodsItems?: components["schemas"]["TradeGoodsItemDto"][] | null;
-      serviceItems?: components["schemas"]["TradeServiceItemDto"][] | null;
-    };
-    EmailVerificationRequest: {
-      /** Format: string */
-      email: string;
-      /** Format: string */
-      countryCode: string;
-    };
-    /**
-     * Format: int32
-     * @enum {integer}
-     */
-    Frequency: 1 | 2 | 3;
-    /**
-     * Format: int32
-     * @enum {integer}
-     */
-    Gender: 1 | 2;
-    HsCodeData: {
-      hsCode?: string | null;
-      /** Format: int32 */
-      count?: number;
-      productName?: string | null;
-    };
-    OrganizationBreakdownDto: {
-      /** Format: int32 */
-      totalRequests?: number;
-      organizations?:
-        | components["schemas"]["OrganizationBreakdownItemDto"][]
-        | null;
-    };
-    OrganizationBreakdownItemDto: {
-      organizationType?: string | null;
-      /** Format: int32 */
-      count?: number;
-    };
-    OrganizationChartDto: {
-      organizationType?: string | null;
-      /** Format: int32 */
-      count?: number;
-    };
-    OrganizationTypeData: {
-      organizationTypeId?: string | null;
-      organizationTypeName?: string | null;
-      /** Format: int32 */
-      count?: number;
-      /** Format: double */
-      percentage?: number;
-    };
-    OrganizationTypeResponse: {
-      id?: string | null;
-      name?: string | null;
-      parentId?: string | null;
-      /** Format: int32 */
-      level?: number;
-      /** Format: int32 */
-      displayOrder?: number;
-      isActive?: boolean;
-      hasChildren?: boolean;
-    };
-    PopularHsCodesInsight: {
-      hsCodes?: components["schemas"]["HsCodeData"][] | null;
-    };
-    ProblemDetails: {
-      type?: string | null;
-      title?: string | null;
-      /** Format: int32 */
-      status?: number | null;
-      detail?: string | null;
-      instance?: string | null;
-    } & {
-      [key: string]: unknown;
-    };
-    ProductChartDto: {
-      productName?: string | null;
-      /** Format: int32 */
-      count?: number;
-    };
-    ProductResponse: {
-      id?: string | null;
-      name?: string | null;
-      hsCode?: string | null;
-      sectorId?: string | null;
-      sectorName?: string | null;
-      isActive?: boolean;
-    };
-    ProductSearchResponse: {
-      items?: components["schemas"]["ProductResponse"][] | null;
-      /** Format: int32 */
-      total?: number;
-    };
-    SectorData: {
-      sectorId?: string | null;
-      sectorName?: string | null;
-      /** Format: int32 */
-      count?: number;
-      /** Format: double */
-      percentage?: number;
-    };
-    SectorResponse: {
-      id?: string | null;
-      name?: string | null;
-      isActive?: boolean;
-    };
-    ServiceSectorResponse: {
-      id?: string | null;
-      name?: string | null;
-      isActive?: boolean;
-    };
-    TopBusinessTypesInsight: {
-      businessTypes?: components["schemas"]["BusinessTypeData"][] | null;
-    };
-    TopCountriesInsight: {
-      countries?: components["schemas"]["CountrySubmissionData"][] | null;
-    };
-    TopOrganizationsInsight: {
-      organizations?: components["schemas"]["OrganizationTypeData"][] | null;
-    };
-    TopSectorsInsight: {
-      sectors?: components["schemas"]["SectorData"][] | null;
-    };
-    TradeGoodsItemDto: {
-      sectorId?: string | null;
-      productId?: string | null;
-      productName?: string | null;
-      hsCode?: string | null;
-      /** Format: double */
-      quantity?: number | null;
-      unitCode?: string | null;
-      frequency: components["schemas"]["Frequency"];
-      standardsAndCerts?: string | null;
-      regulatoryAuthority?: string | null;
-    };
-    TradeInterestContactDto: {
-      fullName: string;
-      /** Format: email */
-      email: string;
-      phone?: string | null;
-      gender?: components["schemas"]["Gender"];
-      channel: components["schemas"]["Channel"];
-      company?: string | null;
-      city?: string | null;
-      countryCode: string;
-    };
-    TradeServiceItemDto: {
-      serviceSectorId: string;
-      description?: string | null;
-    };
-    TradeSubmissionDto: {
-      tradeInterestId?: string | null;
-      organizationType?: string | null;
-      country?: string | null;
-      productName?: string | null;
-      hsCode?: string | null;
-      /** Format: double */
-      quantity?: number | null;
-      unit?: string | null;
-      frequency?: string | null;
-    };
-    /**
-     * Format: int32
-     * @enum {integer}
-     */
-    TradeType: 1 | 2;
-  };
-  responses: never;
-  parameters: never;
-  requestBodies: never;
-  headers: never;
-  pathItems: never;
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
 export type $defs = Record<string, never>;
 export type operations = Record<string, never>;

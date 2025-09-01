@@ -53,14 +53,15 @@ export function Graphs() {
     ...(countryGraphValue !== "" && { countryCodes: [countryGraphValue] }),
     // ...(hsCodeGraphValue !== "" && { hs: [setHsCodeGraphValue] }),
   });
-  // const { data: orgChart } = useOrgChart({
-  //   tradeType: tradeType === 1 ? 1 : 2,
-  //   sectorId: sector.sectorId,
-  // });
-  // const { data: orgBreakdown } = useOrgBreakdown({
-  //   tradeType: tradeType === 1 ? 1 : 2,
-  //   sectorId: sector.sectorId,
-  // });
+  const { data: orgChart } = useOrgChart({
+    tradeType: tradeType === 1 ? 1 : 2,
+    sectorId: sector.sectorId,
+  });
+  const { data: orgBreakdown } = useOrgBreakdown({
+    tradeType: tradeType === 1 ? 1 : 2,
+    parentId: "ORGTYPE_002",
+    sectorId: sector.sectorId,
+  });
   return (
     <div className="flex w-full flex-col gap-6 p-6">
       <Tabs defaultValue="countries">
@@ -76,10 +77,7 @@ export function Graphs() {
                 <SelectValue placeholder="Country" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem key="all" value="all">
-                  All
-                </SelectItem>
-                {countryOptions?.map((option) => (
+                {countryOptions?.data?.map((option) => (
                   <SelectItem key={option.code} value={option.code ?? ""}>
                     {option.name}
                   </SelectItem>

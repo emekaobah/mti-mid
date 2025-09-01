@@ -29,6 +29,9 @@ const Chart = () => {
 
   console.log(topImportSectors, "This is topImportSectors");
 
+  // console.log(topImportCountries, "This is topImportCountries");
+  // console.log(topExportCountries, "This is topExportCountries");
+
   return (
     <div className=" bg-[#FCFCFC] rounded-4xl border-6 border-black p-4 lg:p-10 min-h-[780px] flex flex-col  ">
       <h3 className="font-semibold ">Country Insights</h3>
@@ -36,15 +39,19 @@ const Chart = () => {
         <div className="lg:w-[60%] w-full">
           <InsightsBarChart
             title="Trade Requests"
-            importData={transformCountryData(topImportCountries?.countries)}
-            exportData={transformCountryData(topExportCountries?.countries)}
+            importData={transformCountryData(
+              topImportCountries?.data?.countries
+            )}
+            exportData={transformCountryData(
+              topExportCountries?.data?.countries
+            )}
           />
         </div>
         <div className="lg:w-[40%] w-full">
           <InsightsRadialChart
             title="Top Requested Sectors"
-            importData={transformSectorData(topImportSectors)}
-            exportData={transformSectorData(topExportSectors)}
+            importData={transformSectorData(topImportSectors?.slice(0, 5))}
+            exportData={transformSectorData(topExportSectors?.slice(0, 5))}
           />
         </div>
       </div>
