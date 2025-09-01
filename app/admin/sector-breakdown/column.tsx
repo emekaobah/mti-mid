@@ -3,10 +3,10 @@
 import { ColumnDef } from "@tanstack/react-table";
 // import { AppUserVehicle } from "@/lib/types/responseTypes";
 // import { formatDateItem } from "@/lib/utils";
-import { TradeData } from "./data";
-import { RequestsColumnAction } from "./column-action";
+import { TradeSubmissions } from "@/lib/custom-apis/types";
+import { TradeRequestsAction } from "./column-action";
 
-export const columns: ColumnDef<TradeData>[] = [
+export const columns: ColumnDef<TradeSubmissions>[] = [
   {
     header: "S/N.",
     cell: ({ row, table }) => {
@@ -52,8 +52,9 @@ export const columns: ColumnDef<TradeData>[] = [
     header: "Action",
     id: "actions",
     enableHiding: false,
-    cell: () => {
-      return <RequestsColumnAction />;
+    cell: ({ row }) => {
+      const rowData = row.original;
+      return <TradeRequestsAction submission={rowData} />;
     },
   },
 ];

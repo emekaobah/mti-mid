@@ -39,16 +39,16 @@ axiosClient.interceptors.response.use(
       console.log("[Auth Error] 401 Unauthorized - redirecting to login");
 
       // Clear authentication data
-      if (typeof window !== "undefined") {
-        localStorage.removeItem("token");
-        localStorage.removeItem("user");
+      // if (typeof window !== "undefined") {
+      //   localStorage.removeItem("token");
+      //   localStorage.removeItem("user");
 
-        // Redirect to login page immediately
-        window.location.replace("/");
+      //    Redirect to login page immediately
+      //    window.location.replace("/");
 
-        // Return a rejected promise with a clear auth error
-        return Promise.reject(new Error("UNAUTHORIZED_REDIRECT"));
-      }
+      //   // Return a rejected promise with a clear auth error
+      //   return Promise.reject(new Error("UNAUTHORIZED_REDIRECT"));
+      // }
     }
 
     return Promise.reject(error);

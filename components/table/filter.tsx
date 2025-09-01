@@ -12,7 +12,7 @@ import {
 import { Search } from "lucide-react";
 import useFilterStore from "@/hooks/store/useFilterStore";
 
-interface FilterOption {
+export interface FilterOption {
   label: string;
   value: string | number;
 }
@@ -194,9 +194,9 @@ export function TableFilters({
       {productSectorOptions && productSectorOptions.length > 0 && (
         <Select
           value={productSectorFilterValue}
-          onValueChange={(value) =>
-            setProductSectorFilterValue(value === "all" ? "all" : value)
-          }
+          onValueChange={(value) => {
+            setProductSectorFilterValue(value === "all" ? "" : value);
+          }}
         >
           <SelectTrigger className="w-[150px] bg-white outline-none focus:ring-white border border-[#E7E7E7] text-[10px] text-[rgba(58,58,58,0.6)] p-3 rounded-[10px]">
             <SelectValue placeholder="Product Sectors" />
@@ -216,7 +216,7 @@ export function TableFilters({
         <Select
           value={serviceSectorFilterValue}
           onValueChange={(value) =>
-            setServiceSectorFilterValue(value === "all" ? "all" : value)
+            setServiceSectorFilterValue(value === "all" ? "" : value)
           }
         >
           <SelectTrigger className="w-[150px] bg-white outline-none focus:ring-white border border-[#E7E7E7] text-[10px] text-[rgba(58,58,58,0.6)] p-3 rounded-[10px]">

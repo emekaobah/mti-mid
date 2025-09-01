@@ -4,11 +4,8 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
-import { TrendingUp } from "lucide-react";
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import {
   ChartConfig,
@@ -16,38 +13,44 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { ProductChart } from "@/hooks/api/trade-interest/types";
+
+interface ProductData {
+  productName: string;
+  count: number;
+}
+
+interface ProductsGraphProps {
+  data: ProductChart[];
+}
 
 export const description = "A bar chart";
-const chartData = [
-  { product: "Rice", quantity: 186 },
-  { product: "Cocoa", quantity: 305 },
-  { product: "Tobacco", quantity: 237 },
-  { product: "Starch", quantity: 73 },
-  { product: "Flour", quantity: 209 },
-  { product: "Beans", quantity: 214 },
-  { product: "Wheat", quantity: 300 },
-  { product: "Coffee", quantity: 150 },
-  { product: "Spices", quantity: 100 },
-  { product: "Malt", quantity: 120 },
-];
 
 const chartConfig = {
-  quantity: {
-    label: "Quantity",
+  count: {
+    label: "Count",
     color: "var(--chart-1)",
   },
 } satisfies ChartConfig;
 
-const ProductsGraph = () => {
+const ProductsGraph: React.FC<ProductsGraphProps> = ({ data }) => {
+  // Transform the data to match the chart's expected format
+  const chartData = data.map((item) => ({
+    product: item.productName,
+    count: item.count,
+  }));
+
+  // Calculate total requests for display
+  const totalRequests = data.reduce((sum, item) => sum + item.count, 0);
+
   return (
     <div>
       <Card>
         <CardHeader>
-          {/* <CardTitle>Bar Chart</CardTitle> */}
           <CardDescription className="flex items-center gap-3 text-xs">
             All Countries
-            <div className="bg-[#074318] rounded-full h-2 w-2"></div> 500
-            Requests
+            <div className="bg-[#074318] rounded-full h-2 w-2"></div>
+            {totalRequests} Requests
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -65,18 +68,16 @@ const ProductsGraph = () => {
                 cursor={false}
                 content={<ChartTooltipContent hideLabel />}
               />
-              <Bar dataKey="quantity" fill="#074318" radius={8} width={10} />
+              <Bar
+                dataKey="count"
+                fill="#074318"
+                radius={8}
+                width={10}
+                maxBarSize={30}
+              />
             </BarChart>
           </ChartContainer>
         </CardContent>
-        {/* <CardFooter className="flex-col items-start gap-2 text-sm">
-          <div className="flex gap-2 leading-none font-medium">
-            Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-          </div>
-          <div className="text-muted-foreground leading-none">
-            Showing total visitors for the last 6 months
-          </div>
-        </CardFooter> */}
       </Card>
     </div>
   );

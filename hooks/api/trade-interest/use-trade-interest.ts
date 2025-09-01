@@ -1,6 +1,12 @@
 import { useApiQuery, useApiQueryString } from "@/lib/api-hooks";
 import type { TradeType } from "../shared/types";
-import { ApiResponse, SectorCount } from "./types";
+import {
+  ApiResponse,
+  SectorCount,
+  ProductChart,
+  OrgChart,
+  OrgBreakdown,
+} from "./types";
 
 // Get trade interest by country
 export interface UseTradeInterestByCountryParams {
@@ -21,6 +27,9 @@ export const useTradeInterestByCountry = (
 export interface UseSectorCountParams {
   tradeType?: TradeType;
   countryCodes?: string[];
+  sectorIds?: string;
+  serviceSectorIds?: string;
+  searchTerm?: string;
 }
 
 export const useSectorCount = (params?: UseSectorCountParams) => {
@@ -56,4 +65,68 @@ export interface UseTradeInterestsParams {
 
 export const useTradeInterests = (params?: UseTradeInterestsParams) => {
   return useApiQuery<"/api/TradeInterest">("/api/TradeInterest", params);
+};
+
+// Trade interest by organization chart
+
+// Get product chart
+export interface UseProductChartParams {
+  tradeType: TradeType;
+  countryCodes?: string[];
+  sectorId?: string;
+  serviceSectorIds?: string;
+  organizationType?: string;
+}
+
+export const useProductChart = (params?: UseProductChartParams) => {
+  const result = useApiQuery<"/api/TradeInterest/product-chart">(
+    "/api/TradeInterest/product-chart",
+    params
+  );
+
+  const apiResponse = result.data as ApiResponse<ProductChart[]> | undefined;
+  const productData = apiResponse?.data || [];
+
+  return { ...result, data: productData };
+};
+
+// Get org chart
+export interface UseOrgChartParams {
+  tradeType: TradeType;
+  countryCodes?: string[];
+  sectorId?: string;
+  serviceSectorIds?: string;
+  organizationType?: string;
+}
+
+export const useOrgChart = (params?: UseOrgChartParams) => {
+  const result = useApiQuery<"/api/TradeInterest/organization-chart">(
+    "/api/TradeInterest/organization-chart",
+    params
+  );
+
+  const apiResponse = result.data as ApiResponse<OrgChart[]> | undefined;
+  const productData = apiResponse?.data || [];
+
+  return { ...result, data: productData };
+};
+
+export interface UseOrgChartParams {
+  tradeType: TradeType;
+  countryCodes?: string[];
+  sectorId?: string;
+  serviceSectorIds?: string;
+  organizationType?: string;
+}
+
+export const useOrgBreakdown = (params?: UseOrgChartParams) => {
+  const result = useApiQuery<"/api/TradeInterest/organization-breakdown">(
+    "/api/TradeInterest/organization-breakdown",
+    params
+  );
+
+  const apiResponse = result.data as ApiResponse<OrgBreakdown[]> | undefined;
+  const productData = apiResponse?.data || [];
+
+  return { ...result, data: productData };
 };

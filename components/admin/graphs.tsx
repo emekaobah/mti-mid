@@ -13,40 +13,73 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import useFilterStore from "@/hooks/store/useFilterStore";
+import { useCountries } from "@/hooks/api";
+import { useOrganizationTypes } from "@/hooks/api";
+import { useProductChart, useOrgChart, useOrgBreakdown } from "@/hooks/api";
 
-const countryOptions = [
-  { label: "All", value: "all" },
-  { label: "Agriculture", value: "Agriculture" },
-  { label: "Chemicals", value: "Chemicals" },
-  { label: "Building Materials", value: "Building Materials" },
-];
+// const countryOptions = [
+//   { label: "All", value: "all" },
+//   { label: "Agriculture", value: "Agriculture" },
+//   { label: "Chemicals", value: "Chemicals" },
+//   { label: "Building Materials", value: "Building Materials" },
+// ];
 
 export function Graphs() {
   // useEffect(() => {}, []);
-  const { countryFilterValue, setCountryFilterValue } = useFilterStore();
+  const { countryFilterValue, setCountryFilterValue, tradeType, sector } =
+    useFilterStore();
+  const { data: countryOptions } = useCountries();
+
+  const { data } = useProductChart({
+    tradeType: tradeType === 1 ? 1 : 2,
+    sectorId: sector.sectorId,
+    ...(countryFilterValue !== "" && { countryCodes: [countryFilterValue] }),
+  });
+  const { data: orgChart } = useOrgChart({
+    tradeType: tradeType === 1 ? 1 : 2,
+    sectorId: sector.sectorId,
+  });
+  const { data: orgBreakdown } = useOrgBreakdown({
+    tradeType: tradeType === 1 ? 1 : 2,
+    sectorId: sector.sectorId,
+  });
   return (
     <div className="flex w-full flex-col gap-6 p-6">
       <Tabs defaultValue="countries">
         <TabsList>
           <TabsTrigger value="countries">
-            {/* <TableFilters
-              countryOptions={countryOptions}
-              noGlobalSearch
-              noBackground
-            /> */}
-            Countries
+            <Select
+              value={countryFilterValue}
+              onValueChange={(value) =>
+                setCountryFilterValue(value === "all" ? "all" : value)
+              }
+            >
+              <SelectTrigger className="border-0 ring-0 outline-0 focus:border-0 focus:ring-0 focus:outline-0 focus-visible:border-0 focus-visible:ring-0 focus-visible:outline-0 data-[placeholder]:text-muted-foreground [&_svg:not([class*='text-'])]:text-muted-foreground dark:bg-input/30 dark:hover:bg-input/50 flex w-fit items-center justify-between gap-2 bg-transparent px-3 py-2 text-sm whitespace-nowrap transition-[color,box-shadow] disabled:cursor-not-allowed disabled:opacity-50 data-[size=default]:h-9 data-[size=sm]:h-8 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-2 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4">
+                <SelectValue placeholder="Country" />
+              </SelectTrigger>
+              <SelectContent>
+                {countryOptions?.map((option) => (
+                  <SelectItem key={option.code} value={option.code ?? ""}>
+                    {option.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </TabsTrigger>
           <TabsTrigger value="hsCodes">HS Codes</TabsTrigger>
           <TabsTrigger value="organization">Organization Type</TabsTrigger>
         </TabsList>
         <TabsContent value="countries">
-          <ProductsGraph />
+          <ProductsGraph data={data} />
         </TabsContent>
         <TabsContent value="hsCodes">
-          <ProductsGraph />
+          <ProductsGraph data={data} />
         </TabsContent>
         <TabsContent value="organization">
-          <OrganizationGraph />
+          <OrganizationGraph
+            productsData={orgChart}
+            organizationsData={orgBreakdown}
+          />
         </TabsContent>
       </Tabs>
     </div>

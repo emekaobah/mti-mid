@@ -6,19 +6,23 @@ import { items } from "@/components/table/column-action";
 import { Eye, CircleX, FilePenLine } from "lucide-react";
 // import { useCancelRequest } from "@/features/requests/hooks/useRequests";
 import useModalStore from "@/hooks/store/useModalStore";
+import useTradeSUbmissionStore from "@/hooks/store/useTradeSubmissionStore";
+import { TradeSubmissions } from "@/lib/custom-apis/types";
 
-export const RequestsColumnAction = () => {
+export const TradeRequestsAction = ({
+  submission,
+}: {
+  submission: TradeSubmissions;
+}) => {
   const router = useRouter();
-  //   const { mutate: cancelRequest } = useCancelRequest();
   const { openModal } = useModalStore();
-
-  //   const { setRequest } = useViewRequestStore();
+  const { setSubmission } = useTradeSUbmissionStore();
 
   const menuItems: items[] = [
     {
       label: "Details",
       action: () => {
-        // setRequest(request);
+        setSubmission(submission);
         router.push(`/admin/sector-breakdown/1/business-details`);
       },
       //   icon: Eye,

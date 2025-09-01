@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import React from "react";
 import Image from "next/image";
 import logo from "@/public/logo-svg.svg";
@@ -26,26 +26,19 @@ import Configs from "@/lib/configs";
 import { useApiQueryNew } from "@/hooks/api";
 import { useSectorCount } from "@/hooks/api";
 import { SectorCount } from "@/hooks/api/trade-interest/types";
-
-const productOptions = [
-  { label: "All", value: "all" },
-  { label: "Agriculture", value: "Agriculture" },
-  { label: "Chemicals", value: "Chemicals" },
-  { label: "Building Materials", value: "Building Materials" },
-];
-
-const serviceOptions = [
-  { label: "All", value: "all" },
-  { label: "Business Service", value: "Business Service" },
-  { label: "HR Services", value: "HR Services" },
-  { label: "Educational Services", value: "Educational Services" },
-];
+import { useSectors } from "@/hooks/api";
+import { FilterOption } from "@/components/table/filter";
+import { useServiceSectors } from "@/hooks/api";
 
 const Sectors = () => {
   const { openModal } = useModalStore();
   const router = useRouter();
   const { setTradeType, tradeType, setSector } = useFilterStore();
   const tableFilter = useFilterStore((state) => state);
+  const { data, isLoading: productSectorLoading } = useSectors();
+  const { data: serviceSectorsData, isLoading: serviceSectorLoading } =
+    useServiceSectors();
+  const [isBuy, setIsBuy] = useState<boolean>(true);
 
   // Create skeleton array for consistent loading state
   const skeletonArray = Array.from({ length: 4 }, (_, i) => i);
@@ -61,9 +54,16 @@ const Sectors = () => {
 
   const { data: sectors, isLoading } = useSectorCount({
     tradeType: tradeType === 1 ? 1 : 2,
+    ...(tableFilter.productSectorFilterValue !== "" && {
+      sectorIds: tableFilter.productSectorFilterValue,
+    }),
+    ...(tableFilter.serviceSectorFilterValue !== "" && {
+      serviceSectorIds: tableFilter.serviceSectorFilterValue,
+    }),
+    ...(tableFilter.globalFilter !== "" && {
+      searchTerm: tableFilter.globalFilter,
+    }),
   });
-
-  console.log(sectors, "This is sectors");
 
   const handleSectorClick = (sector: SectorCount) => {
     setSector(sector);
@@ -72,7 +72,34 @@ const Sectors = () => {
 
   const handleTabChange = () => {
     setSector({} as SectorCount);
+    setIsBuy(!isBuy);
   };
+
+  const productSectors = [
+    { label: "All", value: "all" },
+    ...(data
+      ?.map((sector, i) => ({
+        label: sector?.name,
+        value: sector?.id,
+      }))
+      .filter(
+        (item): item is { label: string; value: string } =>
+          Boolean(item.label) && Boolean(item.value)
+      ) ?? []),
+  ];
+
+  const serviceSectors = [
+    { label: "All", value: "all" },
+    ...(serviceSectorsData
+      ?.map((sector, i) => ({
+        label: sector?.name,
+        value: sector?.id,
+      }))
+      .filter(
+        (item): item is { label: string; value: string } =>
+          Boolean(item.label) && Boolean(item.value)
+      ) ?? []),
+  ];
 
   return (
     <main className="min-h-screen  bg-[#FCFCFC] lg:px-15 px-4 mx-auto">
@@ -94,8 +121,8 @@ const Sectors = () => {
             </div>
             <div className="w-full">
               <TableFilters
-                productSectorOptions={productOptions}
-                serviceSectorOptions={serviceOptions}
+                productSectorOptions={productSectors}
+                serviceSectorOptions={serviceSectors}
               />
             </div>
           </div>
@@ -116,7 +143,7 @@ const Sectors = () => {
                 setTradeType(1);
               }}
             >
-              Buy From Nigeria (4)
+              Buy From Nigeria {isBuy && <span>({sectors.length})</span>}
             </TabsTrigger>
             <TabsTrigger
               value="sell"
@@ -126,7 +153,7 @@ const Sectors = () => {
                 setTradeType(2);
               }}
             >
-              Sell to Nigeria (6)
+              Sell to Nigeria{!isBuy && <span>({sectors.length})</span>}
             </TabsTrigger>
           </TabsList>
           <TabsContent value="buy">
