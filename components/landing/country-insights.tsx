@@ -43,8 +43,8 @@ const Chart = () => {
         <div className="lg:w-[40%] w-full">
           <InsightsRadialChart
             title="Top Requested Sectors"
-            importData={transformSectorData(topImportSectors)}
-            exportData={transformSectorData(topExportSectors)}
+            importData={transformSectorData(topImportSectors?.slice(0, 5))}
+            exportData={transformSectorData(topExportSectors?.slice(0, 5))}
           />
         </div>
       </div>

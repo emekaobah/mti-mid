@@ -106,7 +106,7 @@ export function InsightsRadialChart({
     <Card className="flex flex-col h-full border-0 shadow-none bg-[#0A5C21]/[.03] w-full  ">
       <CardHeader className=" pb-0 flex flex-row justify-between">
         <CardDescription>{title || "Chart Titles"}</CardDescription>
-        <CardDescription>Last Update: 26/08/25, 08:44PM</CardDescription>
+        {/* <CardDescription>Last Update: 26/08/25, 08:44PM</CardDescription> */}
       </CardHeader>
       <Tabs defaultValue="import">
         <TabsList className="ml-5 bg-white">

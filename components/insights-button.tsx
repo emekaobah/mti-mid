@@ -15,8 +15,16 @@ const InsightsButton: React.FC<InsightsButtonProps> = ({
   className = "",
 }) => {
   const pathname = usePathname();
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, userCountry } = useAuth();
   const isHomePage = pathname === "/";
+
+  // Determine redirect path based on user's country
+  const getRedirectPath = () => {
+    if (userCountry === "NG") {
+      return "/trade-requests";
+    }
+    return "/trade-insights";
+  };
 
   const handleClick = (e: React.MouseEvent) => {
     if (!isAuthenticated) {
@@ -29,10 +37,10 @@ const InsightsButton: React.FC<InsightsButtonProps> = ({
   if (isHomePage) {
     // Home page: Button that checks auth and either opens modal or navigates
     if (isAuthenticated) {
-      // Authenticated: Navigate to insights
+      // Authenticated: Navigate to insights or trade-requests based on country
       return (
         <Link
-          href="/trade-insights"
+          href={getRedirectPath()}
           className={`flex items-center justify-center space-x-2 rounded-full h-12 w-full sm:w-auto max-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-base text-white font-semibold px-6 text-center ${className}`}
         >
           Explore Insights
@@ -54,7 +62,7 @@ const InsightsButton: React.FC<InsightsButtonProps> = ({
   // Other pages: Always a link, but check auth on click
   return (
     <Link
-      href="/trade-insights"
+      href={getRedirectPath()}
       onClick={handleClick}
       className={`flex items-center justify-center rounded-full h-12 w-12 sm:w-12 ${className}`}
     >
