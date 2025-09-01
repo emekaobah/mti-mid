@@ -168,7 +168,7 @@ const SectorBreakdown = () => {
           columns={columns}
           // dummyData={dummyTradeData}
           emptyTableText="No data found"
-          baseUrl={`${Configs.baseUrl}/api/TradeInterest/submissions-table`}
+          baseUrl={`${Configs.baseUrl}api/TradeInterest/submissions-table`}
           organizationFilterOptions={orgOptions}
           countryFilterOptions={countryOptions}
           productFilterOptions={productOptions}

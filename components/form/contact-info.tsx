@@ -14,18 +14,14 @@ import {
   FormMessage,
   FormDescription,
 } from "@/components/ui/form";
-import ReactFlagsSelect from "react-flags-select";
 import PhoneInput from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { z } from "zod";
-import { useCountries } from "@/hooks/api/catalog/use-countries";
 
 export const contactInfoSchema = z.object({
   name: z.string().min(1, "Full name is required"),
   company: z.string().min(1, "Company or institution name is required"),
   city: z.string().min(1, "City is required"),
-  country: z.string().min(1, "Country is required"),
-  email: z.string().email("Please enter a valid email address"),
   phone: z.string().optional(),
   gender: z.enum(["Male", "Female"]).optional(),
   contactMethod: z.array(z.string()).optional(),
@@ -37,7 +33,6 @@ const contactMethods = ["WhatsApp", "Email", "Phone"];
 
 export default function ContactInfo() {
   const { control } = useFormContext<ContactInfoType>();
-  const { data: countries, isLoading: isCountriesLoading } = useCountries();
 
   return (
     <div className="space-y-8">
@@ -91,66 +86,6 @@ export default function ContactInfo() {
               </FormLabel>
               <FormControl>
                 <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={control}
-          name="country"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>
-                Country <span className="text-red-500">*</span>
-              </FormLabel>
-              <FormControl>
-                <div className="w-full">
-                  {isCountriesLoading ? (
-                    <div className="text-sm text-gray-500">
-                      Loading countries...
-                    </div>
-                  ) : (
-                    <ReactFlagsSelect
-                      selected={field.value}
-                      onSelect={field.onChange}
-                      searchable
-                      countries={
-                        countries?.data
-                          ?.map((country) => country.code)
-                          .filter(
-                            (code): code is string =>
-                              code !== null && code !== undefined
-                          ) || []
-                      }
-                      customLabels={
-                        countries?.data?.reduce((acc, country) => {
-                          if (country.code && country.name) {
-                            acc[country.code] = country.name;
-                          }
-                          return acc;
-                        }, {} as Record<string, string>) || {}
-                      }
-                    />
-                  )}
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={control}
-          name="email"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>
-                Email Address <span className="text-red-500">*</span>
-              </FormLabel>
-              <FormControl>
-                <Input type="email" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
