@@ -19,7 +19,6 @@ import {
   useOrganizationSubtypes,
   useOrganizationTypes,
 } from "@/hooks/api/catalog/use-organization-types";
-import { useCountries } from "@/hooks/api/catalog/use-countries";
 import { useSectorCount } from "@/hooks/api";
 
 export const tradeDirectionSchema = z.object({
@@ -43,7 +42,6 @@ export const respondentDetailsSchema = z.object({
     .array(z.string())
     .max(2, "Please select up to 2 business types")
     .optional(),
-  country: z.string().min(1, "Please select your country"),
 });
 
 export type RespondentDetailsType = z.infer<typeof respondentDetailsSchema>;
@@ -52,14 +50,10 @@ export default function RespondentDetails() {
   const { control, watch } = useFormContext<RespondentDetailsType>();
   const orgType = watch("organizationType");
   const tradeDirection = watch("tradeDirection");
-  const { data: sectors, isLoading: sectorsLoading } = useSectorCount({
-    tradeType: 1,
-  });
+
   const { data: organizationTypes, isLoading } = useOrganizationTypes();
   const { data: organizationSubtypes, isLoading: isSubtypesLoading } =
     useOrganizationSubtypes("ORGTYPE_002");
-  const { data: countries, isLoading: isCountriesLoading } = useCountries();
-  console.log("these are countries", countries);
   console.log("these are organization types", organizationTypes);
   console.log("these are organization subtypes", organizationSubtypes);
   // Find the selected organization type name for display purposes
@@ -84,7 +78,7 @@ export default function RespondentDetails() {
             <FormControl>
               <RadioGroup
                 onValueChange={field.onChange}
-                defaultValue={field.value || "buy_from_nigeria"}
+                defaultValue={field.value}
                 className="grid gap-3"
               >
                 <div className="flex items-center space-x-3">
@@ -238,40 +232,6 @@ export default function RespondentDetails() {
           )}
         />
       )}
-
-      <FormField
-        control={control}
-        name="country"
-        render={({ field }) => (
-          <FormItem>
-            <FormLabel className="text-base font-medium">
-              Which country are you responding from?{" "}
-              <span className="text-red-500">*</span>
-            </FormLabel>
-            <FormControl>
-              <div className="max-w-md">
-                <ReactFlagsSelect
-                  selected={field.value}
-                  onSelect={field.onChange}
-                  searchable
-                  placeholder="Select your country"
-                  countries={["NG", "ZA", "KE", "GH", "CM", "UG", "TZ"]}
-                  customLabels={{
-                    NG: "Nigeria",
-                    ZA: "South Africa",
-                    KE: "Kenya",
-                    GH: "Ghana",
-                    CM: "Cameroon",
-                    UG: "Uganda",
-                    TZ: "Tanzania",
-                  }}
-                />
-              </div>
-            </FormControl>
-            <FormMessage />
-          </FormItem>
-        )}
-      />
     </div>
   );
 }

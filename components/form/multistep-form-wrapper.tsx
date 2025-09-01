@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -9,6 +9,7 @@ import { ProgressIndicator } from "@/components/ui/progress-indicator";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCreateTradeInterest } from "@/hooks/api/trade-interest/use-create-trade-interest";
 import type { CreateTradeInterestRequest } from "@/hooks/api/shared/types";
+import { useSearchParams } from "next/navigation";
 
 // Import existing components
 import RespondentDetails, {
@@ -77,13 +78,19 @@ export default function MultistepFormWrapper() {
     message: string;
   } | null>(null);
 
+  const searchParams = useSearchParams();
   const createTradeInterestMutation = useCreateTradeInterest();
+
+  // Get trade direction from URL query parameter
+  const urlTradeDirection = searchParams.get("tradeDirection");
 
   const methods = useForm<FullFormType>({
     resolver: zodResolver(fullFormSchema),
     mode: "onChange",
     defaultValues: {
-      tradeDirection: "buy_from_nigeria", // Default to import
+      tradeDirection:
+        (urlTradeDirection as "buy_from_nigeria" | "sell_to_nigeria") ||
+        "buy_from_nigeria",
       importGoods: [],
       exportGoods: [],
       importServices: [],
@@ -91,8 +98,18 @@ export default function MultistepFormWrapper() {
     },
   });
 
-  const { trigger, getValues, watch } = methods;
+  const { trigger, getValues, watch, setValue } = methods;
   const tradeDirection = watch("tradeDirection");
+
+  // Update form when URL changes
+  useEffect(() => {
+    if (urlTradeDirection && urlTradeDirection !== tradeDirection) {
+      setValue(
+        "tradeDirection",
+        urlTradeDirection as "buy_from_nigeria" | "sell_to_nigeria"
+      );
+    }
+  }, [urlTradeDirection, tradeDirection, setValue]);
 
   // NEW: Get filtered steps based on trade direction
   const getFilteredSteps = () => {

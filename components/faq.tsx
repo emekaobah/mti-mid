@@ -12,12 +12,7 @@ interface FaqItemProps {
 
 export function FaqItem({ question, answer }: FaqItemProps) {
   return (
-    <Accordion
-      type="single"
-      collapsible
-      className="w-full"
-      defaultValue="item-1"
-    >
+    <Accordion type="single" collapsible className="w-full">
       <AccordionItem value="item-1">
         <AccordionTrigger className="text-[#454545] text-base">
           {question}

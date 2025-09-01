@@ -21,5 +21,28 @@ export type TopOrganizationsInsight =
   components["schemas"]["TopOrganizationsInsight"];
 export type CreateTradeInterestRequest =
   components["schemas"]["CreateTradeInterestRequest"];
-export type EmailVerificationRequest =
+
+export type EmailVerificationRequest2 =
   components["schemas"]["EmailVerificationRequest"];
+export interface EmailVerificationRequest {
+  email: string;
+  countryCode: string;
+}
+
+export interface EmailVerificationResponse {
+  success: boolean;
+  code: string;
+  message: string;
+  email: string | null;
+  userId: string | null;
+  accessToken: string | null;
+  tokenType: string | null;
+  country: string | null;
+}
+
+export interface AuthenticatedUser {
+  email: string;
+  userId: string;
+  country: string;
+  accessToken: string;
+}

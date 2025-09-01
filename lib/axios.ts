@@ -36,19 +36,13 @@ axiosClient.interceptors.response.use(
 
     // Handle 401 Unauthorized errors centrally
     if (status === 401) {
-      console.log("[Auth Error] 401 Unauthorized - redirecting to login");
-
-      // Clear authentication data
-      // if (typeof window !== "undefined") {
-      //   localStorage.removeItem("token");
-      //   localStorage.removeItem("user");
-
-      //    Redirect to login page immediately
-      //    window.location.replace("/");
-
-      //   // Return a rejected promise with a clear auth error
-      //   return Promise.reject(new Error("UNAUTHORIZED_REDIRECT"));
-      // }
+      console.log("[Auth Error] 401 Unauthorized");
+      // Token expired, clear auth data
+      import("./auth-config").then(({ clearAuthData }) => {
+        clearAuthData();
+        console.log("[Auth] Cleared expired token");
+        // Optionally redirect to login or show login modal
+      });
     }
 
     return Promise.reject(error);

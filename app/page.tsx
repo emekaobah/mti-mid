@@ -1,8 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import GatewayCard from "@/components/landing/gateway-card";
 import { FaqItem } from "@/components/faq";
 import CountryInsights from "@/components/landing/country-insights";
 import Footer from "@/components/footer";
+import AuthProtectedLink from "@/components/auth-protected-link";
+import { useAuthModal } from "@/contexts/auth-modal-context";
 
 const gatewayCards = [
   {
@@ -63,6 +67,8 @@ const faqItems = [
   },
 ];
 export default function Home() {
+  const { openModal } = useAuthModal();
+
   return (
     <main className=" bg-[#F9F7F1] ">
       <div className="text-center mx-auto flex flex-col items-center justify-center px-4 pb-40  pt-15 lg:px-15">
@@ -74,23 +80,25 @@ export default function Home() {
           verified trade requests, and direct connections across Africa.
         </p>
         <div className="flex flex-col md:flex-row  gap-6 mt-8">
-          <Link
-            href="/form"
+          <AuthProtectedLink
+            href="/form?tradeDirection=sell_to_nigeria"
+            onOpenAuthModal={() => openModal("sell_to_nigeria")}
             className="flex items-center justify-center space-x-2 rounded-full h-12 w-full min-w-[240px] bg-[#DCF5EA] hover:bg-[#DCF5EA]/90 text-[#074318] text-base font-semibold"
           >
             Sell to Nigeria
-          </Link>
-          <Link
-            href="/form"
+          </AuthProtectedLink>
+          <AuthProtectedLink
+            href="/form?tradeDirection=buy_from_nigeria"
+            onOpenAuthModal={() => openModal("buy_from_nigeria")}
             className="flex items-center justify-center space-x-2 rounded-full h-12 w-full min-w-[240px] bg-[#DCF5EA] hover:bg-[#DCF5EA]/90 text-[#074318] text-base font-semibold"
           >
             Buy from Nigeria{" "}
-          </Link>
+          </AuthProtectedLink>
         </div>
       </div>
 
       {/* Country Insights */}
-      <div className="bg-[#0A5C21] px-16 pt-16 pb-20">
+      <div className="bg-[#0A5C21]  px-4 lgpx-16 pt-16 pb-20">
         <div className="-mt-36">
           <CountryInsights />
         </div>
@@ -109,7 +117,7 @@ export default function Home() {
       </div>
 
       <div className="bg-[#074318]  flex w-full p-4 lg:p-15">
-        <div className="rounded-lg p-12 bg-white w-full flex flex-col lg:flex-row gap-6 lg:gap-44">
+        <div className="rounded-lg lg:p-12 p-4 bg-white w-full flex flex-col lg:flex-row gap-6 lg:gap-44">
           <div>
             <h3 className="text-3xl font-semibold text-[#074318] max-w-[271px]">
               Frequently Asked Questions

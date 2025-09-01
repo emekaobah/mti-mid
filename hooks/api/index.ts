@@ -26,5 +26,5 @@ export * from "./trade-interest/use-trade-interest";
 export * from "./trade-interest/use-create-trade-interest";
 
 // Auth exports
-export * from "./auth/use-email-verification";
+export * from "./auth/use-authenticate";
 export * from "./auth/use-verify-token";

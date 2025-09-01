@@ -3,12 +3,17 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-// import useModalStore from "@/hooks/store/useModalStore";
-// import { Button } from "./ui/button";
 import InsightsButton from "./insights-button";
+import { AuthModal } from "./modals/auth-modal";
+import { useAuthModal } from "@/contexts/auth-modal-context";
 
 const SiteHeader = () => {
-  // const { openModal } = useModalStore();
+  const { openModal } = useAuthModal();
+
+  const handleOpenAuthModal = () => {
+    openModal("explore_insights");
+  };
+
   return (
     <div className="px-4 lg:px-15 pt-8 bg-[#F9F7F1] flex flex-col sm:flex-row items-center sm:justify-between gap-4">
       <Link href="/">
@@ -20,14 +25,10 @@ const SiteHeader = () => {
           priority
         />
       </Link>
-      {/* <Button
-        // href="/form"
-        onClick={() => openModal("verifyMailandCountry")}
-        className="flex items-center justify-center space-x-2 rounded-full h-12 w-full sm:w-auto max-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-base text-white font-semibold px-6 text-center"
-      >
-        Explore Insights
-      </Button> */}
-      <InsightsButton />
+
+      <InsightsButton onOpenAuthModal={handleOpenAuthModal} />
+
+      <AuthModal />
     </div>
   );
 };

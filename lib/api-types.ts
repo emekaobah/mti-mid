@@ -82,7 +82,46 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/api/Auth/bvn/validate": {
+  "/api/Auth/authenticate": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: {
+        content: {
+          "application/json": components["schemas"]["EmailVerificationRequest"];
+          "text/json": components["schemas"]["EmailVerificationRequest"];
+          "application/*+json": components["schemas"]["EmailVerificationRequest"];
+        };
+      };
+      responses: {
+        /** @description OK */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content?: never;
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/Auth/validate-bvn": {
     parameters: {
       query?: never;
       header?: never;
@@ -801,8 +840,8 @@ export interface paths {
       parameters: {
         query?: {
           tradeType?: components["schemas"]["TradeType"];
-          sectorIds?: string;
-          serviceSectorIds?: string;
+          sectorIds?: string[];
+          serviceSectorIds?: string[];
           searchTerm?: string;
         };
         header?: never;
