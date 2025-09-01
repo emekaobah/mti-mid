@@ -27,6 +27,10 @@ const Chart = () => {
     tradeType: 2,
   });
 
+  // Limit sectors to top 5
+  const limitedTopImportSectors = topImportSectors?.slice(0, 5);
+  const limitedTopExportSectors = topExportSectors?.slice(0, 5);
+
   console.log(topImportSectors, "This is topImportSectors");
 
   return (
@@ -43,8 +47,8 @@ const Chart = () => {
         <div className="lg:w-[40%] w-full">
           <InsightsRadialChart
             title="Top Requested Sectors"
-            importData={transformSectorData(topImportSectors)}
-            exportData={transformSectorData(topExportSectors)}
+            importData={transformSectorData(limitedTopImportSectors)}
+            exportData={transformSectorData(limitedTopExportSectors)}
           />
         </div>
       </div>
