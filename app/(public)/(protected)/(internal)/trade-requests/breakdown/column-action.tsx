@@ -30,6 +30,7 @@ export const TradeRequestsAction = ({
     {
       label: "Request Buyers Contact",
       action: () => {
+        setSubmission(submission);
         openModal("requestBuyerModal");
       },
       //   icon: FilePenLine,
