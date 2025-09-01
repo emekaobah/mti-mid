@@ -20,7 +20,7 @@ export const useVerifyBvn = () => {
             color: "white",
           },
         });
-        router.push("/admin/sector-breakdown");
+        router.push("/trade-requests/breakdown");
       } else
         toast.error("Invalid BVN", {
           description: "Kindly enter a valid BVN to proceed",

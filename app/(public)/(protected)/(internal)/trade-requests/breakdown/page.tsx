@@ -15,6 +15,7 @@ import useFilterStore from "@/hooks/store/useFilterStore";
 import { useCountries } from "@/hooks/api";
 import { useOrganizationTypes } from "@/hooks/api";
 import { useProductChart, useOrgChart, useOrgBreakdown } from "@/hooks/api";
+import { useProductsBySector } from "@/hooks/api";
 
 const orgOptions = [
   // { label: "All", value: "all" },
@@ -65,6 +66,24 @@ const SectorBreakdown = () => {
       setCountryFilterValue(""),
       setProductFilterValue("");
   }, []);
+
+  const { data: countries } = useCountries();
+  const { data: Organizations } = useOrganizationTypes();
+  const { data: hsCodesss } = useProductsBySector(sector.sectorId);
+
+  //  const hsCodeOptions = [
+  //   { label: "All", value: "all" },
+  //   ...(hsCodes
+  //     ?.map((sector, i) => ({
+  //       label: sector?.name,
+  //       value: sector?.id,
+  //     }))
+  //     .filter(
+  //       (item): item is { label: string; value: string } =>
+  //         Boolean(item.label) && Boolean(item.value)
+  //     ) ?? []),
+  // ];
+
   return (
     <main className="min-h-screen  bg-[#FCFCFC] lg:px-15 px-4 mx-auto">
       <div className="flex flex-col my-4 gap-2">

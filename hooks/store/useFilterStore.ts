@@ -16,6 +16,8 @@ const state = {
   tradeType: "",
   sectorId: "",
   sector: {} as SectorCount,
+  hsCodeGraphValue: "",
+  countryGraphValue: "",
 };
 
 interface FilterActions {
@@ -29,6 +31,8 @@ interface FilterActions {
   sectorId: string | number;
   tradeType: string | number;
   sector: SectorCount;
+  hsCodeGraphValue: string;
+  countryGraphValue: string;
   setGlobalFilter: (value: string) => void;
   setOrganizationFilterValue: (value: string) => void;
   setCountryFilterValue: (value: string) => void;
@@ -39,6 +43,8 @@ interface FilterActions {
   setTradeType: (value: string | number) => void;
   setSectorId: (value: string | number) => void;
   setSector: (value: SectorCount) => void;
+  setCountryGraphValue: (value: string) => void;
+  setHsCodeGraphValue: (value: string) => void;
   reset: () => void;
 }
 
@@ -59,6 +65,9 @@ const useFilterStore = create<FilterActions>()(
       setTradeType: (value) => set({ tradeType: value }),
       setSectorId: (value) => set({ sectorId: value }),
       setSector: (value) => set({ sector: value }),
+      setCountryGraphValue: (value: string) =>
+        set({ countryGraphValue: value }),
+      setHsCodeGraphValue: (value: string) => set({ hsCodeGraphValue: value }),
       reset: () => set({ ...state }),
     }),
     {

@@ -23,17 +23,13 @@ export const TradeRequestsAction = ({
       label: "Details",
       action: () => {
         setSubmission(submission);
-        router.push(`/admin/sector-breakdown/1/business-details`);
+        router.push(`/trade-requests/breakdown/1/details`);
       },
       //   icon: Eye,
     },
     {
       label: "Request Buyers Contact",
       action: () => {
-        // setRequest(request);
-        // router.push(
-        //   `/request-management/product-request/${request.id}/edit-request`
-        // );
         openModal("requestBuyerModal");
       },
       //   icon: FilePenLine,

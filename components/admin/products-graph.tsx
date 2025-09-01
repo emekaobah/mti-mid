@@ -54,7 +54,7 @@ const ProductsGraph: React.FC<ProductsGraphProps> = ({ data }) => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <ChartContainer config={chartConfig}>
+          <ChartContainer config={chartConfig} className="w-full h-[300px]">
             <BarChart accessibilityLayer data={chartData}>
               <CartesianGrid vertical={false} />
               <XAxis
@@ -77,27 +77,6 @@ const ProductsGraph: React.FC<ProductsGraphProps> = ({ data }) => {
               />
             </BarChart>
           </ChartContainer>
-          {/* <ChartContainer config={chartConfig} className="h-full   ">
-                          <BarChart accessibilityLayer data={importData}>
-                            <CartesianGrid vertical={false} />
-                            <XAxis
-                              dataKey="key"
-                              tickLine={false}
-                              tickMargin={10}
-                              axisLine={false}
-                            />
-                            <ChartTooltip
-                              cursor={false}
-                              content={<ChartTooltipContent hideLabel />}
-                            />
-                            <Bar
-                              dataKey="value"
-                              fill="var(--color-desktop)"
-                              radius={30}
-                              barSize={40}
-                            />
-                          </BarChart>
-                        </ChartContainer> */}
         </CardContent>
       </Card>
     </div>
