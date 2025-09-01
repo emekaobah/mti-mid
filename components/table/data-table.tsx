@@ -142,12 +142,12 @@ export function DataTable<TData, TValue>({
   const table = useTableInstance<TData>({
     data: data?.data.data as unknown as TData[],
     columns,
-    pageMeta,
+    // pageMeta,
   });
 
   // Pagination
-  const { handleNextPage, handlePreviousPage, fetchedRecords } =
-    usePaginationControls(pageMeta, setPageNumber);
+  // const { handleNextPage, handlePreviousPage, fetchedRecords } =
+  //   usePaginationControls(pageMeta, setPageNumber);
 
   //   // Download table data
   //   const downloadData = useDownloadData({
