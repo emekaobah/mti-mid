@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { usePathname } from "next/navigation";
-import { InsightsModal } from "./modals/insights-modal";
+import { AuthModal } from "./modals/auth-modal";
 import Image from "next/image";
 
 const InsightsButton = () => {
@@ -9,7 +9,7 @@ const InsightsButton = () => {
   return (
     <div>
       {pathname === "/" ? (
-        <InsightsModal />
+        <AuthModal />
       ) : (
         <Image
           src="/access-branding.svg"

@@ -16,7 +16,7 @@ import {
 import { useAuth } from "@/hooks/useAuth";
 import type { EmailVerificationResponse } from "@/hooks/api/shared/types";
 
-export function InsightsModal() {
+export function AuthModal() {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
