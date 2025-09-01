@@ -46,6 +46,7 @@ export function Graphs() {
   });
   const { data: orgBreakdown } = useOrgBreakdown({
     tradeType: tradeType === 1 ? 1 : 2,
+    parentId: "ORGTYPE_002",
     sectorId: sector.sectorId,
   });
   return (
@@ -63,7 +64,7 @@ export function Graphs() {
                 <SelectValue placeholder="Country" />
               </SelectTrigger>
               <SelectContent>
-                {countryOptions?.map((option) => (
+                {countryOptions?.data?.map((option) => (
                   <SelectItem key={option.code} value={option.code ?? ""}>
                     {option.name}
                   </SelectItem>

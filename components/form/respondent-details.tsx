@@ -54,10 +54,13 @@ export default function RespondentDetails() {
   const { data: organizationTypes, isLoading } = useOrganizationTypes();
   const { data: organizationSubtypes, isLoading: isSubtypesLoading } =
     useOrganizationSubtypes("ORGTYPE_002");
+
   console.log("these are organization types", organizationTypes);
   console.log("these are organization subtypes", organizationSubtypes);
   // Find the selected organization type name for display purposes
-  const selectedOrgType = organizationTypes?.find((org) => org.id === orgType);
+  const selectedOrgType = organizationTypes?.data?.find(
+    (org) => org.id === orgType
+  );
   return (
     <div className="space-y-8">
       {/* NEW: Trade Direction as first question */}
@@ -132,7 +135,7 @@ export default function RespondentDetails() {
                   defaultValue={field.value}
                   className="grid gap-3"
                 >
-                  {organizationTypes?.map((orgType) => (
+                  {organizationTypes?.data?.map((orgType) => (
                     <div
                       key={orgType.id}
                       className="flex items-center space-x-3"

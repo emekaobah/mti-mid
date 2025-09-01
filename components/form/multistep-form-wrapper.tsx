@@ -141,7 +141,7 @@ export default function MultistepFormWrapper() {
 
     switch (currentStep) {
       case 0: // Respondent Details (now includes trade direction)
-        fieldsToValidate = ["tradeDirection", "organizationType", "country"];
+        fieldsToValidate = ["tradeDirection", "organizationType"];
         break;
       case 1: // Import Requirements (conditional)
         if (tradeDirection === "buy_from_nigeria") {
@@ -154,7 +154,7 @@ export default function MultistepFormWrapper() {
         }
         break;
       case 3: // Contact Information
-        fieldsToValidate = ["name", "company", "city", "country", "email"];
+        fieldsToValidate = ["name", "company", "city", "email"];
         break;
       default:
         return true;

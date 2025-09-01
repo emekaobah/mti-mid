@@ -227,8 +227,8 @@ export default function ImportGoods() {
                         <SelectItem value="" disabled>
                           Loading sectors...
                         </SelectItem>
-                      ) : sectors && sectors.length > 0 ? (
-                        sectors
+                      ) : sectors?.data && sectors?.data?.length > 0 ? (
+                        sectors?.data
                           .filter((sector) => sector.id && sector.name)
                           .map((sector) => (
                             <SelectItem key={sector.id!} value={sector.id!}>

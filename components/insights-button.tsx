@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -16,10 +16,19 @@ const InsightsButton: React.FC<InsightsButtonProps> = ({
 }) => {
   const pathname = usePathname();
   const { isAuthenticated, userCountry } = useAuth();
+  const [isClient, setIsClient] = useState(false);
   const isHomePage = pathname === "/";
+
+  // Ensure we're on the client before using dynamic values
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Determine redirect path based on user's country
   const getRedirectPath = () => {
+    if (!isClient) {
+      return "/trade-insights"; // Default for SSR
+    }
     if (userCountry === "NG") {
       return "/trade-requests";
     }

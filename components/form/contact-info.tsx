@@ -117,7 +117,7 @@ export default function ContactInfo() {
                       onSelect={field.onChange}
                       searchable
                       countries={
-                        countries
+                        countries?.data
                           ?.map((country) => country.code)
                           .filter(
                             (code): code is string =>
@@ -125,7 +125,7 @@ export default function ContactInfo() {
                           ) || []
                       }
                       customLabels={
-                        countries?.reduce((acc, country) => {
+                        countries?.data?.reduce((acc, country) => {
                           if (country.code && country.name) {
                             acc[country.code] = country.name;
                           }

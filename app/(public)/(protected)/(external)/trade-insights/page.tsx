@@ -71,16 +71,24 @@ const TradeInsightsPage = () => {
             {" "}
             <InsightsRadialChart
               title="Top Countries by Submissions"
-              importData={transformCountryData(topImportCountries?.countries)}
-              exportData={transformCountryData(topExportCountries?.countries)}
+              importData={transformCountryData(
+                topImportCountries?.data?.countries
+              )}
+              exportData={transformCountryData(
+                topExportCountries?.data?.countries
+              )}
             />
           </div>
           <div className="ww-full lg:w-[40%]">
             {" "}
             <InsightsListTable
               title="Most Popular HS Codes"
-              importData={transformHsCodeData(popularImportHsCodes?.hsCodes)}
-              exportData={transformHsCodeData(popularExportHsCodes?.hsCodes)}
+              importData={transformHsCodeData(
+                popularImportHsCodes?.data?.hsCodes
+              )}
+              exportData={transformHsCodeData(
+                popularExportHsCodes?.data?.hsCodes
+              )}
             />
           </div>
         </div>
@@ -90,22 +98,30 @@ const TradeInsightsPage = () => {
         >
           <InsightsBarChart
             title="Top Product Sectors"
-            importData={transformSectorData(topImportProductRequests?.sectors)}
-            exportData={transformSectorData(topExportProductRequests?.sectors)}
+            importData={transformSectorData(
+              topImportProductRequests?.data?.sectors
+            )}
+            exportData={transformSectorData(
+              topExportProductRequests?.data?.sectors
+            )}
           />
           <InsightsPieChart
             title="Top Service Sectors"
-            importData={transformSectorData(topImportServiceSectors?.sectors)}
-            exportData={transformSectorData(topExportServiceSectors?.sectors)}
+            importData={transformSectorData(
+              topImportServiceSectors?.data?.sectors
+            )}
+            exportData={transformSectorData(
+              topExportServiceSectors?.data?.sectors
+            )}
           />
 
           <InsightsRadialChart
             title="Top Organisations by Submissions"
             importData={transformOrganizationData(
-              topImportOrganizationTypes?.organizations
+              topImportOrganizationTypes?.data?.organizations
             )}
             exportData={transformOrganizationData(
-              topExportOrganizationTypes?.organizations
+              topExportOrganizationTypes?.data?.organizations
             )}
           />
         </div>

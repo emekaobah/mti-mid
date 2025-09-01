@@ -82,7 +82,7 @@ export default function ExportServices() {
                       Loading service sectors...
                     </div>
                   ) : (
-                    sectors
+                    sectors?.data
                       ?.filter(
                         (sector: {
                           id?: string | null;

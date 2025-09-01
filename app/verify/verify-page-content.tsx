@@ -53,7 +53,7 @@ export const VerifyPageContent = () => {
     }
 
     if (response) {
-      const verifyResponse = response as VerifyTokenResponse;
+      const verifyResponse = response?.data as VerifyTokenResponse;
 
       if (verifyResponse.success && verifyResponse.code === "00") {
         // Verification successful - user exists and is authenticated

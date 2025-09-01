@@ -218,9 +218,9 @@ export default function ExportGoods() {
                         <SelectItem value="" disabled>
                           Loading sectors...
                         </SelectItem>
-                      ) : sectors && sectors.length > 0 ? (
-                        sectors
-                          .filter((sector) => sector.id && sector.name)
+                      ) : sectors?.data && sectors?.data?.length > 0 ? (
+                        sectors?.data
+                          ?.filter((sector) => sector.id && sector.name)
                           .map((sector) => (
                             <SelectItem key={sector.id!} value={sector.id!}>
                               {sector.name!}
