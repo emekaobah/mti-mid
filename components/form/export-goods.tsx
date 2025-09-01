@@ -74,9 +74,9 @@ function ProductField({
           {sectorId ? (
             <Select
               onValueChange={(value) => {
-                const selectedProduct = (products as ProductResponse[])?.find(
-                  (p) => p.id === value
-                );
+                const selectedProduct = (
+                  products?.data as ProductResponse[]
+                )?.find((p) => p.id === value);
                 if (selectedProduct) {
                   // Set the product name
                   formField.onChange(selectedProduct.name);
@@ -110,10 +110,10 @@ function ProductField({
                   <div className="px-2 py-1.5 text-sm text-muted-foreground">
                     Loading products...
                   </div>
-                ) : products &&
-                  Array.isArray(products) &&
-                  products.length > 0 ? (
-                  (products as ProductResponse[])
+                ) : products?.data &&
+                  Array.isArray(products.data) &&
+                  products.data.length > 0 ? (
+                  (products.data as ProductResponse[])
                     .filter(
                       (
                         product

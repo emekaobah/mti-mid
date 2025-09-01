@@ -205,22 +205,22 @@ export function AuthModal({
                     <ReactFlagsSelect
                       selected={selectedCountry}
                       onSelect={(code) => setSelectedCountry(code)}
-                      // countries={
-                      //   countries
-                      //     ?.map((country) => country.code)
-                      //     .filter(
-                      //       (code): code is string =>
-                      //         code !== null && code !== undefined
-                      //     ) || []
-                      // }
-                      // customLabels={
-                      //   countries?.reduce((acc, country) => {
-                      //     if (country.code && country.name) {
-                      //       acc[country.code] = country.name;
-                      //     }
-                      //     return acc;
-                      //   }, {} as Record<string, string>) || {}
-                      // }
+                      countries={
+                        countries?.data
+                          ?.map((country) => country.code)
+                          .filter(
+                            (code): code is string =>
+                              code !== null && code !== undefined
+                          ) || []
+                      }
+                      customLabels={
+                        countries?.data?.reduce((acc, country) => {
+                          if (country.code && country.name) {
+                            acc[country.code] = country.name;
+                          }
+                          return acc;
+                        }, {} as Record<string, string>) || {}
+                      }
                       placeholder="Select your country"
                       className="!border-gray-300 !rounded-lg"
                       selectButtonClassName="!border-gray-300 !rounded-lg !bg-white !text-gray-500 !h-15"
