@@ -11,7 +11,7 @@ const SiteHeader = () => {
   const { openModal } = useAuthModal();
 
   const handleOpenAuthModal = () => {
-    openModal();
+    openModal("explore_insights");
   };
 
   return (

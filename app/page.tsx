@@ -69,10 +69,6 @@ const faqItems = [
 export default function Home() {
   const { openModal } = useAuthModal();
 
-  const handleOpenAuthModal = () => {
-    openModal();
-  };
-
   return (
     <main className=" bg-[#F9F7F1] ">
       <div className="text-center mx-auto flex flex-col items-center justify-center px-4 pb-40  pt-15 lg:px-15">
@@ -86,14 +82,14 @@ export default function Home() {
         <div className="flex flex-col md:flex-row  gap-6 mt-8">
           <AuthProtectedLink
             href="/form?tradeDirection=sell_to_nigeria"
-            onOpenAuthModal={handleOpenAuthModal}
+            onOpenAuthModal={() => openModal("sell_to_nigeria")}
             className="flex items-center justify-center space-x-2 rounded-full h-12 w-full min-w-[240px] bg-[#DCF5EA] hover:bg-[#DCF5EA]/90 text-[#074318] text-base font-semibold"
           >
             Sell to Nigeria
           </AuthProtectedLink>
           <AuthProtectedLink
             href="/form?tradeDirection=buy_from_nigeria"
-            onOpenAuthModal={handleOpenAuthModal}
+            onOpenAuthModal={() => openModal("buy_from_nigeria")}
             className="flex items-center justify-center space-x-2 rounded-full h-12 w-full min-w-[240px] bg-[#DCF5EA] hover:bg-[#DCF5EA]/90 text-[#074318] text-base font-semibold"
           >
             Buy from Nigeria{" "}

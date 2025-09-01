@@ -40,7 +40,7 @@ export function AuthModal({
   const authenticate = useAuthenticate();
   const requestEmailLink = useRequestEmailLink();
   const router = useRouter();
-  const { isOpen, closeModal } = useAuthModal();
+  const { isOpen, closeModal, intent } = useAuthModal();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -132,17 +132,25 @@ export function AuthModal({
     }
   };
 
-  // Handle successful authentication
+  // Handle successful authentication with intent-based redirects
   useEffect(() => {
     if (verificationStatus === "success") {
-      // Close modal after short delay
       setTimeout(() => {
         closeModal();
-        // Navigate to insights page after successful auth
-        router.push(redirectTo);
+        // Redirect based on intent
+        if (intent === "sell_to_nigeria") {
+          router.push("/form?tradeDirection=sell_to_nigeria");
+        } else if (intent === "buy_from_nigeria") {
+          router.push("/form?tradeDirection=buy_from_nigeria");
+        } else if (intent === "explore_insights") {
+          router.push("/trade-insights");
+        } else {
+          // Fallback to default redirect
+          router.push(redirectTo);
+        }
       }, 2000);
     }
-  }, [verificationStatus, closeModal, router, redirectTo]);
+  }, [verificationStatus, closeModal, router, redirectTo, intent]);
 
   const renderStatusMessage = () => {
     if (!statusMessage) return null;
