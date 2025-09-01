@@ -30,22 +30,28 @@ const TradeInsightsPage = () => {
 
   const { data: popularImportHsCodes } = usePopularHsCodes({
     direction: 1,
+    take: 5,
   });
   const { data: popularExportHsCodes } = usePopularHsCodes({
     direction: 2,
+    take: 5,
   });
 
   const { data: topImportProductRequests } = useTopProductSectors({
     direction: 1,
+    take: 5,
   });
   const { data: topExportProductRequests } = useTopProductSectors({
     direction: 2,
+    take: 5,
   });
   const { data: topImportServiceSectors } = useTopServiceSectors({
     direction: 1,
+    take: 5,
   });
   const { data: topExportServiceSectors } = useTopServiceSectors({
     direction: 2,
+    take: 5,
   });
   const { data: topImportCountries } = useTopCountries({
     direction: 1,

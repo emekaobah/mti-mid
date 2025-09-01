@@ -40,7 +40,7 @@ export function InsightsListTable({
     <Card className="flex flex-col h-full  border-0 shadow-none pb-0 w-full bg-[#074318]/[.03] ">
       <CardHeader className=" pb-0 flex flex-row justify-between">
         <CardDescription>{title || "Chart Title"}</CardDescription>
-        <CardDescription>Last Update: 26/08/25, 08:44PM</CardDescription>
+        {/* <CardDescription>Last Update: 26/08/25, 08:44PM</CardDescription> */}
       </CardHeader>
       <Tabs defaultValue="import" className=" h-full">
         <TabsList className=" bg-white ml-5">
