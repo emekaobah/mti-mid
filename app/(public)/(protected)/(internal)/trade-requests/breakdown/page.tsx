@@ -110,18 +110,18 @@ const SectorBreakdown = () => {
       ) ?? []),
   ];
 
-  const productOptions = [
-    { label: "All", value: "all" },
-    ...(hsCodes?.data
-      ?.map((sector, i) => ({
-        label: sector?.name,
-        value: sector?.hsCode,
-      }))
-      .filter(
-        (item): item is { label: string; value: string } =>
-          Boolean(item.label) && Boolean(item.value)
-      ) ?? []),
-  ];
+  // const productOptions = [
+  //   { label: "All", value: "all" },
+  //   ...(hsCodes?.data
+  //     ?.map((sector, i) => ({
+  //       label: sector?.name,
+  //       value: sector?.hsCode,
+  //     }))
+  //     .filter(
+  //       (item): item is { label: string; value: string } =>
+  //         Boolean(item.label) && Boolean(item.value)
+  //     ) ?? []),
+  // ];
 
   return (
     <main className="min-h-screen  bg-[#FCFCFC] lg:px-15 px-4 mx-auto">
@@ -171,7 +171,7 @@ const SectorBreakdown = () => {
           baseUrl={`${Configs.baseUrl}/api/TradeInterest/submissions-table`}
           organizationFilterOptions={orgOptions}
           countryFilterOptions={countryOptions}
-          productFilterOptions={productOptions}
+          // productFilterOptions={productOptions}
           hsCodesFilterOptions={hsCodeOptions}
         />
       </div>
