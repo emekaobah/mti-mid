@@ -1,24 +1,71 @@
 "use client";
 import React from "react";
 import { usePathname } from "next/navigation";
-import { AuthModal } from "./modals/auth-modal";
 import Image from "next/image";
+import Link from "next/link";
+import { useAuth } from "@/hooks/useAuth";
 
-const InsightsButton = () => {
+interface InsightsButtonProps {
+  onOpenAuthModal: () => void;
+  className?: string;
+}
+
+const InsightsButton: React.FC<InsightsButtonProps> = ({
+  onOpenAuthModal,
+  className = "",
+}) => {
   const pathname = usePathname();
+  const { isAuthenticated } = useAuth();
+  const isHomePage = pathname === "/";
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (!isAuthenticated) {
+      e.preventDefault();
+      onOpenAuthModal();
+    }
+    // If authenticated, let the Link handle navigation naturally
+  };
+
+  if (isHomePage) {
+    // Home page: Button that checks auth and either opens modal or navigates
+    if (isAuthenticated) {
+      // Authenticated: Navigate to insights
+      return (
+        <Link
+          href="/trade-insights"
+          className={`flex items-center justify-center space-x-2 rounded-full h-12 w-full sm:w-auto max-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-base text-white font-semibold px-6 text-center ${className}`}
+        >
+          Explore Insights
+        </Link>
+      );
+    } else {
+      // Not authenticated: Button that opens modal
+      return (
+        <button
+          onClick={onOpenAuthModal}
+          className={`flex items-center justify-center space-x-2 rounded-full h-12 w-full sm:w-auto max-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-base text-white font-semibold px-6 text-center ${className}`}
+        >
+          Explore Insights
+        </button>
+      );
+    }
+  }
+
+  // Other pages: Always a link, but check auth on click
   return (
-    <div>
-      {pathname === "/" ? (
-        <AuthModal />
-      ) : (
-        <Image
-          src="/access-branding.svg"
-          alt="access bank logo"
-          width={175}
-          height={25}
-        />
-      )}
-    </div>
+    <Link
+      href="/trade-insights"
+      onClick={handleClick}
+      className={`flex items-center justify-center rounded-full h-12 w-12 sm:w-12 ${className}`}
+    >
+      <Image
+        src="/notes.png"
+        alt="Insights"
+        width={24}
+        height={24}
+        className="w-6 h-6"
+      />
+    </Link>
   );
 };
 
