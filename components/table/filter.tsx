@@ -132,7 +132,7 @@ export function TableFilters({
         <Select
           value={countryFilterValue}
           onValueChange={(value) =>
-            setCountryFilterValue(value === "all" ? "all" : value)
+            setCountryFilterValue(value === "all" ? "" : value)
           }
         >
           <SelectTrigger className="w-[150px] bg-white outline-none focus:ring-white border border-[#E7E7E7] text-[10px] text-[rgba(58,58,58,0.6)] p-3  rounded-[10px]">
@@ -153,7 +153,7 @@ export function TableFilters({
         <Select
           value={productFilterValue}
           onValueChange={(value) =>
-            setProductFilterValue(value === "all" ? "all" : value)
+            setProductFilterValue(value === "all" ? "" : value)
           }
         >
           <SelectTrigger className="w-[150px] bg-white outline-none focus:ring-white border border-[#E7E7E7] text-[10px] text-[rgba(58,58,58,0.6)] p-3 rounded-[10px]">
@@ -174,7 +174,7 @@ export function TableFilters({
         <Select
           value={hsCodesFilterValue}
           onValueChange={(value) =>
-            setHsCodesFilterValue(value === "all" ? "all" : value)
+            setHsCodesFilterValue(value === "all" ? "" : value)
           }
         >
           <SelectTrigger className="w-[150px] bg-white outline-none focus:ring-white border border-[#E7E7E7] text-[10px] text-[rgba(58,58,58,0.6)] p-3 rounded-[10px]">

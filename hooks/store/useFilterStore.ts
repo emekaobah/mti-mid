@@ -65,9 +65,8 @@ const useFilterStore = create<FilterActions>()(
       setTradeType: (value) => set({ tradeType: value }),
       setSectorId: (value) => set({ sectorId: value }),
       setSector: (value) => set({ sector: value }),
-      setCountryGraphValue: (value: string) =>
-        set({ countryGraphValue: value }),
-      setHsCodeGraphValue: (value: string) => set({ hsCodeGraphValue: value }),
+      setCountryGraphValue: (value) => set({ countryGraphValue: value }),
+      setHsCodeGraphValue: (value) => set({ hsCodeGraphValue: value }),
       reset: () => set({ ...state }),
     }),
     {

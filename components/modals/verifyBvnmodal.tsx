@@ -32,7 +32,7 @@ export const VerifyBvnModal = () => {
     try {
       verifyBvn(data.bvn, {
         onSuccess: (res) => {
-          if (res.valid === true) closeModal();
+          if (res.data.valid === true) closeModal();
         },
       });
     } catch (error) {

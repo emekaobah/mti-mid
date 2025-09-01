@@ -17,37 +17,37 @@ import { useOrganizationTypes } from "@/hooks/api";
 import { useProductChart, useOrgChart, useOrgBreakdown } from "@/hooks/api";
 import { useProductsBySector } from "@/hooks/api";
 
-const orgOptions = [
-  // { label: "All", value: "all" },
-  { label: "Government", value: "Government" },
-  { label: "Business", value: "Business" },
-  { label: "Association", value: "Association" },
-];
+// const orgOptions = [
+//   // { label: "All", value: "all" },
+//   { label: "Government", value: "Government" },
+//   { label: "Business", value: "Business" },
+//   { label: "Association", value: "Association" },
+// ];
 
-const countryOptions = [
-  // { label: "All", value: "all" },
-  { label: "Nigeria", value: "Nigeria" },
-  { label: "Cameroon", value: "Cameroon" },
-  { label: "Uganda", value: "Uganda" },
-  { label: "South Africa", value: "South Africa" },
-  { label: "Tanzania", value: "Tanzania" },
-];
+// const countryOptions = [
+//   // { label: "All", value: "all" },
+//   { label: "Nigeria", value: "Nigeria" },
+//   { label: "Cameroon", value: "Cameroon" },
+//   { label: "Uganda", value: "Uganda" },
+//   { label: "South Africa", value: "South Africa" },
+//   { label: "Tanzania", value: "Tanzania" },
+// ];
 
-const productOptions = [
-  // { label: "All", value: "all" },
-  { label: "Beans", value: "Beans" },
-  { label: "Tobacco", value: "Tobacco" },
-  { label: "Sugar", value: "Sugar" },
-  { label: "Melon", value: "Melon" },
-];
+// const productOptions = [
+//   // { label: "All", value: "all" },
+//   { label: "Beans", value: "Beans" },
+//   { label: "Tobacco", value: "Tobacco" },
+//   { label: "Sugar", value: "Sugar" },
+//   { label: "Melon", value: "Melon" },
+// ];
 
-const hsCodes = [
-  { label: "All", value: "all" },
-  { label: "0200-2022E", value: "0200-2022E" },
-  { label: "0200-2023E", value: "0200-2023E" },
-  { label: "0200-2024E", value: "0200-2024E" },
-  { label: "0200-2025E", value: "0200-2025E" },
-];
+// const hsCodes = [
+//   { label: "All", value: "all" },
+//   { label: "0200-2022E", value: "0200-2022E" },
+//   { label: "0200-2023E", value: "0200-2023E" },
+//   { label: "0200-2024E", value: "0200-2024E" },
+//   { label: "0200-2025E", value: "0200-2025E" },
+// ];
 
 const SectorBreakdown = () => {
   const router = useRouter();
@@ -68,21 +68,60 @@ const SectorBreakdown = () => {
   }, []);
 
   const { data: countries } = useCountries();
-  const { data: Organizations } = useOrganizationTypes();
-  const { data: hsCodesss } = useProductsBySector(sector.sectorId);
+  const { data: organizations } = useOrganizationTypes();
+  const { data: hsCodes } = useProductsBySector(sector.sectorId);
 
-  //  const hsCodeOptions = [
-  //   { label: "All", value: "all" },
-  //   ...(hsCodes
-  //     ?.map((sector, i) => ({
-  //       label: sector?.name,
-  //       value: sector?.id,
-  //     }))
-  //     .filter(
-  //       (item): item is { label: string; value: string } =>
-  //         Boolean(item.label) && Boolean(item.value)
-  //     ) ?? []),
-  // ];
+  const countryOptions = [
+    { label: "All", value: "all" },
+    ...(countries?.data
+      ?.map((sector, i) => ({
+        label: sector?.name,
+        value: sector?.code,
+      }))
+      .filter(
+        (item): item is { label: string; value: string } =>
+          Boolean(item.label) && Boolean(item.value)
+      ) ?? []),
+  ];
+
+  const orgOptions = [
+    { label: "All", value: "all" },
+    ...(organizations?.data
+      ?.map((sector, i) => ({
+        label: sector?.name,
+        value: sector?.name,
+      }))
+      .filter(
+        (item): item is { label: string; value: string } =>
+          Boolean(item.label) && Boolean(item.value)
+      ) ?? []),
+  ];
+
+  const hsCodeOptions = [
+    { label: "All", value: "all" },
+    ...(hsCodes?.data
+      ?.map((sector, i) => ({
+        label: sector?.hsCode,
+        value: sector?.hsCode,
+      }))
+      .filter(
+        (item): item is { label: string; value: string } =>
+          Boolean(item.label) && Boolean(item.value)
+      ) ?? []),
+  ];
+
+  const productOptions = [
+    { label: "All", value: "all" },
+    ...(hsCodes?.data
+      ?.map((sector, i) => ({
+        label: sector?.name,
+        value: sector?.hsCode,
+      }))
+      .filter(
+        (item): item is { label: string; value: string } =>
+          Boolean(item.label) && Boolean(item.value)
+      ) ?? []),
+  ];
 
   return (
     <main className="min-h-screen  bg-[#FCFCFC] lg:px-15 px-4 mx-auto">
@@ -133,7 +172,7 @@ const SectorBreakdown = () => {
           organizationFilterOptions={orgOptions}
           countryFilterOptions={countryOptions}
           productFilterOptions={productOptions}
-          hsCodesFilterOptions={hsCodes}
+          hsCodesFilterOptions={hsCodeOptions}
         />
       </div>
     </main>

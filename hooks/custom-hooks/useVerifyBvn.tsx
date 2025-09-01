@@ -3,16 +3,17 @@ import { service } from "@/lib/custom-apis/apis";
 import { useRouter } from "next/navigation";
 import { verifyBvnResponse } from "@/lib/custom-apis/types";
 import { toast } from "sonner";
+import { ApiResponse } from "../api/trade-interest/types";
 
 export const useVerifyBvn = () => {
   const router = useRouter();
 
   return useMutation({
     mutationFn: (bvn: string) => service.verifyBvn(bvn),
-    onSuccess: (res: verifyBvnResponse) => {
+    onSuccess: (res: ApiResponse<verifyBvnResponse>) => {
       console.log(res);
 
-      if (res.valid === true) {
+      if (res.data.valid === true) {
         toast.success("Success", {
           description: "Verification successful",
           style: {
