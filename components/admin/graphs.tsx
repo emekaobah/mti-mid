@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProductsGraph from "./products-graph";
-import OrganizationGraph from "./organization-graph";
+// import OrganizationGraph from "./organization-graph";
 import { TableFilters } from "../table/filter";
 import {
   Select,

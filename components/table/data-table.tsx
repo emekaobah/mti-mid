@@ -142,12 +142,11 @@ export function DataTable<TData, TValue>({
   const table = useTableInstance<TData>({
     data: data?.data.data as unknown as TData[],
     columns,
-    pageMeta,
   });
 
   // Pagination
-  const { handleNextPage, handlePreviousPage, fetchedRecords } =
-    usePaginationControls(pageMeta, setPageNumber);
+  // const { handleNextPage, handlePreviousPage, fetchedRecords } =
+  //   usePaginationControls(pageMeta, setPageNumber);
 
   //   // Download table data
   //   const downloadData = useDownloadData({
@@ -214,7 +213,7 @@ export function DataTable<TData, TValue>({
             </TableBody>
           </Table>
         </div>
-      ) : table.getRowModel().rows?.length ? (
+      ) : table.getRowModel()?.rows?.length ? (
         <>
           {/* Table Wrapper with Horizontal Scrolling */}
           <div className="overflow-x-auto">
