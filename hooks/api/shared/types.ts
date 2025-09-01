@@ -40,6 +40,26 @@ export interface EmailVerificationResponse {
   country: string | null;
 }
 
+// API Response wrapper types
+export interface EmailVerificationResultResponse {
+  succeeded?: boolean;
+  code?: number;
+  message?: string | null;
+  data?: EmailVerificationResponse;
+  pageMeta?: unknown;
+  errors?: string[] | null;
+}
+
+// For request-email-link endpoint
+export interface EmailVerificationResponseResponse {
+  succeeded?: boolean;
+  code?: number;
+  message?: string | null;
+  data?: EmailVerificationResponse;
+  pageMeta?: unknown;
+  errors?: string[] | null;
+}
+
 export interface AuthenticatedUser {
   email: string;
   userId: string;
