@@ -840,8 +840,8 @@ export interface paths {
       parameters: {
         query?: {
           tradeType?: components["schemas"]["TradeType"];
-          sectorIds?: string[];
-          serviceSectorIds?: string[];
+          sectorIds?: string;
+          serviceSectorIds?: string;
           searchTerm?: string;
         };
         header?: never;

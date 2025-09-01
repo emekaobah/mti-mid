@@ -17,7 +17,7 @@ interface PaginatedResponse<T> {
 export const service = {
   async verifyBvn(bvn: string): Promise<verifyBvnResponse> {
     const response = await axiosClient.post<verifyBvnResponse>(
-      `api/Auth/bvn/validate`,
+      `api/Auth/validate-bvn`,
       {
         bvn: bvn,
       }

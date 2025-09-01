@@ -62,7 +62,7 @@ const ProductsGraph: React.FC<ProductsGraphProps> = ({ data }) => {
                 tickLine={false}
                 tickMargin={10}
                 axisLine={false}
-                tickFormatter={(value) => value.slice(0, 3)}
+                // tickFormatter={(value) => value.slice(0, 3)}
               />
               <ChartTooltip
                 cursor={false}
@@ -71,12 +71,33 @@ const ProductsGraph: React.FC<ProductsGraphProps> = ({ data }) => {
               <Bar
                 dataKey="count"
                 fill="#074318"
-                radius={8}
+                radius={30}
                 width={10}
                 maxBarSize={30}
               />
             </BarChart>
           </ChartContainer>
+          {/* <ChartContainer config={chartConfig} className="h-full   ">
+                          <BarChart accessibilityLayer data={importData}>
+                            <CartesianGrid vertical={false} />
+                            <XAxis
+                              dataKey="key"
+                              tickLine={false}
+                              tickMargin={10}
+                              axisLine={false}
+                            />
+                            <ChartTooltip
+                              cursor={false}
+                              content={<ChartTooltipContent hideLabel />}
+                            />
+                            <Bar
+                              dataKey="value"
+                              fill="var(--color-desktop)"
+                              radius={30}
+                              barSize={40}
+                            />
+                          </BarChart>
+                        </ChartContainer> */}
         </CardContent>
       </Card>
     </div>

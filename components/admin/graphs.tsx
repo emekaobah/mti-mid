@@ -16,6 +16,11 @@ import useFilterStore from "@/hooks/store/useFilterStore";
 import { useCountries } from "@/hooks/api";
 import { useOrganizationTypes } from "@/hooks/api";
 import { useProductChart, useOrgChart, useOrgBreakdown } from "@/hooks/api";
+import { InsightsBarChart } from "../charts/bar-chart";
+import {
+  transformCountryData,
+  transformSectorData,
+} from "@/lib/utils/transform-sector-data";
 
 // const countryOptions = [
 //   { label: "All", value: "all" },
@@ -71,6 +76,7 @@ export function Graphs() {
         </TabsList>
         <TabsContent value="countries">
           <ProductsGraph data={data} />
+          {/* <InsightsBarChart importData={data} /> */}
         </TabsContent>
         <TabsContent value="hsCodes">
           <ProductsGraph data={data} />
