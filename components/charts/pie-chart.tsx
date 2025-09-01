@@ -113,7 +113,7 @@ export function InsightsPieChart({
     <Card className="flex flex-col shadow-none border-0 w-full bg-[#074318]/[.03]">
       <CardHeader className=" pb-0 flex flex-row justify-between">
         <CardDescription>{title || "Chart Title"}</CardDescription>
-        {/* <CardDescription>Last Update: 26/08/25, 08:44PM</CardDescription> */}
+        <CardDescription>Last Update: 26/08/25, 08:44PM</CardDescription>
       </CardHeader>
 
       <Tabs defaultValue="import">

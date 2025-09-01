@@ -106,9 +106,9 @@ export function InsightsRadialChart({
     <Card className="flex flex-col h-full border-0 shadow-none bg-[#0A5C21]/[.03] w-full  ">
       <CardHeader className=" pb-0 flex flex-row justify-between">
         <CardDescription>{title || "Chart Titles"}</CardDescription>
-        {/* <CardDescription>Last Update: 26/08/25, 08:44PM</CardDescription> */}
+        <CardDescription>Last Update: 26/08/25, 08:44PM</CardDescription>
       </CardHeader>
-      <Tabs defaultValue="import" className="mt-auto  h-full">
+      <Tabs defaultValue="import">
         <TabsList className="ml-5 bg-white">
           <TabsTrigger
             className="data-[state=active]:bg-[#074318] data-[state=active]:text-white rounded-sm text-xs font-normal"
@@ -125,16 +125,16 @@ export function InsightsRadialChart({
         </TabsList>
 
         {/* import */}
-        <TabsContent value={"import"} className=" mt-auto  ">
+        <TabsContent value={"import"}>
           <Card className="flex flex-col h-full border-0 shadow-none bg-transparent w-full  ">
             {/* <CardHeader className="items-center pb-0">
               <CardTitle>Radial Chart - Label</CardTitle>
               <CardDescription>January - June 2024</CardDescription>
             </CardHeader> */}
-            <CardContent className="flex-1 pb-0  ">
+            <CardContent className="flex-1 pb-0 ">
               <ChartContainer
                 config={chartConfig}
-                className="mx-auto aspect-square max-h-[270px]  "
+                className="mx-auto aspect-square max-h-[270px] "
               >
                 {/* Render concentric Pie rings. Each ring is 24px thick and there are no gaps. */}
                 <PieChart>
@@ -173,7 +173,7 @@ export function InsightsRadialChart({
 
               {/* labels / legend */}
 
-              <div className="mt-4  ">
+              <div className="mt-4">
                 <ul className="space-y-3">
                   {transformedImportData.map((d) => (
                     <li key={d.browser} className="flex items-center gap-3">
