@@ -70,19 +70,21 @@ const InsightsButton: React.FC<InsightsButtonProps> = ({
 
   // Other pages: Always a link, but check auth on click
   return (
-    <Link
-      href={getRedirectPath()}
-      onClick={handleClick}
-      className={`flex items-center justify-center rounded-full h-12 w-12 sm:w-12 ${className}`}
-    >
-      <Image
-        src="/notes.png"
-        alt="Insights"
-        width={24}
-        height={24}
-        className="w-6 h-6"
-      />
-    </Link>
+    // <Link
+    //   href={getRedirectPath()}
+    //   onClick={handleClick}
+    //   className={`flex items-center justify-center rounded-full h-12 w-12 sm:w-12 ${className}`}
+    // >
+    //   <Image
+    //     src="/access-branding.svg"
+    //     alt="Insights"
+    //     width={172}
+    //     height={25}
+
+    //   />
+    // </Link>
+
+    <Image src="/access-branding.svg" alt="Insights" width={172} height={25} />
   );
 };
 
