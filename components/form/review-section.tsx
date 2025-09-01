@@ -11,11 +11,39 @@ import {
   Mail,
   Globe,
 } from "lucide-react";
+import { useServiceSectors } from "@/hooks/api/catalog/use-service-sectors";
+import { useOrganizationTypes } from "@/hooks/api/catalog/use-organization-types";
 
 export default function ReviewSection() {
   const { watch } = useFormContext();
   const formData = watch();
   const tradeDirection = formData.tradeDirection;
+  const { data: serviceSectorsData, isLoading: serviceSectorsLoading } =
+    useServiceSectors();
+  const { data: organizationTypesData, isLoading: organizationTypesLoading } =
+    useOrganizationTypes();
+
+  // Helper function to get sector name from ID
+  const getSectorName = (sectorId: string) => {
+    if (serviceSectorsLoading || !serviceSectorsData?.data) {
+      return sectorId; // Return ID while loading
+    }
+
+    const sector = serviceSectorsData.data.find((s) => s.id === sectorId);
+    return sector?.name || sectorId; // Fallback to ID if name not found
+  };
+
+  // Helper function to get organization type name from ID
+  const getOrganizationTypeName = (orgTypeId: string) => {
+    if (organizationTypesLoading || !organizationTypesData?.data) {
+      return orgTypeId; // Return ID while loading
+    }
+
+    const orgType = organizationTypesData.data.find(
+      (org) => org.id === orgTypeId
+    );
+    return orgType?.name || orgTypeId; // Fallback to ID if name not found
+  };
 
   const formatCountry = (countryCode: string) => {
     const countryLabels: Record<string, string> = {
@@ -114,7 +142,9 @@ export default function ReviewSection() {
                 Organization Type
               </label>
               <p className="text-sm">
-                {formData.organizationType || "Not specified"}
+                {formData.organizationType
+                  ? getOrganizationTypeName(formData.organizationType)
+                  : "Not specified"}
               </p>
             </div>
             {formData.otherOrganization && (
@@ -228,7 +258,8 @@ export default function ReviewSection() {
                         >
                           <div className="text-sm">
                             <div>
-                              <strong>Sector:</strong> {service.sector}
+                              <strong>Sector:</strong>{" "}
+                              {getSectorName(service.sector)}
                             </div>
                             <div>
                               <strong>Description:</strong>{" "}
@@ -322,7 +353,8 @@ export default function ReviewSection() {
                         >
                           <div className="text-sm">
                             <div>
-                              <strong>Sector:</strong> {service.sector}
+                              <strong>Sector:</strong>{" "}
+                              {getSectorName(service.sector)}
                             </div>
                             <div>
                               <strong>Description:</strong>{" "}
