@@ -109,6 +109,42 @@ export const VerifyPageContent = () => {
   }, [response, error, isLoading, token, email, login, router]);
 
   const renderContent = () => {
+    // Final safety check - prevent conflicting UI states
+    if (verificationStatus === "success" && statusMessage.includes("failed")) {
+      console.error(
+        "🚨 CRITICAL: Rendering success state with failed message - this should not happen!"
+      );
+      return (
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <div className="text-red-600 text-center">
+            <p className="text-lg font-semibold">System Error</p>
+            <p className="text-sm">
+              Please refresh the page or contact support.
+            </p>
+          </div>
+        </div>
+      );
+    }
+
+    if (
+      verificationStatus === "error" &&
+      statusMessage.includes("successfully")
+    ) {
+      console.error(
+        "🚨 CRITICAL: Rendering error state with success message - this should not happen!"
+      );
+      return (
+        <div className="flex flex-col items-center justify-center space-y-4">
+          <div className="text-red-600 text-center">
+            <p className="text-lg font-semibold">System Error</p>
+            <p className="text-sm">
+              Please refresh the page or contact support.
+            </p>
+          </div>
+        </div>
+      );
+    }
+
     switch (verificationStatus) {
       case "verifying":
         return (
