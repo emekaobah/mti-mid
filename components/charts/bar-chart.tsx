@@ -39,14 +39,27 @@ interface InsightsBarChartProps {
     key?: string | null;
     value?: number | undefined;
   }[];
+  bgVariant?: "default" | "green";
 }
 export function InsightsBarChart({
   title,
   importData,
   exportData,
+  bgVariant = "default",
 }: InsightsBarChartProps) {
+  // use a very low-opacity green for the 'green' variant (3%)
+  const cardBaseClass =
+    "flex flex-col h-full  border-0 shadow-none pb-0 w-full";
+  const defaultBgClass = "bg-[#F9F7F1]";
+  const greenBgStyle = { backgroundColor: "rgba(10,92,33,0.03)" };
+
   return (
-    <Card className="flex flex-col h-full  border-0 shadow-none pb-0 w-full bg-[#F9F7F1]  ">
+    <Card
+      className={`${cardBaseClass} ${
+        bgVariant === "green" ? "" : defaultBgClass
+      }`}
+      style={bgVariant === "green" ? greenBgStyle : undefined}
+    >
       <CardHeader className=" pb-0 flex flex-row justify-between">
         <CardDescription>{title || "Chart Title"}</CardDescription>
         {/* <CardDescription>Last Update: 26/08/25, 08:44PM</CardDescription> */}
@@ -69,8 +82,8 @@ export function InsightsBarChart({
 
         <TabsContent value={"import"} className="mt-auto">
           <Card className="flex flex-col h-full border-0 shadow-none  w-full bg-transparent ">
-            <CardContent className="mt-auto ">
-              <ChartContainer config={chartConfig} className="h-full   ">
+            <CardContent className="mt-auto  ">
+              <ChartContainer config={chartConfig} className="h-full ">
                 <BarChart accessibilityLayer data={importData}>
                   <CartesianGrid vertical={false} />
                   <XAxis
@@ -78,16 +91,18 @@ export function InsightsBarChart({
                     tickLine={false}
                     tickMargin={10}
                     axisLine={false}
+                    tickFormatter={(value) => value?.toString().slice(0, 12)}
                   />
+
                   <ChartTooltip
                     cursor={false}
-                    content={<ChartTooltipContent hideLabel />}
+                    content={<ChartTooltipContent />}
                   />
                   <Bar
                     dataKey="value"
                     fill="var(--color-desktop)"
                     radius={30}
-                    barSize={40}
+                    barSize={30}
                   />
                 </BarChart>
               </ChartContainer>
@@ -106,6 +121,7 @@ export function InsightsBarChart({
                     tickLine={false}
                     tickMargin={10}
                     axisLine={false}
+                    tickFormatter={(value) => value?.toString().slice(0, 12)}
                   />
                   <ChartTooltip
                     cursor={false}
@@ -115,7 +131,7 @@ export function InsightsBarChart({
                     dataKey="value"
                     fill="var(--color-desktop)"
                     radius={30}
-                    barSize={40}
+                    barSize={30}
                   />
                 </BarChart>
               </ChartContainer>

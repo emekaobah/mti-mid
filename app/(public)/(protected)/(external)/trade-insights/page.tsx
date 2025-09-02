@@ -15,8 +15,6 @@ import {
   transformOrganizationData,
   transformHsCodeData,
 } from "@/lib/utils/transform-sector-data";
-import { InsightsPieChart } from "@/components/charts/pie-chart";
-import { InsightsRadialChart } from "@/components/charts/radial-chart";
 import { InsightsListTable } from "@/components/charts/insights-list-table";
 
 const TradeInsightsPage = () => {
@@ -64,38 +62,32 @@ const TradeInsightsPage = () => {
 
   return (
     <div className="bg-[#FCFCFC] pb-20">
-      {" "}
-      <div className=" bg-[#F9F9F9]/[.9]  border-2 border-white rounded-lg mx-4 lg:mx-15 mt-3 flex flex-col gap-4">
-        <div className="flex flex-col lg:flex-row gap-4">
-          <div className="lg:w-[60%] w-full">
-            {" "}
-            <InsightsRadialChart
-              title="Top Countries by Submissions"
-              importData={transformCountryData(
-                topImportCountries?.data?.countries
-              )}
-              exportData={transformCountryData(
-                topExportCountries?.data?.countries
-              )}
-            />
-          </div>
-          <div className="ww-full lg:w-[40%]">
-            {" "}
-            <InsightsListTable
-              title="Most Popular HS Codes"
-              importData={transformHsCodeData(
-                popularImportHsCodes?.data?.hsCodes
-              )}
-              exportData={transformHsCodeData(
-                popularExportHsCodes?.data?.hsCodes
-              )}
-            />
-          </div>
+      <div className=" bg-[#F9F9F9]/[.9]  border-2 border-white rounded-lg mx-4 lg:mx-15 mt-3 flex flex-col gap-4 overflow-hidden">
+        <div className="bg-[#F9F7F1] px-6 pt-8 py-5 ">
+          <p className="text-[#181818] font-medium ">Trade Request Insights</p>
         </div>
         <div
           className="grid grid-cols-1 lg:grid-cols-2 gap-4 px-8 my-6 
 "
         >
+          <InsightsBarChart
+            title="Top Countries by Submissions"
+            importData={transformCountryData(
+              topImportCountries?.data?.countries
+            )}
+            exportData={transformCountryData(
+              topExportCountries?.data?.countries
+            )}
+          />
+          <InsightsListTable
+            title="Most Popular HS Codes"
+            importData={transformHsCodeData(
+              popularImportHsCodes?.data?.hsCodes
+            )}
+            exportData={transformHsCodeData(
+              popularExportHsCodes?.data?.hsCodes
+            )}
+          />
           <InsightsBarChart
             title="Top Product Sectors"
             importData={transformSectorData(
@@ -104,8 +96,9 @@ const TradeInsightsPage = () => {
             exportData={transformSectorData(
               topExportProductRequests?.data?.sectors
             )}
+            bgVariant="green"
           />
-          <InsightsPieChart
+          <InsightsBarChart
             title="Top Service Sectors"
             importData={transformSectorData(
               topImportServiceSectors?.data?.sectors
@@ -115,7 +108,7 @@ const TradeInsightsPage = () => {
             )}
           />
 
-          <InsightsRadialChart
+          <InsightsBarChart
             title="Top Organisations by Submissions"
             importData={transformOrganizationData(
               topImportOrganizationTypes?.data?.organizations
