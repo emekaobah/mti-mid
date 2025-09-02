@@ -78,7 +78,7 @@ export const VerifyPageContent = () => {
 
             setVerificationStatus("success");
             setStatusMessage(
-              "Email verified successfully! Redirecting to dashboard..."
+              verifyData.message || "Verification completed successfully"
             );
 
             // Redirect to home page after a short delay
@@ -88,7 +88,7 @@ export const VerifyPageContent = () => {
           } else {
             setVerificationStatus("error");
             setStatusMessage(
-              "Verification response incomplete. Please try again."
+              verifyData.message || "Verification response incomplete"
             );
           }
         } else {
@@ -101,50 +101,12 @@ export const VerifyPageContent = () => {
       } else {
         // API call failed at the top level or data is missing
         setVerificationStatus("error");
-        setStatusMessage(
-          response.message || "Verification failed. Please try again."
-        );
+        setStatusMessage(response.message || "Verification failed");
       }
     }
   }, [response, error, isLoading, token, email, login, router]);
 
   const renderContent = () => {
-    // Final safety check - prevent conflicting UI states
-    if (verificationStatus === "success" && statusMessage.includes("failed")) {
-      console.error(
-        "🚨 CRITICAL: Rendering success state with failed message - this should not happen!"
-      );
-      return (
-        <div className="flex flex-col items-center justify-center space-y-4">
-          <div className="text-red-600 text-center">
-            <p className="text-lg font-semibold">System Error</p>
-            <p className="text-sm">
-              Please refresh the page or contact support.
-            </p>
-          </div>
-        </div>
-      );
-    }
-
-    if (
-      verificationStatus === "error" &&
-      statusMessage.includes("successfully")
-    ) {
-      console.error(
-        "🚨 CRITICAL: Rendering error state with success message - this should not happen!"
-      );
-      return (
-        <div className="flex flex-col items-center justify-center space-y-4">
-          <div className="text-red-600 text-center">
-            <p className="text-lg font-semibold">System Error</p>
-            <p className="text-sm">
-              Please refresh the page or contact support.
-            </p>
-          </div>
-        </div>
-      );
-    }
-
     switch (verificationStatus) {
       case "verifying":
         return (
@@ -165,11 +127,8 @@ export const VerifyPageContent = () => {
           <div className="flex flex-col items-center justify-center space-y-4">
             <CheckCircle className="h-12 w-12 text-green-600" />
             <h2 className="text-xl font-semibold text-gray-800">
-              Email Verified Successfully!
-            </h2>
-            <p className="text-gray-600 text-center max-w-md">
               {statusMessage}
-            </p>
+            </h2>
             <button
               onClick={() => router.push("/")}
               className="max-w-48 w-full cursor-pointer mx-auto flex items-center justify-center h-12 bg-[#074318] hover:bg-[#074318]/90 text-white font-semibold rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
@@ -184,11 +143,8 @@ export const VerifyPageContent = () => {
           <div className="flex flex-col items-center justify-center space-y-4">
             <XCircle className="h-12 w-12 text-red-600" />
             <h2 className="text-xl font-semibold text-gray-800">
-              Verification Failed
-            </h2>
-            <p className="text-gray-600 text-center max-w-md">
               {statusMessage}
-            </p>
+            </h2>
             <button
               onClick={() => router.push("/")}
               className="max-w-48 w-full cursor-pointer mx-auto flex items-center justify-center h-12 bg-[#074318] hover:bg-[#074318]/90 text-white font-semibold rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
