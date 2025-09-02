@@ -114,7 +114,7 @@ const Sectors = () => {
         </div>
       </div>
       <div className=" flex flex-col border-white bg-[#f9f9f9] rounded-md">
-        <div className="bg-[#F9F7F1] p-6 flex justify-between items-center rounded-t-md">
+        <div className="bg-[#F9F7F1] p-6 flex flex-col md:flex-row justify-between items-center rounded-t-md">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-0.5">
               <h1 className="font-medium text-base">Trade Request</h1>
@@ -157,7 +157,7 @@ const Sectors = () => {
             </TabsTrigger>
           </TabsList>
           <TabsContent value="buy">
-            <div className="grid grid-cols-4 p-6 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 p-3 md:p-6 gap-6">
               {isLoading
                 ? // Show skeleton loading state
                   skeletonArray.map((_, i) => <SectorCardSkeleton key={i} />)
@@ -175,7 +175,7 @@ const Sectors = () => {
           </TabsContent>
           <TabsContent value="sell">
             {/* <ProductsGraph /> */}
-            <div className="grid grid-cols-4 p-6 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 p-3 md:p-6 gap-6">
               {isLoading
                 ? // Show skeleton loading state
                   skeletonArray.map((_, i) => <SectorCardSkeleton key={i} />)
