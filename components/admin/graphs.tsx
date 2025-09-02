@@ -65,6 +65,12 @@ export function Graphs() {
     parentId: "ORGTYPE_002",
     sectorId: sector.sectorId,
   });
+  const selectedCountry = countryOptions?.data?.find(
+    (option) => option.code === countryGraphValue
+  )?.name;
+  const selectedHsCode = hsCodes?.data?.find(
+    (option) => option.hsCode === hsCodeGraphValue
+  )?.hsCode;
   return (
     <div className="flex w-full flex-col gap-6 p-6">
       <Tabs defaultValue="countries" onValueChange={() => handleTabChange()}>
@@ -116,10 +122,10 @@ export function Graphs() {
           <TabsTrigger value="organization">Organization Type</TabsTrigger>
         </TabsList>
         <TabsContent value="countries">
-          <ProductsGraph data={data} />
+          <ProductsGraph data={data} title={selectedCountry ?? ""} />
         </TabsContent>
         <TabsContent value="hsCodes">
-          <ProductsGraph data={data} />
+          <ProductsGraph data={data} title={selectedHsCode ?? ""} />
         </TabsContent>
         <TabsContent value="organization">
           {/* <OrganizationGraph

@@ -22,6 +22,7 @@ interface ProductData {
 
 interface ProductsGraphProps {
   data: ProductChart[];
+  title?: string;
 }
 
 export const description = "A bar chart";
@@ -33,7 +34,7 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-const ProductsGraph: React.FC<ProductsGraphProps> = ({ data }) => {
+const ProductsGraph: React.FC<ProductsGraphProps> = ({ data, title }) => {
   // Transform the data to match the chart's expected format
   const chartData = data.map((item) => ({
     product: item.productName,
@@ -48,7 +49,7 @@ const ProductsGraph: React.FC<ProductsGraphProps> = ({ data }) => {
       <Card>
         <CardHeader>
           <CardDescription className="flex items-center gap-3 text-xs">
-            All Countries
+            {title !== "" ? title : "All"}
             <div className="bg-[#074318] rounded-full h-2 w-2"></div>
             {totalRequests} Requests
           </CardDescription>
