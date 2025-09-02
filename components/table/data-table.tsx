@@ -93,6 +93,11 @@ export function DataTable<TData, TValue>({
   const setPageNumber = usePaginationStore((state) => state.setPageNumber);
   const pageSize = 12;
   const tableFilter = useFilterStore((state) => state);
+  // Ensure we never call .includes on undefined during SSR/prerender
+  const sectorIdSafe: string =
+    (tableFilter?.sector?.sectorId as string) ||
+    String(tableFilter?.sectorId ?? "") ||
+    "";
 
   //   url and query params
   const { finalUrl, debouncedGlobalFilter } = useTableQueryParams({
@@ -106,11 +111,11 @@ export function DataTable<TData, TValue>({
     productFilter: tableFilter.productFilterValue,
     hsCodesFilter: tableFilter.hsCodesFilterValue,
     page: pageNumber,
-    ...(tableFilter.sector.sectorId.includes("SECTOR") && {
-      sectorId: tableFilter.sector.sectorId,
+    ...(sectorIdSafe.includes("SECTOR") && {
+      sectorId: sectorIdSafe,
     }),
-    ...(tableFilter.sector.sectorId.includes("SERVICESEC") && {
-      serviceSectorId: tableFilter.sector.sectorId,
+    ...(sectorIdSafe.includes("SERVICESEC") && {
+      serviceSectorId: sectorIdSafe,
     }),
   });
 
