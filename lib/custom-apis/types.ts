@@ -61,4 +61,10 @@ export interface TradeSubmissions {
   quantity: string | number;
   unit: string | number;
   frequency: string;
+  standardsAndCerts: string;
+  regulatoryAuthority: string;
+  serviceName: string;
+  description: string;
+  productId: string;
+  serviceId: string;
 }

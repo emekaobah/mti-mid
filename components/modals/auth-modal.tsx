@@ -65,7 +65,7 @@ export function AuthModal({
         setStatusMessage("Invalid response from server. Please try again.");
         return;
       }
-      console.log("api response from authenticate", response);
+
       if (response.success && response.code === "00") {
         // Existing user - log them in
         if (

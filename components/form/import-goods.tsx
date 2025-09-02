@@ -45,7 +45,7 @@ function ProductField({
   const { data: products, isLoading: isProductsLoading } = useProductsBySector(
     validSectorId as string
   );
-  console.log("this is the products from import goods", products);
+
   return (
     <FormField
       control={control}

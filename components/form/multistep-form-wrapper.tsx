@@ -295,14 +295,10 @@ export default function MultistepFormWrapper() {
               })) || null,
       };
 
-      console.log("Transformed data for API:", transformedData);
-
       // Submit to backend
       const response = await createTradeInterestMutation.mutateAsync(
         transformedData
       );
-
-      console.log("API Response:", response);
 
       setSubmissionMessage({
         type: "success",

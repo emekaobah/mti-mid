@@ -19,14 +19,14 @@ export const TradeRequestsAction = ({
   const { setSubmission } = useTradeSUbmissionStore();
 
   const menuItems: items[] = [
-    {
-      label: "Details",
-      action: () => {
-        setSubmission(submission);
-        router.push(`/trade-requests/breakdown/1/details`);
-      },
-      //   icon: Eye,
-    },
+    // {
+    //   label: "Details",
+    //   action: () => {
+    //     setSubmission(submission);
+    //     router.push(`/trade-requests/breakdown/1/details`);
+    //   },
+    //   //   icon: Eye,
+    // },
     {
       label: "Request contact details",
       action: () => {

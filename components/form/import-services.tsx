@@ -43,7 +43,7 @@ export default function ImportServices() {
     useServiceSectors();
 
   const importServicesData = importServices?.data;
-  console.log("these are the import services", importServices);
+
   return (
     <div className="flex flex-col h-full">
       <div className="flex-1 space-y-8">

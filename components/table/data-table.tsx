@@ -94,10 +94,6 @@ export function DataTable<TData, TValue>({
   const pageSize = 12;
   const tableFilter = useFilterStore((state) => state);
 
-  // useEffect(() => {
-  //   console.log(tableFilter);
-  // }, [tableFilter]);
-
   //   url and query params
   const { finalUrl, debouncedGlobalFilter } = useTableQueryParams({
     baseUrl,
@@ -110,12 +106,13 @@ export function DataTable<TData, TValue>({
     productFilter: tableFilter.productFilterValue,
     hsCodesFilter: tableFilter.hsCodesFilterValue,
     page: pageNumber,
-    sectorId: tableFilter.sector.sectorId,
+    ...(tableFilter.sector.sectorId.includes("SECTOR") && {
+      sectorId: tableFilter.sector.sectorId,
+    }),
+    ...(tableFilter.sector.sectorId.includes("SERVICESEC") && {
+      serviceSectorId: tableFilter.sector.sectorId,
+    }),
   });
-
-  useEffect(() => {
-    console.log(finalUrl);
-  }, [finalUrl]);
 
   useEffect(() => {
     setPageNumber(pageNumber);
@@ -128,8 +125,6 @@ export function DataTable<TData, TValue>({
 
   // Fetch data with the updated URL
   const { data, isLoading } = useFetchTableData(finalUrl);
-
-  console.log(data);
 
   //page  --meta
   const pageMeta = data?.pageMeta || {
