@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import {
   useVerifyToken,
-  type VerifyTokenResponse,
+  type VerifyTokenData,
 } from "@/hooks/api/auth/use-verify-token";
 import { useAuth } from "@/hooks/useAuth";
 import { Loader2, CheckCircle, XCircle } from "lucide-react";
@@ -53,46 +53,56 @@ export const VerifyPageContent = () => {
     }
 
     if (response) {
-      const verifyResponse = response?.data as VerifyTokenResponse;
+      // Check if the API call succeeded at the top level
+      if (response.succeeded && response.data) {
+        const verifyData = response.data;
 
-      if (verifyResponse.success && verifyResponse.code === "00") {
-        // Verification successful - user exists and is authenticated
-        if (
-          verifyResponse.accessToken &&
-          verifyResponse.userId &&
-          verifyResponse.email &&
-          verifyResponse.country
-        ) {
-          const userData = {
-            email: verifyResponse.email,
-            userId: verifyResponse.userId,
-            country: verifyResponse.country,
-            accessToken: verifyResponse.accessToken,
-          };
+        // Check if the verification was successful in the data
+        if (verifyData.success && verifyData.code === "00") {
+          // Verification successful - user exists and is authenticated
+          if (
+            verifyData.accessToken &&
+            verifyData.userId &&
+            verifyData.email &&
+            verifyData.country
+          ) {
+            const userData = {
+              email: verifyData.email,
+              userId: verifyData.userId,
+              country: verifyData.country,
+              accessToken: verifyData.accessToken,
+            };
 
-          // Log the user in
-          login(userData);
+            // Log the user in
+            login(userData);
 
-          setVerificationStatus("success");
-          setStatusMessage(
-            "Email verified successfully! Redirecting to dashboard..."
-          );
+            setVerificationStatus("success");
+            setStatusMessage(
+              "Email verified successfully! Redirecting to dashboard..."
+            );
 
-          // Redirect to home page after a short delay
-          setTimeout(() => {
-            router.push("/");
-          }, 2000);
+            // Redirect to home page after a short delay
+            setTimeout(() => {
+              router.push("/");
+            }, 2000);
+          } else {
+            setVerificationStatus("error");
+            setStatusMessage(
+              "Verification response incomplete. Please try again."
+            );
+          }
         } else {
+          // Verification failed in the data
           setVerificationStatus("error");
           setStatusMessage(
-            "Verification response incomplete. Please try again."
+            verifyData.message || "Verification failed. Please try again."
           );
         }
       } else {
-        // Verification failed or user not found
+        // API call failed at the top level or data is missing
         setVerificationStatus("error");
         setStatusMessage(
-          verifyResponse.message || "Verification failed. Please try again."
+          response.message || "Verification failed. Please try again."
         );
       }
     }
@@ -124,6 +134,12 @@ export const VerifyPageContent = () => {
             <p className="text-gray-600 text-center max-w-md">
               {statusMessage}
             </p>
+            <button
+              onClick={() => router.push("/")}
+              className="max-w-48 w-full cursor-pointer mx-auto flex items-center justify-center h-12 bg-[#074318] hover:bg-[#074318]/90 text-white font-semibold rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              Go to Home
+            </button>
           </div>
         );
 

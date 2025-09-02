@@ -5,15 +5,29 @@ export interface VerifyTokenRequest {
   email: string;
 }
 
-export interface VerifyTokenResponse {
+export interface VerifyTokenData {
   success: boolean;
   code: string;
   message: string;
-  email: string | null;
-  userId: string | null;
-  accessToken: string | null;
-  tokenType: string | null;
-  country: string | null;
+  email: string;
+  userId: string;
+  accessToken: string;
+  tokenType: string;
+  country: string;
+}
+
+export interface VerifyTokenResponse {
+  succeeded: boolean;
+  code: number;
+  message: string;
+  data: VerifyTokenData;
+  pageMeta: {
+    pageNumber: number;
+    pageSize: number;
+    totalPages: number;
+    totalRecords: number;
+  };
+  errors: string[];
 }
 
 export const useVerifyToken = (params?: VerifyTokenRequest) => {
