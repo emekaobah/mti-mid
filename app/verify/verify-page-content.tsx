@@ -56,9 +56,13 @@ export const VerifyPageContent = () => {
       // The API sometimes returns a wrapper { succeeded, data } and
       // sometimes returns the inner payload directly. Normalize both shapes
       // so we always operate on verifyData.
-      // Use `any` here to avoid brittle type errors from generated types.
-      const apiResp: any = response;
-      const verifyData: any = apiResp.data ?? apiResp;
+      const apiResp = response as {
+        succeeded?: boolean;
+        message?: string | null;
+        data?: VerifyTokenData | null;
+      };
+      const verifyData: VerifyTokenData | undefined =
+        apiResp.data ?? ((response as unknown) as VerifyTokenData);
 
       // Check that we have a payload to inspect
       if (verifyData) {
