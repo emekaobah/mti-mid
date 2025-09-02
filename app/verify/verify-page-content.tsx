@@ -53,10 +53,15 @@ export const VerifyPageContent = () => {
     }
 
     if (response) {
-      // Check if the API call succeeded at the top level
-      if (response.succeeded && response.data) {
-        const verifyData = response.data;
+      // The API sometimes returns a wrapper { succeeded, data } and
+      // sometimes returns the inner payload directly. Normalize both shapes
+      // so we always operate on verifyData.
+      // Use `any` here to avoid brittle type errors from generated types.
+      const apiResp: any = response;
+      const verifyData: any = apiResp.data ?? apiResp;
 
+      // Check that we have a payload to inspect
+      if (verifyData) {
         // Check if the verification was successful in the data
         if (verifyData.success && verifyData.code === "00") {
           // Verification successful - user exists and is authenticated
@@ -92,16 +97,16 @@ export const VerifyPageContent = () => {
             );
           }
         } else {
-          // Verification failed in the data
+          // Verification failed inside the payload
           setVerificationStatus("error");
           setStatusMessage(
             verifyData.message || "Verification failed. Please try again."
           );
         }
       } else {
-        // API call failed at the top level or data is missing
+        // No payload at all
         setVerificationStatus("error");
-        setStatusMessage(response.message || "Verification failed");
+        setStatusMessage(apiResp.message || "Verification failed");
       }
     }
   }, [response, error, isLoading, token, email, login, router]);
