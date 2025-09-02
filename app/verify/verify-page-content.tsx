@@ -66,8 +66,15 @@ export const VerifyPageContent = () => {
 
       // Check that we have a payload to inspect
       if (verifyData) {
-        // Check if the verification was successful in the data
-        if (verifyData.success && verifyData.code === "00") {
+        // Check if the verification was successful. The API can indicate
+        // success either via the outer `succeeded` flag or via the inner
+        // `success` boolean (some responses leave `code` null). Consider
+        // any of these as success.
+        const isSuccess =
+          apiResp.succeeded === true || verifyData.success === true ||
+          verifyData.code === "00";
+
+        if (isSuccess) {
           // Verification successful - user exists and is authenticated
           if (
             verifyData.accessToken &&
