@@ -62,7 +62,7 @@ export const VerifyPageContent = () => {
         data?: VerifyTokenData | null;
       };
       const verifyData: VerifyTokenData | undefined =
-        apiResp.data ?? ((response as unknown) as VerifyTokenData);
+        apiResp.data ?? (response as unknown as VerifyTokenData);
 
       // Check that we have a payload to inspect
       if (verifyData) {
