@@ -71,7 +71,8 @@ export const VerifyPageContent = () => {
         // `success` boolean (some responses leave `code` null). Consider
         // any of these as success.
         const isSuccess =
-          apiResp.succeeded === true || verifyData.success === true ||
+          apiResp.succeeded === true ||
+          verifyData.success === true ||
           verifyData.code === "00";
 
         if (isSuccess) {
