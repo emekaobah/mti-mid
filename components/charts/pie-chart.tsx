@@ -84,9 +84,6 @@ export function InsightsPieChart({
   importData,
   exportData,
 }: InsightsPieChartProps) {
-  console.log("importData", importData);
-  console.log("exportData", exportData);
-
   // Transform and validate data
   const transformedImportData =
     importData && importData.length > 0

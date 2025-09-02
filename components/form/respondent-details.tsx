@@ -52,8 +52,6 @@ export default function RespondentDetails() {
   const { data: organizationSubtypes, isLoading: isSubtypesLoading } =
     useOrganizationSubtypes(orgType);
 
-  console.log("these are organization types", organizationTypes?.data);
-  console.log("these are organization subtypes", organizationSubtypes);
   // Find the selected organization type name for display purposes
   const selectedOrgType = organizationTypes?.data?.find(
     (org) => org.id === orgType

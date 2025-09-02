@@ -17,6 +17,7 @@ interface UseTableQueryParams {
   hsCodesFilterLabel?: string | undefined;
   tradeType?: string | number;
   sectorId?: string | number;
+  serviceSectorId?: string | number;
   page?: string | number;
 }
 
@@ -36,6 +37,7 @@ export const useTableQueryParams = ({
   tradeType,
   page,
   sectorId,
+  serviceSectorId,
 }: UseTableQueryParams) => {
   const [debouncedGlobalFilter] = useDebounce(globalFilter, 300);
 
@@ -91,6 +93,9 @@ export const useTableQueryParams = ({
     if (sectorId) {
       url.searchParams.append("sectorId", sectorId.toString());
     }
+    if (serviceSectorId) {
+      url.searchParams.append("serviceSectorId", serviceSectorId.toString());
+    }
 
     return url.toString();
   }, [
@@ -105,6 +110,7 @@ export const useTableQueryParams = ({
     hsCodesFilter,
     tradeType,
     sectorId,
+    serviceSectorId,
   ]);
 
   return {

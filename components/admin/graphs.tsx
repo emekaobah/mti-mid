@@ -51,10 +51,6 @@ export function Graphs() {
     ...(hsCodeGraphValue !== "" && { hsCode: hsCodeGraphValue }),
   });
 
-  useEffect(() => {
-    console.log(countryGraphValue);
-  }, [countryGraphValue]);
-
   const { data: orgChart } = useOrgChart({
     tradeType: tradeType === 1 ? 1 : 2,
     sectorId: sector.sectorId,

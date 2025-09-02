@@ -18,7 +18,6 @@ axiosClient.interceptors.request.use(
 
     if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
-      console.log("[Client Axios] Token attached to request");
     }
     return config;
   }
@@ -28,7 +27,7 @@ axiosClient.interceptors.response.use(
   (response: AxiosResponse) => response,
   (error) => {
     // Log full error for debugging
-    console.log("[Full Axios Error]", error);
+
     const message = error?.response?.statusText || error?.message;
     const status = error?.response?.status;
 
@@ -36,11 +35,10 @@ axiosClient.interceptors.response.use(
 
     // Handle 401 Unauthorized errors centrally
     if (status === 401) {
-      console.log("[Auth Error] 401 Unauthorized");
       // Token expired, clear auth data
       import("./auth-config").then(({ clearAuthData }) => {
         clearAuthData();
-        console.log("[Auth] Cleared expired token");
+
         // Optionally redirect to login or show login modal
       });
     }

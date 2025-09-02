@@ -40,7 +40,7 @@ export default function ExportServices() {
     name: "exportServices",
   });
   const { data: sectors, isLoading: sectorsLoading } = useServiceSectors();
-  console.log("these are the service sectors", sectors);
+
   return (
     <div className="space-y-8">
       <div className="flex items-center space-x-2">

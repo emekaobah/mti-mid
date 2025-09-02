@@ -44,7 +44,7 @@ interface TableFiltersProps {
 }
 
 export function TableFilters({
-  filterPlaceholder = "Search",
+  filterPlaceholder,
   dateFilterPlaceholder = "Pick a date",
   statusFilterPlaceholder = "Filter by status",
   noDateFilter,
@@ -237,7 +237,7 @@ export function TableFilters({
         <div className="flex gap-3 items-center bg-white w-[150px] rounded-[10px] p-3 md:w-[220px] focus:ring-white border border-[#E7E7E7]">
           <Search className="text-gray-400" size={14} />
           <input
-            placeholder={filterPlaceholder}
+            placeholder={filterPlaceholder ? filterPlaceholder : "Search"}
             value={globalFilter}
             onChange={(event) => setGlobalFilter(event.target.value)}
             className="text-[10px] text-[rgba(58,58,58,0.6)]  outline-none"

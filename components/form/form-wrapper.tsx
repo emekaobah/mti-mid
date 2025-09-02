@@ -40,7 +40,6 @@ export default function FormWrapper() {
   });
 
   const onSubmit = (data: FullFormType) => {
-    console.log("Form submitted:", data);
     // TODO: Send data to backend or API
   };
 

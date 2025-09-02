@@ -78,19 +78,6 @@ const SectorBreakdown = () => {
       ) ?? []),
   ];
 
-  // const productOptions = [
-  //   { label: "All", value: "all" },
-  //   ...(hsCodes?.data
-  //     ?.map((sector, i) => ({
-  //       label: sector?.name,
-  //       value: sector?.hsCode,
-  //     }))
-  //     .filter(
-  //       (item): item is { label: string; value: string } =>
-  //         Boolean(item.label) && Boolean(item.value)
-  //     ) ?? []),
-  // ];
-
   return (
     <main className="min-h-screen  bg-[#FCFCFC] lg:px-15 px-4 mx-auto">
       <div className="flex flex-col my-4 gap-2">
@@ -127,21 +114,20 @@ const SectorBreakdown = () => {
             </p>
           </div>
         </div>
-        <div className="w-full">
+        {/* <div className="w-full">
           <Graphs />
-        </div>
+        </div> */}
       </div>
       <div className="mt-10">
         <DataTable
           columns={columns}
-          // dummyData={dummyTradeData}
           emptyTableText="No data found"
           baseUrl={`${Configs.baseUrl}/api/TradeInterest/submissions-table`}
           organizationFilterOptions={orgOptions}
           countryFilterOptions={countryOptions}
           // productFilterOptions={productOptions}
-          hsCodesFilterOptions={hsCodeOptions}
-          filterPlaceholder="Search by product name"
+          // hsCodesFilterOptions={hsCodeOptions}
+          noGlobalSearch
         />
       </div>
     </main>

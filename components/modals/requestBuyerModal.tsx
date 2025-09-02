@@ -23,6 +23,8 @@ export const RequestBuyerModal = () => {
     request.mutate(
       {
         tradeInterestId: submission?.tradeInterestId,
+        productId: submission.productId ?? "",
+        serviceSectorId: submission.serviceId ?? "",
       },
       {
         onSuccess: () => {
