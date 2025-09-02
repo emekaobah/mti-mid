@@ -122,7 +122,7 @@ const SectorBreakdown = () => {
         <DataTable
           columns={columns}
           emptyTableText="No data found"
-          baseUrl={`${Configs.baseUrl}/api/TradeInterest/submissions-table`}
+          baseUrl={`${Configs.baseUrl}api/TradeInterest/submissions-table`}
           organizationFilterOptions={orgOptions}
           countryFilterOptions={countryOptions}
           // productFilterOptions={productOptions}
