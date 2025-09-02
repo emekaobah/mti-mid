@@ -3,7 +3,7 @@ import useModalStore from "@/hooks/store/useModalStore";
 
 interface CardProps {
   sector: string;
-  date: number | string;
+  date?: number | string;
   request: number | string;
   onClick?: () => void;
 }
@@ -27,9 +27,9 @@ const SectorCard: React.FC<CardProps> = ({
       </div>
       <div className="flex justify-between p-4 items-center">
         <div className="flex flex-col justify-between">
-          <div className="flex text-[8px] items-center gap-2">
+          {/* <div className="flex text-[8px] items-center gap-2">
             <div className="bg-[#074318] rounded-full h-1 w-1"></div> {date}
-          </div>
+          </div> */}
           <p className="text-[10px]">
             <span className="font-medium text-lg">{request}</span> Requests
           </p>

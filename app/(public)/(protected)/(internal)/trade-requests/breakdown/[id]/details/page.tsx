@@ -31,7 +31,7 @@ const BusinessDetails = () => {
         </div>
       </div>
       <div className=" flex flex-col border-white bg-[#f9f9f9] rounded-md">
-        <div className="bg-[#F9F7F1] p-6 flex justify-between items-center rounded-t-md">
+        <div className="bg-[#F9F7F1] p-6 flex flex-col gap-3 md:flex-row justify-between items-center rounded-t-md">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-0.5">
               <h1 className="font-medium text-base">Trade Request</h1>
@@ -62,7 +62,7 @@ const BusinessDetails = () => {
           </Button>
         </div>
 
-        <div className="grid gap-8 grid-cols-5 p-6">
+        <div className="grid gap-8 grid-cols-2 md:grid-cols-3 lg:grid-cols-5 p-6">
           <div className="">
             <p className="text-xs text-[#575757]">Organization</p>
             <h2 className="text-base text-[#3A3A3A]">

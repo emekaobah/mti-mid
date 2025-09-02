@@ -1,15 +1,68 @@
-import { CircleCheck } from "lucide-react";
+import { Button } from "../ui/button";
+import { useCreateContactRequest } from "@/hooks/api";
+import useTradeSUbmissionStore from "@/hooks/store/useTradeSubmissionStore";
+import { toast } from "sonner";
+import useModalStore from "@/hooks/store/useModalStore";
 
 export const RequestBuyerModal = () => {
+  const { submission } = useTradeSUbmissionStore();
+  const request = useCreateContactRequest();
+  const { closeModal } = useModalStore();
+
+  const handleRequest = () => {
+    if (!submission?.tradeInterestId) {
+      toast.error("Error", {
+        description: "Invalid trade request",
+        style: {
+          background: "red",
+          color: "white",
+        },
+      });
+      return;
+    }
+    request.mutate(
+      {
+        tradeInterestId: submission?.tradeInterestId,
+      },
+      {
+        onSuccess: () => {
+          toast.success("Success", {
+            description: "Request Sent",
+            style: {
+              background: "green",
+              color: "white",
+            },
+          });
+          closeModal();
+        },
+        onError: () => {
+          toast.error("Error", {
+            description: "Something went wrong",
+            style: {
+              background: "red",
+              color: "white",
+            },
+          });
+        },
+      }
+    );
+  };
+
   return (
     <div className="flex flex-col items-center gap-6">
-      <CircleCheck size={120} className="animate-bounce" color="#074318" />
       <div className="flex flex-col items-center gap-3 text-sm mb-4">
-        <p>Your request has been received.</p>
         <p className="text-center">
-          You’ll receive the buyer’s verified contact information <br />
-          directly in your email.
+          Your request will be sent to an administrator and a<br /> response
+          will be sent to your email.
         </p>
+        <p>Click below to proceed.</p>
+        <Button
+          color="#074318"
+          className="bg-[#074318]"
+          onClick={() => handleRequest()}
+        >
+          Request Details
+        </Button>
       </div>
     </div>
   );

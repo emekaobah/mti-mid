@@ -17,38 +17,6 @@ import { useOrganizationTypes } from "@/hooks/api";
 import { useProductChart, useOrgChart, useOrgBreakdown } from "@/hooks/api";
 import { useProductsBySector } from "@/hooks/api";
 
-// const orgOptions = [
-//   // { label: "All", value: "all" },
-//   { label: "Government", value: "Government" },
-//   { label: "Business", value: "Business" },
-//   { label: "Association", value: "Association" },
-// ];
-
-// const countryOptions = [
-//   // { label: "All", value: "all" },
-//   { label: "Nigeria", value: "Nigeria" },
-//   { label: "Cameroon", value: "Cameroon" },
-//   { label: "Uganda", value: "Uganda" },
-//   { label: "South Africa", value: "South Africa" },
-//   { label: "Tanzania", value: "Tanzania" },
-// ];
-
-// const productOptions = [
-//   // { label: "All", value: "all" },
-//   { label: "Beans", value: "Beans" },
-//   { label: "Tobacco", value: "Tobacco" },
-//   { label: "Sugar", value: "Sugar" },
-//   { label: "Melon", value: "Melon" },
-// ];
-
-// const hsCodes = [
-//   { label: "All", value: "all" },
-//   { label: "0200-2022E", value: "0200-2022E" },
-//   { label: "0200-2023E", value: "0200-2023E" },
-//   { label: "0200-2024E", value: "0200-2024E" },
-//   { label: "0200-2025E", value: "0200-2025E" },
-// ];
-
 const SectorBreakdown = () => {
   const router = useRouter();
   const {
@@ -110,18 +78,18 @@ const SectorBreakdown = () => {
       ) ?? []),
   ];
 
-  const productOptions = [
-    { label: "All", value: "all" },
-    ...(hsCodes?.data
-      ?.map((sector, i) => ({
-        label: sector?.name,
-        value: sector?.hsCode,
-      }))
-      .filter(
-        (item): item is { label: string; value: string } =>
-          Boolean(item.label) && Boolean(item.value)
-      ) ?? []),
-  ];
+  // const productOptions = [
+  //   { label: "All", value: "all" },
+  //   ...(hsCodes?.data
+  //     ?.map((sector, i) => ({
+  //       label: sector?.name,
+  //       value: sector?.hsCode,
+  //     }))
+  //     .filter(
+  //       (item): item is { label: string; value: string } =>
+  //         Boolean(item.label) && Boolean(item.value)
+  //     ) ?? []),
+  // ];
 
   return (
     <main className="min-h-screen  bg-[#FCFCFC] lg:px-15 px-4 mx-auto">
@@ -139,8 +107,8 @@ const SectorBreakdown = () => {
         <div className="rounded-t-md bg-[#F9F7F1] p-6 flex flex-col gap-3">
           <div className="flex items-center gap-0.5">
             <h1 className="font-medium text-base">Trade Request Statistics</h1>
-            <Minus color="#F65D2F" className="rotate-90" />
-            <p className="text-sm">Aug 26 - Aug 28</p>
+            {/* <Minus color="#F65D2F" className="rotate-90" />
+            <p className="text-sm">Aug 26 - Aug 28</p> */}
           </div>
           <div className="flex items-center gap-3 text-xs">
             <div className="bg-[#074318] rounded-full h-2 w-2"></div>
@@ -171,7 +139,7 @@ const SectorBreakdown = () => {
           baseUrl={`${Configs.baseUrl}api/TradeInterest/submissions-table`}
           organizationFilterOptions={orgOptions}
           countryFilterOptions={countryOptions}
-          productFilterOptions={productOptions}
+          // productFilterOptions={productOptions}
           hsCodesFilterOptions={hsCodeOptions}
         />
       </div>

@@ -96,12 +96,12 @@ export function TableFilters({
             : ""
         } ${!noBackground && "p-3"} ${
           showSubmittedRequests ? "rounded-t-2xl" : "rounded-2xl"
-        } md:flex items-center gap-2 md:gap-6 overflow-x-auto thin-scrollbar`,
+        } md:flex items-center gap-2 md:gap-3 lg:gap-6 overflow-x-auto thin-scrollbar`,
         className
       )}
     >
       {showSubmittedRequests && (
-        <div className="flex items-center gap-2 text-[10px] ">
+        <div className="flex col-span-2 md:col-span-1 items-center gap-2 text-[10px] ">
           <div className="bg-[#074318] rounded-full h-2 w-2"></div>
           <p className="">Submitted Requests</p>
         </div>
@@ -234,7 +234,7 @@ export function TableFilters({
 
       {/* Global Search */}
       {!noGlobalSearch && (
-        <div className="flex gap-3 items-center bg-white rounded-[10px] p-3 w-[220px] focus:ring-white border border-[#E7E7E7]">
+        <div className="flex gap-3 items-center bg-white w-[150px] rounded-[10px] p-3 md:w-[220px] focus:ring-white border border-[#E7E7E7]">
           <Search className="text-gray-400" size={14} />
           <input
             placeholder={filterPlaceholder}
