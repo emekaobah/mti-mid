@@ -28,7 +28,7 @@ export const TradeRequestsAction = ({
       //   icon: Eye,
     },
     {
-      label: "Request Buyers Contact",
+      label: "Request contact details",
       action: () => {
         setSubmission(submission);
         openModal("requestBuyerModal");
