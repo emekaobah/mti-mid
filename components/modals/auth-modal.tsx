@@ -39,7 +39,7 @@ export function AuthModal({
   const [statusMessage, setStatusMessage] = useState("");
 
   const { data: countries, isLoading: isCountriesLoading } = useCountries();
-  const { login } = useAuth();
+  const { login, user } = useAuth();
   const authenticate = useAuthenticate();
   const requestEmailLink = useRequestEmailLink();
   const router = useRouter();
@@ -161,14 +161,26 @@ export function AuthModal({
         } else if (intent === "buy_from_nigeria") {
           router.push("/form?tradeDirection=buy_from_nigeria");
         } else if (intent === "explore_insights") {
-          router.push("/trade-insights");
+          // Check user's country for explore_insights intent
+          if (user?.country === "NG") {
+            router.push("/trade-requests");
+          } else {
+            router.push("/trade-insights");
+          }
         } else {
           // Fallback to default redirect
           router.push(redirectTo);
         }
       }, 2000);
     }
-  }, [verificationStatus, closeModal, router, redirectTo, intent]);
+  }, [
+    verificationStatus,
+    closeModal,
+    router,
+    redirectTo,
+    intent,
+    user?.country,
+  ]);
 
   const renderStatusMessage = () => {
     if (!statusMessage) return null;

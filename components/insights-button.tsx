@@ -45,7 +45,7 @@ const InsightsButton: React.FC<InsightsButtonProps> = ({
 
   if (isHomePage) {
     // Home page: Button that checks auth and either opens modal or navigates
-    if (isAuthenticated) {
+    if (isClient && isAuthenticated) {
       // Authenticated: Navigate to insights or trade-requests based on country
       return (
         <Link
@@ -56,7 +56,7 @@ const InsightsButton: React.FC<InsightsButtonProps> = ({
         </Link>
       );
     } else {
-      // Not authenticated: Button that opens modal
+      // Not authenticated or still loading: Button that opens modal
       return (
         <button
           onClick={onOpenAuthModal}
