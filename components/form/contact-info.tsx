@@ -234,38 +234,6 @@ export default function ContactInfo() {
           )}
         />
       </div>
-
-      {/* Consent Checkbox */}
-      <div className="border-t pt-6">
-        <FormField
-          control={control}
-          name="consent"
-          render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-              <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-              </FormControl>
-              <div className="space-y-1">
-                <FormLabel className="text-sm font-medium cursor-pointer">
-                  Consent to Data Use
-                </FormLabel>
-                <FormDescription className="text-sm text-muted-foreground">
-                  I hereby consent to the collection, processing, and use of my
-                  personal data in accordance with the organization&apos;s
-                  privacy policy.
-                </FormDescription>
-                <p className="text-xs text-muted-foreground">
-                  Note: You may withdraw your consent at any time by contacting
-                  the system administrator.
-                </p>
-              </div>
-            </FormItem>
-          )}
-        />
-      </div>
     </div>
   );
 }

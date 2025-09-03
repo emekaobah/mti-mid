@@ -95,6 +95,7 @@ export default function MultistepFormWrapper() {
       exportGoods: [],
       importServices: [],
       exportServices: [],
+      consent: false,
     },
   });
 
@@ -155,6 +156,9 @@ export default function MultistepFormWrapper() {
         break;
       case 3: // Contact Information
         fieldsToValidate = ["name", "company", "city"];
+        break;
+      case 4: // Review & Submit
+        fieldsToValidate = ["consent"];
         break;
       default:
         return true;
@@ -224,6 +228,15 @@ export default function MultistepFormWrapper() {
   };
 
   const onSubmit = async (data: FullFormType) => {
+    // Check if consent is given
+    if (!data.consent) {
+      setSubmissionMessage({
+        type: "error",
+        message: "You must consent to data use before submitting the form.",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmissionMessage(null);
 

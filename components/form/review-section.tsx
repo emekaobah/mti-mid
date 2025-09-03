@@ -3,6 +3,14 @@
 import { useFormContext } from "react-hook-form";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
+import {
+  FormField,
+  FormItem,
+  FormControl,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import {
   CheckCircle,
   Package,
@@ -15,7 +23,7 @@ import { useServiceSectors } from "@/hooks/api/catalog/use-service-sectors";
 import { useOrganizationTypes } from "@/hooks/api/catalog/use-organization-types";
 
 export default function ReviewSection() {
-  const { watch } = useFormContext();
+  const { watch, control } = useFormContext();
   const formData = watch();
   const tradeDirection = formData.tradeDirection;
   const { data: serviceSectorsData, isLoading: serviceSectorsLoading } =
@@ -490,6 +498,52 @@ export default function ReviewSection() {
           </CardContent>
         </Card>
       )}
+
+      {/* Consent Checkbox */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2">
+            <CheckCircle className="h-5 w-5" />
+            <span>Consent & Agreement</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            <FormField
+              control={control}
+              name="consent"
+              render={({ field }) => (
+                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                  <FormControl>
+                    <Checkbox
+                      checked={field.value}
+                      onCheckedChange={field.onChange}
+                    />
+                  </FormControl>
+                  <div className="space-y-2">
+                    <FormLabel className="text-sm font-medium cursor-pointer">
+                      Consent to Data Use
+                    </FormLabel>
+                    <p className="text-sm text-muted-foreground">
+                      By checking this box, you consent to the collection,
+                      processing, storage, and disclosure of your personal data
+                      to authorized third parties, solely for the purposes of
+                      providing trade intelligence services, facilitating
+                      communication, and ensuring compliance with applicable
+                      regulations.
+                    </p>
+                    <p className="text-xs text-muted-foreground">
+                      Note: You may withdraw your consent at any time by
+                      contacting the system administrator.
+                    </p>
+                  </div>
+                </FormItem>
+              )}
+            />
+            <FormMessage />
+          </div>
+        </CardContent>
+      </Card>
 
       <div className="text-center p-6 bg-muted/50 rounded-lg">
         <p className="text-sm text-muted-foreground">
