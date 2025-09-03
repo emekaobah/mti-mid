@@ -24,7 +24,7 @@ export const RequestBuyerModal = () => {
       {
         tradeInterestId: submission?.tradeInterestId,
         productId: submission.productId ?? "",
-        serviceSectorId: submission.serviceId ?? "",
+        serviceId: submission.serviceId ?? "",
       },
       {
         onSuccess: () => {

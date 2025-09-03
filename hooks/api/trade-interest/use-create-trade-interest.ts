@@ -25,7 +25,7 @@ export const useCreateTradeInterestWithOptions = (
 interface CreateContactRequest {
   tradeInterestId: string;
   productId?: string;
-  serviceSectorId?: string;
+  serviceId?: string;
 }
 export const useCreateContactRequest = () => {
   return useApiMutation<
