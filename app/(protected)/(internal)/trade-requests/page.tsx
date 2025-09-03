@@ -122,10 +122,10 @@ const Sectors = () => {
           <p className="text-xs">Powered by</p>
           <Image src={logo} alt="Access bank logo" />
         </div> */}
-        <div className="flex items-center gap-3" onClick={() => router.back()}>
+        {/* <div className="flex items-center gap-3" onClick={() => router.back()}>
           <MoveLeft />
           <p className="text-xs">Back</p>
-        </div>
+        </div> */}
       </div>
       <div className=" flex flex-col border-white bg-[#f9f9f9] rounded-md">
         <div className="bg-[#F9F7F1] p-6 flex flex-col md:flex-row justify-between items-center rounded-t-md">
@@ -142,7 +142,7 @@ const Sectors = () => {
           </div>
           <Button
             className="bg-[#074318] rounded-full"
-            onClick={() => router.push("/trade-insights")}
+            onClick={() => router.push("/insights")}
           >
             Trade Request Insights
           </Button>

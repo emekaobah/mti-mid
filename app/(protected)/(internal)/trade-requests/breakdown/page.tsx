@@ -98,10 +98,10 @@ const SectorBreakdown = () => {
           <p className="text-xs">Powered by</p>
           <Image src={logo} alt="Access bank logo" />
         </div> */}
-        <div className="flex items-center gap-3" onClick={() => router.back()}>
+        {/* <div className="flex items-center gap-3" onClick={() => router.back()}>
           <MoveLeft />
           <p className="text-xs">Back</p>
-        </div>
+        </div> */}
       </div>
       <div className=" flex flex-col border-white rounded-md bg-[#f9f9f9]">
         <div className="rounded-t-md bg-[#F9F7F1] p-6 flex flex-col gap-3">
