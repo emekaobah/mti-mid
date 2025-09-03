@@ -15,14 +15,16 @@ export const respondentDetailsSchema = z.object({
     .refine((val) => val !== undefined, {
       message: "Please select your trade direction",
     }),
-  organizationType: z.enum([
-    "Government",
-    "Business",
-    "Association",
-    "Cooperative/Farmers Association",
-    "Other",
-  ]),
+  organizationType: z
+    .string()
+    .min(1, "Please select your organization type")
+    .refine((val) => val && val.trim().length > 0, {
+      message: "Please select your organization type",
+    }),
   otherOrganization: z.string().optional(),
-  businessTypes: z.array(z.string()).optional(),
+  organizationSubtypes: z
+    .array(z.string())
+    .max(2, "Please select up to 2 subtypes")
+    .optional(),
   country: z.string().min(1, "Country is required"),
 });

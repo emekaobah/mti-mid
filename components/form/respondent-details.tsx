@@ -34,7 +34,12 @@ export const respondentDetailsSchema = z.object({
     .refine((val) => val !== undefined, {
       message: "Please select your trade direction",
     }),
-  organizationType: z.string().min(1, "Please select your organization type"),
+  organizationType: z
+    .string()
+    .min(1, "Please select your organization type")
+    .refine((val) => val && val.trim().length > 0, {
+      message: "Please select your organization type",
+    }),
   otherOrganization: z.string().optional(),
   organizationSubtypes: z
     .array(z.string())
