@@ -36,6 +36,7 @@ export const LoginForm = () => {
     type: "success" | "error";
     message: string;
   } | null>(null);
+  const [emailSent, setEmailSent] = useState(false);
 
   // Fetch countries from API
   const { data: countries, isLoading: isCountriesLoading } = useCountries();
@@ -107,6 +108,7 @@ export const LoginForm = () => {
                   emailResponse.data?.message ||
                     "Email verification link sent successfully!"
                 );
+                setEmailSent(true);
                 setSubmitMessage({
                   type: "success",
                   message:
@@ -247,9 +249,14 @@ export const LoginForm = () => {
                 type="submit"
                 disabled={
                   authenticateMutation.isPending ||
-                  requestEmailLinkMutation.isPending
+                  requestEmailLinkMutation.isPending ||
+                  emailSent
                 }
-                className="min-w-[280px] rounded-4xl bg-[#074318] hover:bg-[#074318]/90 text-white font-semibold h-12"
+                className={`min-w-[280px] rounded-4xl font-semibold h-12 ${
+                  emailSent
+                    ? "bg-gray-400 text-gray-600 cursor-not-allowed"
+                    : "bg-[#074318] hover:bg-[#074318]/90 text-white"
+                }`}
               >
                 {authenticateMutation.isPending ||
                 requestEmailLinkMutation.isPending ? (
@@ -259,6 +266,8 @@ export const LoginForm = () => {
                       ? "Verifying..."
                       : "Sending Email Link..."}
                   </>
+                ) : emailSent ? (
+                  "Email Sent ✓"
                 ) : (
                   "Verify Email"
                 )}
