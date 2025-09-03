@@ -127,22 +127,22 @@ export function DataTable<TData, TValue>({
   const { data, isLoading } = useFetchTableData(finalUrl);
 
   //page  --meta
-  const pageMeta = data?.pageMeta || {
-    pageNumber: 1,
-    pageSize: 12,
-    totalPages: 1,
-    totalRecords: 0,
+  const pageMeta = {
+    pageNumber: data?.data.page ?? 1,
+    pageSize: data?.data.pageSize ?? 12,
+    totalPages: data?.data.totalPages ?? 1,
+    totalRecords: data?.data.totalCount ?? 0,
   };
 
   const table = useTableInstance<TData>({
     data: (data?.data.data as unknown as TData[]) ?? [],
     columns,
-    // pageMeta,
+    pageMeta,
   });
 
   // Pagination
-  // const { handleNextPage, handlePreviousPage, fetchedRecords } =
-  //   usePaginationControls(pageMeta, setPageNumber);
+  const { handleNextPage, handlePreviousPage, fetchedRecords } =
+    usePaginationControls(pageMeta, setPageNumber);
 
   //   // Download table data
   //   const downloadData = useDownloadData({
@@ -264,9 +264,9 @@ export function DataTable<TData, TValue>({
             </div>
           </div>
           {/* Pagination Controls */}
-          {/* <div className="flex justify-between items-center pt-6 pb-3"> */}
-          {/* Total Records Info */}
-          {/* <div className="hidden md:flex text-sm text-gray-600 mb-0 md:mb-4">
+          <div className="flex justify-between items-center pt-6 pb-3">
+            {/* Total Records Info */}
+            <div className="hidden md:flex text-sm text-gray-600 mb-0 md:mb-4">
               {`Showing ${fetchedRecords} of ${pageMeta.totalRecords} records`}
             </div>
             <div className="flex md:hidden text-sm text-gray-600 mb-0 md:mb-4">
@@ -283,10 +283,9 @@ export function DataTable<TData, TValue>({
                 <ChevronLeft />
                 Prev
               </Button>
-              {response?.data.pageMeta && (
+              {pageMeta && (
                 <span>
-                  {response?.data?.pageMeta.pageNumber}/
-                  {response?.data?.pageMeta.totalPages}
+                  {pageMeta.pageNumber}/{pageMeta.totalPages}
                 </span>
               )}
               <Button
@@ -298,8 +297,8 @@ export function DataTable<TData, TValue>({
                 Next
                 <ChevronRight />
               </Button>
-            </div> */}
-          {/* </div> */}
+            </div>
+          </div>
         </>
       ) : (
         <div className="flex flex-col items-center justify-center py-20 rounded-[15px] bg-white mb-10">
