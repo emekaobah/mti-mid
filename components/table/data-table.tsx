@@ -135,7 +135,7 @@ export function DataTable<TData, TValue>({
   };
 
   const table = useTableInstance<TData>({
-    data: data?.data.data as unknown as TData[],
+    data: (data?.data.data as unknown as TData[]) ?? [],
     columns,
     // pageMeta,
   });
