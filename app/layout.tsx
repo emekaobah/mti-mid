@@ -29,7 +29,7 @@ export default function RootLayout({
           <AuthModalProvider>
             <SiteHeader />
             {children}
-            <Toaster />
+            <Toaster richColors />
           </AuthModalProvider>
         </QueryProvider>
       </body>

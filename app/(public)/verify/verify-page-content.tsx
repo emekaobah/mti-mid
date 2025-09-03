@@ -6,7 +6,6 @@ import {
   useVerifyToken,
   type VerifyTokenData,
 } from "@/hooks/api/auth/use-verify-token";
-import { useAuth } from "@/hooks/useAuth";
 import { Loader2, CheckCircle, XCircle } from "lucide-react";
 
 export const VerifyPageContent = () => {
@@ -16,8 +15,6 @@ export const VerifyPageContent = () => {
     "verifying" | "success" | "error"
   >("verifying");
   const [statusMessage, setStatusMessage] = useState("");
-
-  const { login } = useAuth();
 
   // Extract both token and email from URL query parameters
   const token = searchParams.get("token");
@@ -53,55 +50,36 @@ export const VerifyPageContent = () => {
     }
 
     if (response) {
-      // The API sometimes returns a wrapper { succeeded, data } and
-      // sometimes returns the inner payload directly. Normalize both shapes
-      // so we always operate on verifyData.
+      // Handle the new API response format
       const apiResp = response as {
         succeeded?: boolean;
         message?: string | null;
         data?: VerifyTokenData | null;
       };
+
+      console.log("API Response:", apiResp);
       const verifyData: VerifyTokenData | undefined =
         apiResp.data ?? (response as unknown as VerifyTokenData);
 
       // Check that we have a payload to inspect
       if (verifyData) {
-        // Check if the verification was successful. The API can indicate
-        // success either via the outer `succeeded` flag or via the inner
-        // `success` boolean (some responses leave `code` null). Consider
-        // any of these as success.
+        // Check if the verification was successful
         const isSuccess =
-          apiResp.succeeded === true ||
-          verifyData.success === true ||
-          verifyData.code === "00";
+          apiResp.succeeded === true || verifyData.success === true;
 
         if (isSuccess) {
-          // Verification successful - user exists and is authenticated
-          if (
-            verifyData.accessToken &&
-            verifyData.userId &&
-            verifyData.email &&
-            verifyData.country
-          ) {
-            const userData = {
-              email: verifyData.email,
-              userId: verifyData.userId,
-              country: verifyData.country,
-              accessToken: verifyData.accessToken,
-            };
-
-            // Log the user in
-            login(userData);
-
+          // Verification successful - user exists and is verified
+          if (verifyData.userId && verifyData.email && verifyData.country) {
             setVerificationStatus("success");
             setStatusMessage(
-              verifyData.message || "Verification completed successfully"
+              verifyData.message ||
+                "Email verified successfully! Please log in to continue."
             );
 
-            // Redirect to home page after a short delay
+            // Redirect to login page after a short delay
             setTimeout(() => {
-              router.push("/");
-            }, 2000);
+              router.push("/login");
+            }, 3000);
           } else {
             setVerificationStatus("error");
             setStatusMessage(
@@ -121,7 +99,7 @@ export const VerifyPageContent = () => {
         setStatusMessage(apiResp.message || "Verification failed");
       }
     }
-  }, [response, error, isLoading, token, email, login, router]);
+  }, [response, error, isLoading, token, email, router]);
 
   const renderContent = () => {
     switch (verificationStatus) {
@@ -146,11 +124,14 @@ export const VerifyPageContent = () => {
             <h2 className="text-xl font-semibold text-gray-800">
               {statusMessage}
             </h2>
+            <p className="text-gray-600 text-center max-w-md">
+              You will be redirected to the login page shortly...
+            </p>
             <button
-              onClick={() => router.push("/")}
+              onClick={() => router.push("/login")}
               className="max-w-48 w-full cursor-pointer mx-auto flex items-center justify-center h-12 bg-[#074318] hover:bg-[#074318]/90 text-white font-semibold rounded-full disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              Go to Home
+              Go to Login
             </button>
           </div>
         );

@@ -9,7 +9,6 @@ import { getAuthToken } from "./auth-config";
 const axiosClient: AxiosInstance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   timeout: 20000,
-  // Remove https.Agent as it's Node.js specific and not needed in browser
 });
 
 axiosClient.interceptors.request.use(
@@ -27,7 +26,6 @@ axiosClient.interceptors.response.use(
   (response: AxiosResponse) => response,
   (error) => {
     // Log full error for debugging
-
     const message = error?.response?.statusText || error?.message;
     const status = error?.response?.status;
 
@@ -35,11 +33,14 @@ axiosClient.interceptors.response.use(
 
     // Handle 401 Unauthorized errors centrally
     if (status === 401) {
-      // Token expired, clear auth data
+      // Token expired or invalid, clear auth data
       import("./auth-config").then(({ clearAuthData }) => {
         clearAuthData();
 
-        // Optionally redirect to login or show login modal
+        // Redirect to home page if on a protected route
+        if (typeof window !== "undefined" && window.location.pathname !== "/") {
+          window.location.href = "/";
+        }
       });
     }
 

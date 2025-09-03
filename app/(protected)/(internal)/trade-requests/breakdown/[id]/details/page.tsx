@@ -1,11 +1,7 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
-import logo from "@/public/logo-svg.svg";
 import { MoveLeft } from "lucide-react";
-import { Minus } from "lucide-react";
-import { Graphs } from "@/components/admin/graphs";
 import { Button } from "@/components/ui/button";
 import useModalStore from "@/hooks/store/useModalStore";
 import { useRouter } from "next/navigation";

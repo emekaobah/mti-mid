@@ -1,6 +1,5 @@
 "use client";
 import { InsightsBarChart } from "@/components/charts/bar-chart";
-import { useTopBusinessTypes } from "@/hooks/api/market-insights/use-business-types";
 import { usePopularHsCodes } from "@/hooks/api/market-insights/use-hs-codes";
 import { useTopOrganizationTypes } from "@/hooks/api/market-insights/use-organization-types";
 import { useTopCountries } from "@/hooks/api/market-insights/use-top-countries";
@@ -16,9 +15,10 @@ import {
   transformHsCodeData,
 } from "@/lib/utils/transform-sector-data";
 import { InsightsListTable } from "@/components/charts/insights-list-table";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 const TradeInsightsPage = () => {
-  const { data: topBusinessTypes } = useTopBusinessTypes();
   const { data: topImportOrganizationTypes } = useTopOrganizationTypes({
     direction: 1,
   });
@@ -59,6 +59,18 @@ const TradeInsightsPage = () => {
     direction: 2,
     take: 5,
   });
+  const { isAuthenticated, isInitialized, userCountry } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (isInitialized) {
+      if (!isAuthenticated) {
+        router.replace("/");
+      } else if (userCountry === "NG") {
+        router.replace("/trade-requests");
+      }
+    }
+  }, [isAuthenticated, isInitialized, userCountry, router]);
 
   return (
     <div className="bg-[#FCFCFC] pb-20">

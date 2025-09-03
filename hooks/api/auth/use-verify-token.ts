@@ -7,12 +7,10 @@ export interface VerifyTokenRequest {
 
 export interface VerifyTokenData {
   success: boolean;
-  code: string;
+  code: string | null;
   message: string;
   email: string;
   userId: string;
-  accessToken: string;
-  tokenType: string;
   country: string;
 }
 
@@ -21,13 +19,8 @@ export interface VerifyTokenResponse {
   code: number;
   message: string;
   data: VerifyTokenData;
-  pageMeta: {
-    pageNumber: number;
-    pageSize: number;
-    totalPages: number;
-    totalRecords: number;
-  };
-  errors: string[];
+  pageMeta: null;
+  errors: null;
 }
 
 export const useVerifyToken = (params?: VerifyTokenRequest) => {

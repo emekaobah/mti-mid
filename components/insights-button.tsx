@@ -1,89 +1,57 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { usePathname } from "next/navigation";
+import React from "react";
+import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { useAuth } from "@/hooks/useAuth";
+import { Button } from "./ui/button";
+import { authStorage } from "@/lib/auth-storage";
 
 interface InsightsButtonProps {
-  onOpenAuthModal: () => void;
   className?: string;
 }
 
-const InsightsButton: React.FC<InsightsButtonProps> = ({
-  onOpenAuthModal,
-  className = "",
-}) => {
+const InsightsButton: React.FC<InsightsButtonProps> = ({ className = "" }) => {
+  const router = useRouter();
   const pathname = usePathname();
-  const { isAuthenticated, userCountry } = useAuth();
-  const [isClient, setIsClient] = useState(false);
   const isHomePage = pathname === "/";
 
-  // Ensure we're on the client before using dynamic values
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
+  const handleTradeInsights = () => {
+    // Get current user data directly from localStorage
+    const currentUser = authStorage.getUser();
+    console.log("Current user from localStorage:", currentUser);
 
-  // Determine redirect path based on user's country
-  const getRedirectPath = () => {
-    if (!isClient) {
-      return "/trade-insights"; // Default for SSR
+    // Check if user is authenticated
+    if (!currentUser || !currentUser.accessToken) {
+      console.log("User not authenticated, redirecting to login");
+      router.push("/login");
+      return;
     }
+
+    // Check user country
+    const userCountry = currentUser.country;
+    console.log("User country:", userCountry);
+
     if (userCountry === "NG") {
-      return "/trade-requests";
+      router.push("/trade-requests");
+    } else {
+      router.push("/trade-insights");
     }
-    return "/trade-insights";
-  };
-
-  const handleClick = (e: React.MouseEvent) => {
-    if (!isAuthenticated) {
-      e.preventDefault();
-      onOpenAuthModal();
-    }
-    // If authenticated, let the Link handle navigation naturally
   };
 
   if (isHomePage) {
-    // Home page: Button that checks auth and either opens modal or navigates
-    if (isClient && isAuthenticated) {
-      // Authenticated: Navigate to insights or trade-requests based on country
-      return (
-        <Link
-          href={getRedirectPath()}
-          className={`flex items-center justify-center space-x-2 rounded-full h-12 w-full sm:w-auto max-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-base text-white font-semibold px-6 text-center ${className}`}
-        >
-          Explore Insights
-        </Link>
-      );
-    } else {
-      // Not authenticated or still loading: Button that opens modal
-      return (
-        <button
-          onClick={onOpenAuthModal}
-          className={`flex items-center justify-center space-x-2 rounded-full h-12 w-full sm:w-auto max-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-base text-white font-semibold px-6 text-center ${className}`}
-        >
-          Explore Insights
-        </button>
-      );
-    }
+    // Home page: Simple button that navigates to insights
+    return (
+      <Button
+        onClick={handleTradeInsights}
+        className={`flex items-center justify-center space-x-2 rounded-full h-12 w-full sm:w-auto max-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-base text-white font-semibold px-6 text-center ${className}`}
+      >
+        Explore Insights
+      </Button>
+    );
   }
 
   // Other pages: Always a link, but check auth on click
   return (
-    // <Link
-    //   href={getRedirectPath()}
-    //   onClick={handleClick}
-    //   className={`flex items-center justify-center rounded-full h-12 w-12 sm:w-12 ${className}`}
-    // >
-    //   <Image
-    //     src="/access-branding.svg"
-    //     alt="Insights"
-    //     width={172}
-    //     height={25}
-
-    //   />
-    // </Link>
-
     <Image src="/access-branding.svg" alt="Insights" width={172} height={25} />
   );
 };

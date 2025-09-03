@@ -25,9 +25,31 @@ export const contactInfoSchema = z.object({
   phone: z.string().optional(),
   gender: z.enum(["Male", "Female"]).optional(),
   contactMethod: z.array(z.string()).optional(),
+  consent: z.boolean().refine((val) => val === true, {
+    message: "You must consent to data use to continue",
+  }),
+});
+
+// Schema for backend submission (excludes consent field)
+export const contactInfoBackendSchema = z.object({
+  name: z.string().min(1, "Full name is required"),
+  company: z.string().min(1, "Company or institution name is required"),
+  city: z.string().min(1, "City is required"),
+  phone: z.string().optional(),
+  gender: z.enum(["Male", "Female"]).optional(),
+  contactMethod: z.array(z.string()).optional(),
 });
 
 export type ContactInfoType = z.infer<typeof contactInfoSchema>;
+export type ContactInfoBackendType = z.infer<typeof contactInfoBackendSchema>;
+
+// Helper function to prepare data for backend (removes consent field)
+export const prepareContactInfoForBackend = (
+  data: ContactInfoType
+): ContactInfoBackendType => {
+  const { consent, ...backendData } = data;
+  return backendData;
+};
 
 const contactMethods = ["WhatsApp", "Email", "Phone"];
 
@@ -208,6 +230,38 @@ export default function ContactInfo() {
                 ))}
               </div>
               <FormMessage />
+            </FormItem>
+          )}
+        />
+      </div>
+
+      {/* Consent Checkbox */}
+      <div className="border-t pt-6">
+        <FormField
+          control={control}
+          name="consent"
+          render={({ field }) => (
+            <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+              <FormControl>
+                <Checkbox
+                  checked={field.value}
+                  onCheckedChange={field.onChange}
+                />
+              </FormControl>
+              <div className="space-y-1">
+                <FormLabel className="text-sm font-medium cursor-pointer">
+                  Consent to Data Use
+                </FormLabel>
+                <FormDescription className="text-sm text-muted-foreground">
+                  I hereby consent to the collection, processing, and use of my
+                  personal data in accordance with the organization&apos;s
+                  privacy policy.
+                </FormDescription>
+                <p className="text-xs text-muted-foreground">
+                  Note: You may withdraw your consent at any time by contacting
+                  the system administrator.
+                </p>
+              </div>
             </FormItem>
           )}
         />

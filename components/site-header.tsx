@@ -44,7 +44,7 @@ const SiteHeader = () => {
         </div>
       </Link>
 
-      <InsightsButton onOpenAuthModal={handleOpenAuthModal} />
+      <InsightsButton />
 
       <AuthModal />
     </div>

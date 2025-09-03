@@ -1,12 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import GatewayCard from "@/components/landing/gateway-card";
 import { FaqItem } from "@/components/faq";
 import CountryInsights from "@/components/landing/country-insights";
 import Footer from "@/components/footer";
-import AuthProtectedLink from "@/components/auth-protected-link";
-import { useAuthModal } from "@/contexts/auth-modal-context";
+import { Button } from "@/components/ui/button";
+import { authStorage } from "@/lib/auth-storage";
 
 const gatewayCards = [
   {
@@ -41,33 +42,58 @@ const gatewayCards = [
 
 const faqItems = [
   {
-    question: "How can I submit a trade request?",
+    question: "Who can use this platform?",
     answer:
-      "You can submit a trade request through our online form or by contacting our support team.",
+      "Businesses and exporters in Nigeria seeking trade opportunities across Africa.",
   },
   {
-    question: "What types of products and services can I offer?",
+    question: "How do I submit a trade request?",
     answer:
-      "You can offer any products or services that are legally allowed for export from Nigeria.",
+      "Use the online trade request form. You'll receive a confirmation email once your request is submitted.",
   },
   {
-    question: "How do I know if my trade request has been received?",
-    answer:
-      "You will receive a confirmation email once your trade request has been submitted successfully.",
+    question: "What products or services can I offer?",
+    answer: "Any products or services legally allowed for export from Nigeria.",
   },
   {
-    question: "What should I do if I don't receive a confirmation email?",
+    question: "What market insights can I access?",
     answer:
-      "If you don't receive a confirmation email, please check your spam folder or contact our support team for assistance.",
+      "Get verified trade requests, real-time demand trends, compliance requirements, and country-specific opportunities.",
   },
   {
-    question: "What if I need help with my trade request?",
+    question: "Is support available?",
     answer:
-      "If you need help with your trade request, please contact our support team for assistance.",
+      "Yes. Contact us via info@fmiti.gov.ng or call +234 123-456-7890 / +234 987-654-3210 for assistance.",
+  },
+  {
+    question: "Is my data secure?",
+    answer:
+      "Yes. All data is encrypted and accessible only to authorized users.",
+  },
+  {
+    question: "How can I withdraw my consent for the use of my personal data?",
+    answer:
+      "You may withdraw your consent at any time by contacting the system administrator.",
   },
 ];
 export default function Home() {
-  const { openModal } = useAuthModal();
+  const router = useRouter();
+
+  const handleTradeAction = (tradeDirection: string) => {
+    // Get current user data directly from localStorage
+    const currentUser = authStorage.getUser();
+    console.log("Current user from localStorage:", currentUser);
+
+    // Check if user is authenticated
+    if (!currentUser || !currentUser.accessToken) {
+      console.log("User not authenticated, redirecting to login");
+      router.push("/login");
+      return;
+    }
+
+    // If authenticated, navigate to the form with the trade direction
+    router.push(`/form?tradeDirection=${tradeDirection}`);
+  };
 
   return (
     <main className=" bg-[#F9F7F1] ">
@@ -79,21 +105,19 @@ export default function Home() {
           Empowering Nigerian exporters with real-time market intelligence,
           verified trade requests, and direct connections across Africa.
         </p>
-        <div className="flex flex-col md:flex-row  gap-6 mt-8">
-          <AuthProtectedLink
-            href="/form?tradeDirection=sell_to_nigeria"
-            onOpenAuthModal={() => openModal("sell_to_nigeria")}
-            className="flex items-center justify-center space-x-2 rounded-full h-12 w-full min-w-[240px] bg-[#DCF5EA] hover:bg-[#DCF5EA]/90 text-[#074318] text-base font-semibold"
+        <div className="flex flex-col md:flex-row gap-6 mt-8 justify-center items-center">
+          <Button
+            onClick={() => handleTradeAction("sell_to_nigeria")}
+            className="flex items-center justify-center space-x-2 rounded-full h-12 w-full max-w-[240px] bg-[#DCF5EA] hover:bg-[#DCF5EA]/90 text-[#074318] text-base font-semibold"
           >
             Sell to Nigeria
-          </AuthProtectedLink>
-          <AuthProtectedLink
-            href="/form?tradeDirection=buy_from_nigeria"
-            onOpenAuthModal={() => openModal("buy_from_nigeria")}
-            className="flex items-center justify-center space-x-2 rounded-full h-12 w-full min-w-[240px] bg-[#DCF5EA] hover:bg-[#DCF5EA]/90 text-[#074318] text-base font-semibold"
+          </Button>
+          <Button
+            onClick={() => handleTradeAction("buy_from_nigeria")}
+            className="flex items-center justify-center space-x-2 rounded-full h-12 w-full max-w-[240px] bg-[#DCF5EA] hover:bg-[#DCF5EA]/90 text-[#074318] text-base font-semibold"
           >
             Buy from Nigeria{" "}
-          </AuthProtectedLink>
+          </Button>
         </div>
       </div>
 
@@ -136,12 +160,6 @@ export default function Home() {
         </div>
       </div>
 
-      {/* <div className="mx-auto max-w-6xl rounded-2xl border border-border p-6 bg-card">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-          <TradeRequestsChart />
-          <TopRequestedSectorsChart />
-        </div>
-      </div> */}
       <Footer />
     </main>
   );

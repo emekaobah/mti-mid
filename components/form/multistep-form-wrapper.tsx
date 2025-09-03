@@ -98,7 +98,7 @@ export default function MultistepFormWrapper() {
     },
   });
 
-  const { trigger, getValues, watch, setValue } = methods;
+  const { trigger, watch, setValue } = methods;
   const tradeDirection = watch("tradeDirection");
 
   // Update form when URL changes
@@ -296,9 +296,7 @@ export default function MultistepFormWrapper() {
       };
 
       // Submit to backend
-      const response = await createTradeInterestMutation.mutateAsync(
-        transformedData
-      );
+      await createTradeInterestMutation.mutateAsync(transformedData);
 
       setSubmissionMessage({
         type: "success",

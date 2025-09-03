@@ -1,5 +1,4 @@
 export const AUTH_STORAGE_KEYS = {
-  TOKEN: "auth_token",
   USER: "auth_user",
 } as const;
 
@@ -11,19 +10,6 @@ export interface AuthenticatedUser {
 }
 
 export const authStorage = {
-  setToken: (token: string) => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem(AUTH_STORAGE_KEYS.TOKEN, token);
-    }
-  },
-
-  getToken: (): string | null => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem(AUTH_STORAGE_KEYS.TOKEN);
-    }
-    return null;
-  },
-
   setUser: (user: AuthenticatedUser) => {
     if (typeof window !== "undefined") {
       localStorage.setItem(AUTH_STORAGE_KEYS.USER, JSON.stringify(user));
@@ -40,12 +26,12 @@ export const authStorage = {
 
   clearAuth: () => {
     if (typeof window !== "undefined") {
-      localStorage.removeItem(AUTH_STORAGE_KEYS.TOKEN);
       localStorage.removeItem(AUTH_STORAGE_KEYS.USER);
     }
   },
 
   isAuthenticated: (): boolean => {
-    return !!authStorage.getToken();
+    const user = authStorage.getUser();
+    return !!user?.accessToken;
   },
 };

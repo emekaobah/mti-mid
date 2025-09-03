@@ -29,6 +29,7 @@ import { SectorCount } from "@/hooks/api/trade-interest/types";
 import { useSectors } from "@/hooks/api";
 import { FilterOption } from "@/components/table/filter";
 import { useServiceSectors } from "@/hooks/api";
+import { useAuth } from "@/hooks/useAuth";
 
 const Sectors = () => {
   const { openModal } = useModalStore();
@@ -39,13 +40,24 @@ const Sectors = () => {
   const { data: serviceSectorsData, isLoading: serviceSectorLoading } =
     useServiceSectors();
   const [isBuy, setIsBuy] = useState<boolean>(true);
+  const { isAuthenticated, isInitialized, userCountry } = useAuth();
 
   // Create skeleton array for consistent loading state
   const skeletonArray = Array.from({ length: 4 }, (_, i) => i);
 
   useEffect(() => {
+    if (isInitialized) {
+      if (!isAuthenticated) {
+        router.replace("/");
+      } else if (userCountry !== "NG") {
+        router.replace("/trade-insights");
+      }
+    }
+  }, [isAuthenticated, isInitialized, userCountry, router]);
+
+  useEffect(() => {
     setTradeType(1);
-  }, []);
+  }, [setTradeType]);
 
   const { finalUrl } = useTableQueryParams({
     baseUrl: `${Configs.baseUrl}/api/TradeInterest/sector-count`,
@@ -100,6 +112,8 @@ const Sectors = () => {
           Boolean(item.label) && Boolean(item.value)
       ) ?? []),
   ];
+
+  // RouteGuard handles all validation - just render the page
 
   return (
     <main className="min-h-screen  bg-[#FCFCFC] lg:px-15 px-4 mx-auto">

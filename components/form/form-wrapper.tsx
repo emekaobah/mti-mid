@@ -39,7 +39,7 @@ export default function FormWrapper() {
     },
   });
 
-  const onSubmit = (data: FullFormType) => {
+  const onSubmit = (_data: FullFormType) => {
     // TODO: Send data to backend or API
   };
 

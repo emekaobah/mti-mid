@@ -1,21 +1,16 @@
 "use client";
 
 import React, { useEffect } from "react";
-import Image from "next/image";
-import logo from "@/public/logo-svg.svg";
 import { MoveLeft } from "lucide-react";
-import { Minus } from "lucide-react";
-import { Graphs } from "@/components/admin/graphs";
 import { DataTable } from "@/components/table/data-table";
 import { columns } from "./column";
-import { dummyTradeData } from "./data";
 import { useRouter } from "next/navigation";
 import Configs from "@/lib/configs";
 import useFilterStore from "@/hooks/store/useFilterStore";
 import { useCountries } from "@/hooks/api";
 import { useOrganizationTypes } from "@/hooks/api";
-import { useProductChart, useOrgChart, useOrgBreakdown } from "@/hooks/api";
 import { useProductsBySector } from "@/hooks/api";
+import { Graphs } from "@/components/admin/graphs";
 
 const SectorBreakdown = () => {
   const router = useRouter();
@@ -29,11 +24,16 @@ const SectorBreakdown = () => {
   } = useFilterStore();
 
   useEffect(() => {
-    setHsCodesFilterValue(""),
-      setOrganizationFilterValue(""),
-      setCountryFilterValue(""),
-      setProductFilterValue("");
-  }, []);
+    setHsCodesFilterValue("");
+    setOrganizationFilterValue("");
+    setCountryFilterValue("");
+    setProductFilterValue("");
+  }, [
+    setHsCodesFilterValue,
+    setOrganizationFilterValue,
+    setCountryFilterValue,
+    setProductFilterValue,
+  ]);
 
   const { data: countries } = useCountries();
   const { data: organizations } = useOrganizationTypes();
@@ -42,7 +42,7 @@ const SectorBreakdown = () => {
   const countryOptions = [
     { label: "All", value: "all" },
     ...(countries?.data
-      ?.map((sector, i) => ({
+      ?.map((sector) => ({
         label: sector?.name,
         value: sector?.code,
       }))
@@ -55,7 +55,7 @@ const SectorBreakdown = () => {
   const orgOptions = [
     { label: "All", value: "all" },
     ...(organizations?.data
-      ?.map((sector, i) => ({
+      ?.map((sector) => ({
         label: sector?.name,
         value: sector?.name,
       }))
@@ -68,7 +68,7 @@ const SectorBreakdown = () => {
   const hsCodeOptions = [
     { label: "All", value: "all" },
     ...(hsCodes?.data
-      ?.map((sector, i) => ({
+      ?.map((sector) => ({
         label: sector?.hsCode,
         value: sector?.hsCode,
       }))
@@ -77,6 +77,19 @@ const SectorBreakdown = () => {
           Boolean(item.label) && Boolean(item.value)
       ) ?? []),
   ];
+
+  // const productOptions = [
+  //   { label: "All", value: "all" },
+  //   ...(hsCodes?.data
+  //     ?.map((sector) => ({
+  //       label: sector?.name,
+  //       value: sector?.hsCode,
+  //     }))
+  //     .filter(
+  //       (item): item is { label: string; value: string } =>
+  //         Boolean(item.label) && Boolean(item.value)
+  //     ) ?? []),
+  // ];
 
   return (
     <main className="min-h-screen  bg-[#FCFCFC] lg:px-15 px-4 mx-auto">
@@ -114,20 +127,21 @@ const SectorBreakdown = () => {
             </p>
           </div>
         </div>
-        {/* <div className="w-full">
+        <div className="w-full">
           <Graphs />
-        </div> */}
+        </div>
       </div>
       <div className="mt-10">
         <DataTable
           columns={columns}
+          // dummyData={dummyTradeData}
           emptyTableText="No data found"
           baseUrl={`${Configs.baseUrl}api/TradeInterest/submissions-table`}
           organizationFilterOptions={orgOptions}
           countryFilterOptions={countryOptions}
           // productFilterOptions={productOptions}
-          // hsCodesFilterOptions={hsCodeOptions}
-          noGlobalSearch
+          hsCodesFilterOptions={hsCodeOptions}
+          filterPlaceholder="Search by product name"
         />
       </div>
     </main>

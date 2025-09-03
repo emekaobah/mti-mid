@@ -7,7 +7,7 @@ interface GatewayCard {
   color: string;
 }
 
-const GatewayCard = ({ title, description, image, color }: GatewayCard) => {
+const GatewayCard = ({ title, description, image }: GatewayCard) => {
   return (
     <div
       className={`rounded-xl flex flex-col items-center justify-center text-center bg-[#074318]/[0.03] gap-6 p-12 text-[#3A3A3A] `}

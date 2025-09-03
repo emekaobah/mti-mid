@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   getCurrentUser,
   isAuthenticated,
@@ -8,10 +8,31 @@ import {
 import type { AuthenticatedUser } from "../lib/auth-storage";
 
 export const useAuth = () => {
-  const [user, setUser] = useState<AuthenticatedUser | null>(getCurrentUser());
-  const [authenticated, setAuthenticated] = useState(isAuthenticated());
+  const [user, setUser] = useState<AuthenticatedUser | null>(null);
+  const [authenticated, setAuthenticated] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
+
+  // Initialize auth state after component mounts (client-side only)
+  useEffect(() => {
+    const initAuth = () => {
+      const currentUser = getCurrentUser();
+      const authStatus = isAuthenticated();
+
+      setUser(currentUser);
+      setAuthenticated(authStatus);
+      setIsInitialized(true);
+    };
+
+    // Only run on client side
+    if (typeof window !== "undefined") {
+      initAuth();
+    }
+  }, []);
 
   const login = (userData: AuthenticatedUser) => {
+    // Clear any existing tokens first to prevent multiple valid tokens
+    clearAuthData();
+    // Then set new token
     setAuthData(userData);
     setUser(userData);
     setAuthenticated(true);
@@ -23,11 +44,20 @@ export const useAuth = () => {
     setAuthenticated(false);
   };
 
+  // Check if user already has a valid token to prevent re-authentication
+  const hasValidToken = (): boolean => {
+    const currentUser = getCurrentUser();
+    return !!currentUser?.accessToken;
+  };
+
   // Sync with localStorage changes
   useEffect(() => {
     const handleStorageChange = () => {
-      setUser(getCurrentUser());
-      setAuthenticated(isAuthenticated());
+      const newUser = getCurrentUser();
+      const newAuthStatus = isAuthenticated();
+
+      setUser(newUser);
+      setAuthenticated(newAuthStatus);
     };
 
     window.addEventListener("storage", handleStorageChange);
@@ -37,8 +67,10 @@ export const useAuth = () => {
   return {
     user,
     isAuthenticated: authenticated,
+    isInitialized,
     login,
     logout,
+    hasValidToken,
     userEmail: user?.email,
     userId: user?.userId,
     userCountry: user?.country,
