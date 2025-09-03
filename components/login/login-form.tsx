@@ -103,7 +103,10 @@ export const LoginForm = () => {
                 emailLinkResponse as EmailVerificationResultResponse;
               console.log("Email link response:", emailResponse);
 
-              if (emailResponse.succeeded) {
+              if (
+                emailResponse.succeeded &&
+                emailResponse.data?.success === true
+              ) {
                 toast.success(
                   emailResponse.data?.message ||
                     "Email verification link sent successfully!"
@@ -115,15 +118,14 @@ export const LoginForm = () => {
                     "Email verification link has been sent to your email address. Please check your inbox and verify your email before logging in.",
                 });
               } else {
-                toast.error(
+                // Show error message even when succeeded is true but data.success is false
+                const errorMessage =
                   emailResponse.data?.message ||
-                    "Failed to send email verification link. Please try again."
-                );
+                  "Failed to send email verification link. Please try again.";
+                toast.error(errorMessage);
                 setSubmitMessage({
                   type: "error",
-                  message:
-                    emailResponse.data?.message ||
-                    "Failed to send email verification link. Please try again.",
+                  message: errorMessage,
                 });
               }
             },

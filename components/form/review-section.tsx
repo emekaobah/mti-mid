@@ -163,14 +163,7 @@ export default function ReviewSection() {
                 <p className="text-sm">{formData.otherOrganization}</p>
               </div>
             )}
-            <div>
-              <label className="text-sm font-medium text-muted-foreground">
-                Country
-              </label>
-              <p className="text-sm">
-                {formatCountry(formData.country) || "Not specified"}
-              </p>
-            </div>
+
             {formData.businessTypes && formData.businessTypes.length > 0 && (
               <div>
                 <label className="text-sm font-medium text-muted-foreground">
@@ -407,18 +400,7 @@ export default function ReviewSection() {
               </label>
               <p className="text-sm">{formData.city || "Not specified"}</p>
             </div>
-            <div>
-              <label className="text-sm font-medium text-muted-foreground">
-                Country
-              </label>
-              <p className="text-sm">{formData.country || "Not specified"}</p>
-            </div>
-            <div>
-              <label className="text-sm font-medium text-muted-foreground">
-                Email
-              </label>
-              <p className="text-sm">{formData.email || "Not specified"}</p>
-            </div>
+
             {formData.phone && (
               <div>
                 <label className="text-sm font-medium text-muted-foreground">
