@@ -19,10 +19,23 @@ import "react-phone-number-input/style.css";
 import { z } from "zod";
 
 export const contactInfoSchema = z.object({
-  name: z.string().min(1, "Full name is required"),
-  company: z.string().min(1, "Company or institution name is required"),
-  city: z.string().min(1, "City is required"),
-  phone: z.string().optional(),
+  name: z.string().refine((val) => val && val.trim().length > 0, {
+    message: "Full name is required",
+  }),
+  company: z.string().refine((val) => val && val.trim().length > 0, {
+    message: "Company or institution name is required",
+  }),
+  city: z.string().refine((val) => val && val.trim().length > 0, {
+    message: "City is required",
+  }),
+  phone: z
+    .string()
+    .refine((val) => val && val.trim().length > 0, {
+      message: "Phone number is required",
+    })
+    .refine((val) => val && val.replace(/\D/g, "").length <= 20, {
+      message: "Phone number must be 20 digits or less",
+    }),
   gender: z.enum(["Male", "Female"]).optional(),
   contactMethod: z.array(z.string()).optional(),
   consent: z.boolean().refine((val) => val === true, {
@@ -32,10 +45,23 @@ export const contactInfoSchema = z.object({
 
 // Schema for backend submission (excludes consent field)
 export const contactInfoBackendSchema = z.object({
-  name: z.string().min(1, "Full name is required"),
-  company: z.string().min(1, "Company or institution name is required"),
-  city: z.string().min(1, "City is required"),
-  phone: z.string().optional(),
+  name: z.string().refine((val) => val && val.trim().length > 0, {
+    message: "Full name is required",
+  }),
+  company: z.string().refine((val) => val && val.trim().length > 0, {
+    message: "Company or institution name is required",
+  }),
+  city: z.string().refine((val) => val && val.trim().length > 0, {
+    message: "City is required",
+  }),
+  phone: z
+    .string()
+    .refine((val) => val && val.trim().length > 0, {
+      message: "Phone number is required",
+    })
+    .refine((val) => val && val.replace(/\D/g, "").length <= 20, {
+      message: "Phone number must be 20 digits or less",
+    }),
   gender: z.enum(["Male", "Female"]).optional(),
   contactMethod: z.array(z.string()).optional(),
 });
@@ -119,7 +145,9 @@ export default function ContactInfo() {
           name="phone"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Phone Number</FormLabel>
+              <FormLabel>
+                Phone Number <span className="text-red-500">*</span>
+              </FormLabel>
               <FormControl>
                 <div className="w-full">
                   <PhoneInput
@@ -128,14 +156,14 @@ export default function ContactInfo() {
                     defaultCountry="NG"
                     placeholder="Enter phone number"
                     value={field.value}
-                    onChange={field.onChange}
+                    onChange={(value) => {
+                      field.onChange(value || "");
+                    }}
+                    onBlur={field.onBlur}
                     className="flex h-12 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                   />
                 </div>
               </FormControl>
-              {/* <FormDescription>
-                Optional - we may call for clarification
-              </FormDescription> */}
               <FormMessage />
             </FormItem>
           )}

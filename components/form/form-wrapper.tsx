@@ -32,10 +32,21 @@ export default function FormWrapper() {
     resolver: zodResolver(fullFormSchema),
     defaultValues: {
       tradeDirection: "buy_from_nigeria", // Default to import
+      organizationType: "",
+      otherOrganization: "",
+      organizationSubtypes: [],
       importGoods: [],
       exportGoods: [],
       importServices: [],
       exportServices: [],
+      // Add default values for contact info fields to prevent undefined errors
+      name: "",
+      company: "",
+      city: "",
+      phone: "",
+      gender: undefined,
+      contactMethod: [],
+      consent: false,
     },
   });
 

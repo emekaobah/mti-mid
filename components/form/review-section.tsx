@@ -21,6 +21,7 @@ import {
 } from "lucide-react";
 import { useServiceSectors } from "@/hooks/api/catalog/use-service-sectors";
 import { useOrganizationTypes } from "@/hooks/api/catalog/use-organization-types";
+import { useSectors } from "@/hooks/api/catalog/use-sectors";
 
 export default function ReviewSection() {
   const { watch, control } = useFormContext();
@@ -30,14 +31,26 @@ export default function ReviewSection() {
     useServiceSectors();
   const { data: organizationTypesData, isLoading: organizationTypesLoading } =
     useOrganizationTypes();
+  const { data: productSectorsData, isLoading: productSectorsLoading } =
+    useSectors();
 
-  // Helper function to get sector name from ID
-  const getSectorName = (sectorId: string) => {
+  // Helper function to get service sector name from ID
+  const getServiceSectorName = (sectorId: string) => {
     if (serviceSectorsLoading || !serviceSectorsData?.data) {
       return sectorId; // Return ID while loading
     }
 
     const sector = serviceSectorsData.data.find((s) => s.id === sectorId);
+    return sector?.name || sectorId; // Fallback to ID if name not found
+  };
+
+  // Helper function to get product sector name from ID
+  const getProductSectorName = (sectorId: string) => {
+    if (productSectorsLoading || !productSectorsData?.data) {
+      return sectorId; // Return ID while loading
+    }
+
+    const sector = productSectorsData.data.find((s) => s.id === sectorId);
     return sector?.name || sectorId; // Fallback to ID if name not found
   };
 
@@ -216,7 +229,8 @@ export default function ReviewSection() {
                         >
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                             <div>
-                              <strong>Sector:</strong> {good.sector}
+                              <strong>Sector:</strong>{" "}
+                              {getProductSectorName(good.sector)}
                             </div>
                             <div>
                               <strong>Product:</strong> {good.product}
@@ -260,7 +274,7 @@ export default function ReviewSection() {
                           <div className="text-sm">
                             <div>
                               <strong>Sector:</strong>{" "}
-                              {getSectorName(service.sector)}
+                              {getServiceSectorName(service.sector)}
                             </div>
                             <div>
                               <strong>Description:</strong>{" "}
@@ -311,7 +325,8 @@ export default function ReviewSection() {
                         >
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
                             <div>
-                              <strong>Sector:</strong> {good.sector}
+                              <strong>Sector:</strong>{" "}
+                              {getProductSectorName(good.sector)}
                             </div>
                             <div>
                               <strong>Product:</strong> {good.product}
@@ -355,7 +370,7 @@ export default function ReviewSection() {
                           <div className="text-sm">
                             <div>
                               <strong>Sector:</strong>{" "}
-                              {getSectorName(service.sector)}
+                              {getServiceSectorName(service.sector)}
                             </div>
                             <div>
                               <strong>Description:</strong>{" "}

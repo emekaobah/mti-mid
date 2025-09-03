@@ -378,11 +378,14 @@ export default function ImportGoods() {
         ))}
 
         {fields.length === 0 && (
-          <div className="text-center py-8 text-muted-foreground">
+          <div className="text-center py-8">
             <Package className="h-12 w-12 mx-auto mb-4 opacity-50" />
-            <p>
+            <p className="text-muted-foreground mb-2">
               No products added yet. Click &ldquo;Add Product&rdquo; to get
               started.
+            </p>
+            <p className="text-sm text-destructive font-medium">
+              Please add at least one good to import
             </p>
           </div>
         )}
