@@ -345,7 +345,7 @@ export default function MultistepFormWrapper() {
               })) || null
             : data.exportGoods?.map((item) => ({
                 sectorId: item.sector || null,
-                productId: null, // Export goods don't have productId
+                productId: item.productId || null,
                 productName: item.product || null,
                 hsCode: item.hsCode || null,
                 quantity: item.quantity ? parseFloat(item.quantity) : null,
@@ -356,8 +356,8 @@ export default function MultistepFormWrapper() {
                     : item.frequency === "Quarterly"
                     ? 2
                     : 3,
-                standardsAndCerts: null, // Export goods don't have standards
-                regulatoryAuthority: null, // Export goods don't have authority
+                standardsAndCerts: item.standards || null,
+                regulatoryAuthority: item.authority || null,
               })) || null,
         serviceItems:
           data.tradeDirection === "buy_from_nigeria"

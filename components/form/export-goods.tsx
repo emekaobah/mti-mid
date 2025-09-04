@@ -32,6 +32,7 @@ export const exportGoodsSchema = z.object({
       z.object({
         sector: z.string().min(1, "Sector is required"),
         product: z.string().min(1, "Product name is required"),
+        productId: z.string().optional(),
         hsCode: z.string().optional(),
         quantity: z.string().optional(),
         unit: z.string().optional(),
@@ -81,6 +82,11 @@ function ProductField({
                 if (selectedProduct) {
                   // Set the product name
                   formField.onChange(selectedProduct.name);
+                  // Set the product ID
+                  setValue(
+                    `exportGoods.${index}.productId`,
+                    selectedProduct.id || undefined
+                  );
                   // Auto-fill the HS code if available
                   if (selectedProduct.hsCode) {
                     setValue(
@@ -389,6 +395,7 @@ export default function ExportGoods() {
             append({
               sector: "",
               product: "",
+              productId: "",
               hsCode: "",
               quantity: "",
               unit: "",
