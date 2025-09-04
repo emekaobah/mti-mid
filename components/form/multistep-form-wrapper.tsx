@@ -306,13 +306,12 @@ export default function MultistepFormWrapper() {
     try {
       // Transform form data to match API schema
       const transformedData: CreateTradeInterestRequest = {
-        countryCode: "NG", // Default to Nigeria since country field was removed
         orgId: data.organizationType,
         tradeType: data.tradeDirection === "buy_from_nigeria" ? 1 : 2, // 1 for import, 2 for export
         notes: "", // Optional field, can be added later if needed
+        consent: data.consent, // Include consent value from form
         contact: {
           fullName: data.name,
-          email: "", // Default empty email since email field was removed
           phone: data.phone || null,
           gender:
             data.gender === "Male"
@@ -323,7 +322,6 @@ export default function MultistepFormWrapper() {
           channel: 1, // Default to email (1), can be made configurable
           company: data.company || null,
           city: data.city || null,
-          countryCode: "NG", // Default to Nigeria since country field was removed
         },
         goodsItems:
           data.tradeDirection === "buy_from_nigeria"

@@ -1285,10 +1285,10 @@ export interface components {
       percentage?: number;
     };
     CreateTradeInterestRequest: {
-      countryCode: string;
       orgId: string;
       tradeType: components["schemas"]["TradeType"];
       notes?: string | null;
+      consent: boolean;
       contact: components["schemas"]["TradeInterestContactDto"];
       goodsItems?: components["schemas"]["TradeGoodsItemDto"][] | null;
       serviceItems?: components["schemas"]["TradeServiceItemDto"][] | null;
@@ -1575,14 +1575,11 @@ export interface components {
     };
     TradeInterestContactDto: {
       fullName: string;
-      /** Format: email */
-      email: string;
       phone?: string | null;
       gender?: components["schemas"]["Gender"];
       channel: components["schemas"]["Channel"];
       company?: string | null;
       city?: string | null;
-      countryCode: string;
     };
     TradeServiceItemDto: {
       serviceSectorId: string;
