@@ -166,16 +166,19 @@ export const LoginForm = () => {
   };
 
   return (
-    <div>
-      <Card className="shadow-none border-0 w-2xl">
+    <div className="flex justify-center w-full">
+      <Card className="shadow-none border-0 w-full max-w-4xl">
         <CardHeader className="text-center">
           <CardTitle className=" font-medium text-[#3A3A3A]">
             Please verify your email to get started{" "}
           </CardTitle>
         </CardHeader>
 
-        <CardContent className="flex flex-col items-center w-full">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 w-full">
+        <CardContent className="flex flex-col items-center w-full p-4 sm:p-6">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="space-y-4 sm:space-y-6 w-full"
+          >
             {/* Email Field */}
             <div className="space-y-2">
               <Label
@@ -254,7 +257,7 @@ export const LoginForm = () => {
                   requestEmailLinkMutation.isPending ||
                   emailSent
                 }
-                className={`min-w-[280px] rounded-4xl font-semibold h-12 ${
+                className={`w-full sm:min-w-[280px] sm:w-auto rounded-4xl font-semibold h-12 ${
                   emailSent
                     ? "bg-gray-400 text-gray-600 cursor-not-allowed"
                     : "bg-[#074318] hover:bg-[#074318]/90 text-white"
