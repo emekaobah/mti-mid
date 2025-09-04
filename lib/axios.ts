@@ -25,21 +25,22 @@ axiosClient.interceptors.request.use(
 axiosClient.interceptors.response.use(
   (response: AxiosResponse) => response,
   (error) => {
-    // Log full error for debugging
     const message = error?.response?.statusText || error?.message;
     const status = error?.response?.status;
 
     console.error("[Axios Client Error]", message);
 
-    // Handle 401 Unauthorized errors centrally
     if (status === 401) {
-      // Token expired or invalid, clear auth data
+      // Clear auth data and redirect to login
       import("./auth-config").then(({ clearAuthData }) => {
         clearAuthData();
 
-        // Redirect to home page if on a protected route
-        if (typeof window !== "undefined" && window.location.pathname !== "/") {
-          window.location.href = "/";
+        // Redirect to login page if on a protected route
+        if (
+          typeof window !== "undefined" &&
+          window.location.pathname !== "/login"
+        ) {
+          window.location.href = "/login";
         }
       });
     }

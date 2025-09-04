@@ -80,16 +80,18 @@ export default function Home() {
   const router = useRouter();
 
   const handleTradeAction = (tradeDirection: string) => {
-    // Get current user data directly from localStorage
-    const currentUser = authStorage.getUser();
-    console.log("Current user from localStorage:", currentUser);
-
-    // Check if user is authenticated
-    if (!currentUser || !currentUser.accessToken) {
-      console.log("User not authenticated, redirecting to login");
+    // Check if user is authenticated (includes token expiration check)
+    if (!authStorage.isAuthenticated()) {
+      console.log(
+        "User not authenticated or token expired, redirecting to login"
+      );
       router.push("/login");
       return;
     }
+
+    // Get current user data directly from localStorage
+    const currentUser = authStorage.getUser();
+    console.log("Current user from localStorage:", currentUser);
 
     // If authenticated, navigate to the form with the trade direction
     router.push(`/form?tradeDirection=${tradeDirection}`);

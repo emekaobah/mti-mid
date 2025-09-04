@@ -2,7 +2,6 @@
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Image from "next/image";
-import Link from "next/link";
 import { Button } from "./ui/button";
 import { authStorage } from "@/lib/auth-storage";
 
@@ -16,18 +15,26 @@ const InsightsButton: React.FC<InsightsButtonProps> = ({ className = "" }) => {
   const isHomePage = pathname === "/";
 
   const handleTradeInsights = () => {
-    // Get current user data directly from localStorage
-    const currentUser = authStorage.getUser();
-    console.log("Current user from localStorage:", currentUser);
-
-    // Check if user is authenticated
-    if (!currentUser || !currentUser.accessToken) {
-      console.log("User not authenticated, redirecting to login");
+    // Check if user is authenticated (includes token expiration check)
+    if (!authStorage.isAuthenticated()) {
+      console.log(
+        "User not authenticated or token expired, redirecting to login"
+      );
       router.push("/login");
       return;
     }
 
-    // Check user country
+    // Get current user data directly from localStorage
+    const currentUser = authStorage.getUser();
+    console.log("Current user from localStorage:", currentUser);
+
+    // Check user country (with null safety)
+    if (!currentUser) {
+      console.log("User data not found, redirecting to login");
+      router.push("/login");
+      return;
+    }
+
     const userCountry = currentUser.country;
     console.log("User country:", userCountry);
 

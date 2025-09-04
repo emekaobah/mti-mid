@@ -46,8 +46,7 @@ export const useAuth = () => {
 
   // Check if user already has a valid token to prevent re-authentication
   const hasValidToken = (): boolean => {
-    const currentUser = getCurrentUser();
-    return !!currentUser?.accessToken;
+    return isAuthenticated(); // This includes token expiration check
   };
 
   // Sync with localStorage changes

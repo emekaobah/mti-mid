@@ -1,3 +1,5 @@
+import { jwtDecode } from "jwt-decode";
+
 export const AUTH_STORAGE_KEYS = {
   USER: "auth_user",
 } as const;
@@ -32,6 +34,24 @@ export const authStorage = {
 
   isAuthenticated: (): boolean => {
     const user = authStorage.getUser();
-    return !!user?.accessToken;
+    if (!user?.accessToken) return false;
+
+    // Check if token is expired
+    try {
+      const decoded = jwtDecode<{ exp: number }>(user.accessToken);
+      const currentTime = Date.now() / 1000;
+      const isExpired = decoded.exp < currentTime;
+
+      if (isExpired) {
+        console.log("Token expired, clearing auth data");
+        authStorage.clearAuth();
+      }
+
+      return !isExpired;
+    } catch (error) {
+      console.error("Token decode error:", error);
+      authStorage.clearAuth(); // Clear invalid token
+      return false;
+    }
   },
 };
