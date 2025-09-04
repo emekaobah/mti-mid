@@ -49,7 +49,7 @@ const faqItems = [
   {
     question: "How do I submit a trade request?",
     answer:
-      "Use the online trade request form. You'll receive a confirmation email once your request is submitted.",
+      "Click on the 'Sell to Nigeria' or 'Buy from Nigeria' button on the home page. You'll receive a confirmation email once your request is submitted.",
   },
   {
     question: "What products or services can I offer?",
@@ -58,7 +58,7 @@ const faqItems = [
   {
     question: "What market insights can I access?",
     answer:
-      "Get verified trade requests, real-time demand trends, compliance requirements, and country-specific opportunities.",
+      "Trade requests, real-time demand trends, compliance requirements, and country-specific opportunities.",
   },
   {
     question: "Is support available?",

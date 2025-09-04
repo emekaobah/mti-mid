@@ -200,59 +200,61 @@ export default function ImportGoods() {
               </Button>
             </div>
 
-            <FormField
-              control={control}
-              name={`importGoods.${index}.sector`}
-              render={({ field: formField }) => (
-                <FormItem>
-                  <FormLabel>Sector</FormLabel>
-                  <Select
-                    onValueChange={formField.onChange}
-                    defaultValue={formField.value}
-                    disabled={isSectorsLoading}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          placeholder={
-                            isSectorsLoading
-                              ? "Loading sectors..."
-                              : "Select a sector"
-                          }
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {isSectorsLoading ? (
-                        <SelectItem value="" disabled>
-                          Loading sectors...
-                        </SelectItem>
-                      ) : sectors?.data && sectors?.data?.length > 0 ? (
-                        sectors?.data
-                          .filter((sector) => sector.id && sector.name)
-                          .map((sector) => (
-                            <SelectItem key={sector.id!} value={sector.id!}>
-                              {sector.name!}
-                            </SelectItem>
-                          ))
-                      ) : (
-                        <SelectItem value="" disabled>
-                          No sectors available
-                        </SelectItem>
-                      )}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={control}
+                name={`importGoods.${index}.sector`}
+                render={({ field: formField }) => (
+                  <FormItem>
+                    <FormLabel>Sector</FormLabel>
+                    <Select
+                      onValueChange={formField.onChange}
+                      defaultValue={formField.value}
+                      disabled={isSectorsLoading}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue
+                            placeholder={
+                              isSectorsLoading
+                                ? "Loading sectors..."
+                                : "Select a sector"
+                            }
+                          />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {isSectorsLoading ? (
+                          <SelectItem value="" disabled>
+                            Loading sectors...
+                          </SelectItem>
+                        ) : sectors?.data && sectors?.data?.length > 0 ? (
+                          sectors?.data
+                            .filter((sector) => sector.id && sector.name)
+                            .map((sector) => (
+                              <SelectItem key={sector.id!} value={sector.id!}>
+                                {sector.name!}
+                              </SelectItem>
+                            ))
+                        ) : (
+                          <SelectItem value="" disabled>
+                            No sectors available
+                          </SelectItem>
+                        )}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <ProductField
-              index={index}
-              control={control}
-              sectorId={watchedSectors?.[index]?.sector || null}
-              setValue={setValue}
-            />
+              <ProductField
+                index={index}
+                control={control}
+                sectorId={watchedSectors?.[index]?.sector || null}
+                setValue={setValue}
+              />
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
@@ -260,9 +262,7 @@ export default function ImportGoods() {
                 name={`importGoods.${index}.hsCode`}
                 render={({ field: formField }) => (
                   <FormItem>
-                    <FormLabel>
-                      HS Code (Auto-filled when product is selected)
-                    </FormLabel>
+                    <FormLabel>HS Code (Auto-filled)</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Will be auto-filled when you select a product"
@@ -271,11 +271,7 @@ export default function ImportGoods() {
                         className={formField.value ? "bg-muted" : ""}
                       />
                     </FormControl>
-                    {formField.value && (
-                      <FormDescription>
-                        HS Code auto-filled from selected product
-                      </FormDescription>
-                    )}
+
                     <FormMessage />
                   </FormItem>
                 )}
@@ -341,39 +337,41 @@ export default function ImportGoods() {
               />
             </div>
 
-            <FormField
-              control={control}
-              name={`importGoods.${index}.standards`}
-              render={({ field: formField }) => (
-                <FormItem>
-                  <FormLabel>Standards & Certifications (Optional)</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      placeholder="Describe any specific standards, certifications, or quality requirements"
-                      {...formField}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={control}
+                name={`importGoods.${index}.standards`}
+                render={({ field: formField }) => (
+                  <FormItem>
+                    <FormLabel>Standards & Certifications (Optional)</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Describe any specific standards, certifications, or quality requirements"
+                        {...formField}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <FormField
-              control={control}
-              name={`importGoods.${index}.authority`}
-              render={({ field: formField }) => (
-                <FormItem>
-                  <FormLabel>Regulatory Authority (Optional)</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="e.g., FDA, ISO, Local Standards Body"
-                      {...formField}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+              <FormField
+                control={control}
+                name={`importGoods.${index}.authority`}
+                render={({ field: formField }) => (
+                  <FormItem>
+                    <FormLabel>Regulatory Authority (Optional)</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="e.g., FDA, ISO, Local Standards Body"
+                        {...formField}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
         ))}
 

@@ -18,6 +18,7 @@ import {
   FormMessage,
   FormDescription,
 } from "@/components/ui/form";
+import { Textarea } from "@/components/ui/textarea";
 import { Plus, Trash2, Package } from "lucide-react";
 import { z } from "zod";
 import { useSectors } from "@/hooks/api/catalog/use-sectors";
@@ -35,6 +36,8 @@ export const exportGoodsSchema = z.object({
         quantity: z.string().optional(),
         unit: z.string().optional(),
         frequency: z.enum(["Monthly", "Quarterly", "Annually"]).optional(),
+        standards: z.string().optional(),
+        authority: z.string().optional(),
       })
     )
     .max(5, "You can only add up to 5 goods"),
@@ -189,59 +192,61 @@ export default function ExportGoods() {
               </Button>
             </div>
 
-            <FormField
-              control={control}
-              name={`exportGoods.${index}.sector`}
-              render={({ field: formField }) => (
-                <FormItem>
-                  <FormLabel>Sector</FormLabel>
-                  <Select
-                    onValueChange={formField.onChange}
-                    defaultValue={formField.value}
-                    disabled={isSectorsLoading}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          placeholder={
-                            isSectorsLoading
-                              ? "Loading sectors..."
-                              : "Select a sector"
-                          }
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {isSectorsLoading ? (
-                        <SelectItem value="" disabled>
-                          Loading sectors...
-                        </SelectItem>
-                      ) : sectors?.data && sectors?.data?.length > 0 ? (
-                        sectors?.data
-                          ?.filter((sector) => sector.id && sector.name)
-                          .map((sector) => (
-                            <SelectItem key={sector.id!} value={sector.id!}>
-                              {sector.name!}
-                            </SelectItem>
-                          ))
-                      ) : (
-                        <SelectItem value="" disabled>
-                          No sectors available
-                        </SelectItem>
-                      )}
-                    </SelectContent>
-                  </Select>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={control}
+                name={`exportGoods.${index}.sector`}
+                render={({ field: formField }) => (
+                  <FormItem>
+                    <FormLabel>Sector</FormLabel>
+                    <Select
+                      onValueChange={formField.onChange}
+                      defaultValue={formField.value}
+                      disabled={isSectorsLoading}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue
+                            placeholder={
+                              isSectorsLoading
+                                ? "Loading sectors..."
+                                : "Select a sector"
+                            }
+                          />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {isSectorsLoading ? (
+                          <SelectItem value="" disabled>
+                            Loading sectors...
+                          </SelectItem>
+                        ) : sectors?.data && sectors?.data?.length > 0 ? (
+                          sectors?.data
+                            ?.filter((sector) => sector.id && sector.name)
+                            .map((sector) => (
+                              <SelectItem key={sector.id!} value={sector.id!}>
+                                {sector.name!}
+                              </SelectItem>
+                            ))
+                        ) : (
+                          <SelectItem value="" disabled>
+                            No sectors available
+                          </SelectItem>
+                        )}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-            <ProductField
-              index={index}
-              control={control}
-              sectorId={watchedSectors?.[index]?.sector || null}
-              setValue={setValue}
-            />
+              <ProductField
+                index={index}
+                control={control}
+                sectorId={watchedSectors?.[index]?.sector || null}
+                setValue={setValue}
+              />
+            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
@@ -249,9 +254,7 @@ export default function ExportGoods() {
                 name={`exportGoods.${index}.hsCode`}
                 render={({ field: formField }) => (
                   <FormItem>
-                    <FormLabel>
-                      HS Code (Auto-filled when product is selected)
-                    </FormLabel>
+                    <FormLabel>HS Code (Auto-filled)</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Will be auto-filled when you select a product"
@@ -260,11 +263,7 @@ export default function ExportGoods() {
                         className={formField.value ? "bg-muted" : ""}
                       />
                     </FormControl>
-                    {formField.value && (
-                      <FormDescription>
-                        HS Code auto-filled from selected product
-                      </FormDescription>
-                    )}
+
                     <FormMessage />
                   </FormItem>
                 )}
@@ -329,6 +328,42 @@ export default function ExportGoods() {
                 )}
               />
             </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={control}
+                name={`exportGoods.${index}.standards`}
+                render={({ field: formField }) => (
+                  <FormItem>
+                    <FormLabel>Standards & Certifications (Optional)</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Describe any specific standards, certifications, or quality requirements"
+                        {...formField}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={control}
+                name={`exportGoods.${index}.authority`}
+                render={({ field: formField }) => (
+                  <FormItem>
+                    <FormLabel>Regulatory Authority (Optional)</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="e.g., FDA, ISO, Local Standards Body"
+                        {...formField}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
           </div>
         ))}
 
@@ -358,6 +393,8 @@ export default function ExportGoods() {
               quantity: "",
               unit: "",
               frequency: undefined,
+              standards: "",
+              authority: "",
             })
           }
           className="w-full"

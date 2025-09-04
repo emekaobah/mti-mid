@@ -220,6 +220,8 @@ export default function ReviewSection() {
                           quantity?: string;
                           unit?: string;
                           frequency?: string;
+                          standards?: string;
+                          authority?: string;
                         },
                         index: number
                       ) => (
@@ -242,13 +244,29 @@ export default function ReviewSection() {
                             )}
                             {good.quantity && (
                               <div>
-                                <strong>Quantity:</strong> {good.quantity}{" "}
-                                {good.unit}
+                                <strong>Quantity</strong> {good.quantity}{" "}
+                                {good.unit && (
+                                  <>
+                                    <strong>Unit</strong> {good.unit}
+                                  </>
+                                )}
                               </div>
                             )}
                             {good.frequency && (
                               <div>
                                 <strong>Frequency:</strong> {good.frequency}
+                              </div>
+                            )}
+                            {good.standards && (
+                              <div>
+                                <strong>Standards & Certifications:</strong>{" "}
+                                {good.standards}
+                              </div>
+                            )}
+                            {good.authority && (
+                              <div>
+                                <strong>Regulatory Authority:</strong>{" "}
+                                {good.authority}
                               </div>
                             )}
                           </div>
@@ -316,6 +334,8 @@ export default function ReviewSection() {
                           quantity?: string;
                           unit?: string;
                           frequency?: string;
+                          standards?: string;
+                          authority?: string;
                         },
                         index: number
                       ) => (
@@ -338,13 +358,29 @@ export default function ReviewSection() {
                             )}
                             {good.quantity && (
                               <div>
-                                <strong>Quantity:</strong> {good.quantity}{" "}
-                                {good.unit}
+                                <strong>Quantity</strong> {good.quantity}{" "}
+                                {good.unit && (
+                                  <>
+                                    <strong>Unit</strong> {good.unit}
+                                  </>
+                                )}
                               </div>
                             )}
                             {good.frequency && (
                               <div>
                                 <strong>Frequency:</strong> {good.frequency}
+                              </div>
+                            )}
+                            {good.standards && (
+                              <div>
+                                <strong>Standards & Certifications:</strong>{" "}
+                                {good.standards}
+                              </div>
+                            )}
+                            {good.authority && (
+                              <div>
+                                <strong>Regulatory Authority:</strong>{" "}
+                                {good.authority}
                               </div>
                             )}
                           </div>
