@@ -50,7 +50,7 @@ const InsightsButton: React.FC<InsightsButtonProps> = ({ className = "" }) => {
     return (
       <Button
         onClick={handleTradeInsights}
-        className={`flex items-center justify-center space-x-2 rounded-full h-12 w-full sm:w-auto max-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-base text-white font-semibold px-6 text-center ${className}`}
+        className={`flex items-center justify-center space-x-2 rounded-full h-12 w-full s min-w-[150px]  lg:max-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-base text-white font-semibold lg:px-6 text-center ${className}`}
       >
         Explore Insights
       </Button>
