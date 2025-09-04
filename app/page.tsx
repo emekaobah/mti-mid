@@ -49,7 +49,7 @@ const faqItems = [
   {
     question: "How do I submit a trade request?",
     answer:
-      "Click on the 'Sell to Nigeria' or 'Buy from Nigeria' button on the home page. You'll receive a confirmation email once your request is submitted.",
+      "Click on the 'Sell to Nigeria' or 'Buy from Nigeria' button on the home page.",
   },
   {
     question: "What products or services can I offer?",
