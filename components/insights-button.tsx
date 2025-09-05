@@ -17,26 +17,20 @@ const InsightsButton: React.FC<InsightsButtonProps> = ({ className = "" }) => {
   const handleTradeInsights = () => {
     // Check if user is authenticated (includes token expiration check)
     if (!authStorage.isAuthenticated()) {
-      console.log(
-        "User not authenticated or token expired, redirecting to login"
-      );
       router.push("/login");
       return;
     }
 
     // Get current user data directly from localStorage
     const currentUser = authStorage.getUser();
-    console.log("Current user from localStorage:", currentUser);
 
     // Check user country (with null safety)
     if (!currentUser) {
-      console.log("User data not found, redirecting to login");
       router.push("/login");
       return;
     }
 
     const userCountry = currentUser.country;
-    console.log("User country:", userCountry);
 
     if (userCountry === "NG") {
       router.push("/trade-requests");
@@ -50,7 +44,7 @@ const InsightsButton: React.FC<InsightsButtonProps> = ({ className = "" }) => {
     return (
       <Button
         onClick={handleTradeInsights}
-        className={`flex items-center justify-center space-x-2 rounded-full h-12 w-full s min-w-[150px]  lg:max-w-[240px] bg-[#074318] hover:bg-[#074318]/90 text-base text-white font-semibold lg:px-6 text-center ${className}`}
+        className={` space-x-2 rounded-full h-12  bg-[#074318] hover:bg-[#074318]/90 text-sm lg:text-base text-white font-semibold lg:min-w-[240px]  text-center ${className}`}
       >
         Explore Insights
       </Button>
