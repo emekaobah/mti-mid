@@ -67,4 +67,6 @@ export interface TradeSubmissions {
   description: string;
   productId: string;
   serviceId: string;
+  otherProduct: string;
+  otherService: string;
 }

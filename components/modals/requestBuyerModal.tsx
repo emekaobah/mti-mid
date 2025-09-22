@@ -13,10 +13,6 @@ export const RequestBuyerModal = () => {
     if (!submission?.tradeInterestId) {
       toast.error("Error", {
         description: "Invalid trade request",
-        style: {
-          background: "red",
-          color: "white",
-        },
       });
       return;
     }
@@ -30,20 +26,12 @@ export const RequestBuyerModal = () => {
         onSuccess: () => {
           toast.success("Success", {
             description: "Request Sent",
-            style: {
-              background: "green",
-              color: "white",
-            },
           });
           closeModal();
         },
         onError: () => {
           toast.error("Error", {
             description: "Something went wrong",
-            style: {
-              background: "red",
-              color: "white",
-            },
           });
         },
       }

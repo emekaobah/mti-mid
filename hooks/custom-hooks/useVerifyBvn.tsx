@@ -16,10 +16,6 @@ export const useVerifyBvn = () => {
       if (res.data.valid === true) {
         toast.success("Success", {
           description: "Verification successful",
-          style: {
-            background: "green",
-            color: "white",
-          },
         });
         if (sector.sectorId.includes("SERVICESEC")) {
           router.push("/trade-requests/services");
@@ -29,10 +25,6 @@ export const useVerifyBvn = () => {
       } else
         toast.error("Invalid BVN", {
           description: "Kindly enter a valid BVN to proceed",
-          style: {
-            background: "red",
-            color: "white",
-          },
         });
     },
     onError: () => {

@@ -2,7 +2,7 @@ import { useApiQuery } from "@/lib/api-hooks";
 import type { ProductResponse, ProductSearchResponse } from "../shared/types";
 
 // Get products by sector
-export const useProductsBySector = (sectorId: string) => {
+export const useProductsBySector = (sectorId: string | null) => {
   return useApiQuery<"/api/Catalog/products/{sectorId}">(
     `/api/Catalog/products/${sectorId}` as "/api/Catalog/products/{sectorId}",
     undefined,

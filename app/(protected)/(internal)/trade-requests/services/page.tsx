@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { MoveLeft } from "lucide-react";
 import { DataTable } from "@/components/table/data-table";
-import { columns } from "./column";
+import { useServiceColumns } from "./column";
 import { useRouter } from "next/navigation";
 import Configs from "@/lib/configs";
 import useFilterStore from "@/hooks/store/useFilterStore";
@@ -20,6 +20,8 @@ const SectorBreakdown = () => {
     setCountryFilterValue,
     setProductFilterValue,
   } = useFilterStore();
+
+  const columns = useServiceColumns();
 
   useEffect(() => {
     setHsCodesFilterValue("");

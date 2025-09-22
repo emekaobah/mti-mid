@@ -76,7 +76,9 @@ const BusinessDetails = () => {
           <div className="">
             <p className="text-xs text-[#575757]">Product Name</p>
             <h2 className="text-base text-[#3A3A3A]">
-              {submission?.productName ?? "-"}
+              {sector.sectorId === "SECTOR_016"
+                ? submission?.otherProduct
+                : submission?.productName}
             </h2>
           </div>
           <div className="">
@@ -85,12 +87,14 @@ const BusinessDetails = () => {
               {submission?.country ?? "-"}
             </h2>
           </div>
-          <div className="">
-            <p className="text-xs text-[#575757]">HS Code</p>
-            <h2 className="text-base text-[#3A3A3A]">
-              {submission?.hsCode ?? "-"}
-            </h2>
-          </div>
+          {sector.sectorId !== "SECTOR_016" && (
+            <div className="">
+              <p className="text-xs text-[#575757]">HS Code</p>
+              <h2 className="text-base text-[#3A3A3A]">
+                {submission?.hsCode ?? "-"}
+              </h2>
+            </div>
+          )}
           <div className="">
             <p className="text-xs text-[#575757]">Quantity</p>
             <h2 className="text-base text-[#3A3A3A]">
