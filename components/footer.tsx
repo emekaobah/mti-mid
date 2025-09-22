@@ -27,8 +27,8 @@ const Footer = () => {
       </div>
       <Separator className="mt-11 " />
       <p className="text-sm text-[#074318] mt-4">
-        &copy; {new Date().getFullYear()} Ministry of Industry, Trade and
-        Investment. AFCTA Trade Intelligence System.
+        &copy; {new Date().getFullYear()} Federal Ministry of Industry, Trade
+        and Investment. AfCFTA Trade Intelligence System
       </p>
     </div>
   );

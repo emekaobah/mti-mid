@@ -17,13 +17,7 @@ const gatewayCards = [
     image: "/glass.png",
     color: "rgba(7, 67, 24, 1)",
   },
-  {
-    title: "Share Trade Needs",
-    description:
-      "Governments, businesses, and partners easily submit what they want to buy or sell through forms and quick quizzes..",
-    image: "/notes.png",
-    color: "rgba(6, 55, 20, 1)",
-  },
+
   {
     title: "Verified Market Insights",
     description:
@@ -41,11 +35,6 @@ const gatewayCards = [
 ];
 
 const faqItems = [
-  {
-    question: "Who can use this platform?",
-    answer:
-      "Businesses and exporters in Nigeria seeking trade opportunities across Africa.",
-  },
   {
     question: "How do I submit a trade request?",
     answer:
@@ -82,16 +71,12 @@ export default function Home() {
   const handleTradeAction = (tradeDirection: string) => {
     // Check if user is authenticated (includes token expiration check)
     if (!authStorage.isAuthenticated()) {
-      console.log(
-        "User not authenticated or token expired, redirecting to login"
-      );
       router.push("/login");
       return;
     }
 
     // Get current user data directly from localStorage
     const currentUser = authStorage.getUser();
-    console.log("Current user from localStorage:", currentUser);
 
     // If authenticated, navigate to the form with the trade direction
     router.push(`/form?tradeDirection=${tradeDirection}`);
@@ -135,7 +120,7 @@ export default function Home() {
         <h2 className="text-2xl text-center font-semibold text-[#074318]">
           Nigeria&apos;s Gateway to African Markets
         </h2>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-x-6 gap-y-8 mt-10 ">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-x-6 gap-y-8 mt-10 ">
           {gatewayCards.map((card) => (
             <GatewayCard key={card.title} {...card} />
           ))}

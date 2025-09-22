@@ -46,90 +46,125 @@ function ProductField({
     validSectorId as string
   );
 
+  // Check if "Other Goods, Tell Us!" is selected
+  const isOtherGoodsTellUs = sectorId === "SECTOR_016";
+
   return (
-    <FormField
-      control={control}
-      name={`importGoods.${index}.product`}
-      render={({ field: formField }) => (
-        <FormItem>
-          <FormLabel>Product</FormLabel>
-          {sectorId ? (
-            <Select
-              onValueChange={(value) => {
-                const selectedProduct = (
-                  products?.data as ProductResponse[]
-                )?.find((p) => p.id === value);
-                if (selectedProduct) {
-                  // Set the product name
-                  formField.onChange(selectedProduct.name);
-                  // Set the product ID
-                  setValue(
-                    `importGoods.${index}.productId`,
-                    selectedProduct.id || undefined
-                  );
-                  // Auto-fill the HS code if available
-                  if (selectedProduct.hsCode) {
-                    setValue(
-                      `importGoods.${index}.hsCode`,
-                      selectedProduct.hsCode
-                    );
-                  }
-                } else {
-                  formField.onChange(value);
-                }
-              }}
-              defaultValue={formField.value}
-              disabled={isProductsLoading}
-            >
+    <>
+      {isOtherGoodsTellUs ? (
+        // Custom input for "Other Goods, Tell Us!" sector
+        <FormField
+          control={control}
+          name={`importGoods.${index}.otherProduct`}
+          render={({ field: formField }) => (
+            <FormItem>
+              <FormLabel>Product</FormLabel>
               <FormControl>
-                <SelectTrigger>
-                  <SelectValue
-                    placeholder={
-                      isProductsLoading
-                        ? "Loading products..."
-                        : "Select a product"
-                    }
-                  />
-                </SelectTrigger>
+                <Input
+                  placeholder="Please describe the product you want to import"
+                  {...formField}
+                  onChange={(e) => {
+                    formField.onChange(e.target.value);
+                    // Clear productId and hsCode for custom products
+                    setValue(`importGoods.${index}.productId`, "");
+                    setValue(`importGoods.${index}.hsCode`, "");
+                    // Clear the product field to avoid duplication
+                    setValue(`importGoods.${index}.product`, "");
+                  }}
+                />
               </FormControl>
-              <SelectContent>
-                {isProductsLoading ? (
-                  <div className="px-2 py-1.5 text-sm text-muted-foreground">
-                    Loading products...
-                  </div>
-                ) : products?.data &&
-                  Array.isArray(products.data) &&
-                  products.data.length > 0 ? (
-                  (products.data as ProductResponse[])
-                    .filter(
-                      (
-                        product
-                      ): product is ProductResponse & {
-                        id: string;
-                        name: string;
-                      } => Boolean(product.id && product.name)
-                    )
-                    .map((product) => (
-                      <SelectItem key={product.id} value={product.id}>
-                        {product.name}
-                      </SelectItem>
-                    ))
-                ) : (
-                  <div className="px-2 py-1.5 text-sm text-muted-foreground">
-                    No products available for this sector
-                  </div>
-                )}
-              </SelectContent>
-            </Select>
-          ) : (
-            <FormControl>
-              <Input placeholder="Select a sector first" disabled />
-            </FormControl>
+              <FormMessage />
+            </FormItem>
           )}
-          <FormMessage />
-        </FormItem>
+        />
+      ) : (
+        <FormField
+          control={control}
+          name={`importGoods.${index}.product`}
+          render={({ field: formField }) => (
+            <FormItem>
+              <FormLabel>Product</FormLabel>
+              {sectorId ? (
+                <Select
+                  onValueChange={(value) => {
+                    const selectedProduct = (
+                      products?.data as ProductResponse[]
+                    )?.find((p) => p.id === value);
+                    if (selectedProduct) {
+                      // Set the product name
+                      formField.onChange(selectedProduct.name);
+                      // Set the product ID
+                      setValue(
+                        `importGoods.${index}.productId`,
+                        selectedProduct.id || undefined
+                      );
+                      // Auto-fill the HS code if available
+                      if (selectedProduct.hsCode) {
+                        setValue(
+                          `importGoods.${index}.hsCode`,
+                          selectedProduct.hsCode
+                        );
+                      }
+                      // Clear otherProduct for standard products
+                      setValue(`importGoods.${index}.otherProduct`, "");
+                    } else {
+                      formField.onChange(value);
+                    }
+                  }}
+                  defaultValue={formField.value}
+                  disabled={isProductsLoading}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue
+                        placeholder={
+                          isProductsLoading
+                            ? "Loading products..."
+                            : "Select a product"
+                        }
+                      />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {isProductsLoading ? (
+                      <div className="px-2 py-1.5 text-sm text-muted-foreground">
+                        Loading products...
+                      </div>
+                    ) : products?.data &&
+                      Array.isArray(products.data) &&
+                      products.data.length > 0 ? (
+                      (products.data as ProductResponse[])
+                        .filter(
+                          (
+                            product
+                          ): product is ProductResponse & {
+                            id: string;
+                            name: string;
+                          } => Boolean(product.id && product.name)
+                        )
+                        .map((product) => (
+                          <SelectItem key={product.id} value={product.id}>
+                            {product.name}
+                          </SelectItem>
+                        ))
+                    ) : (
+                      <div className="px-2 py-1.5 text-sm text-muted-foreground">
+                        No products available for this sector
+                      </div>
+                    )}
+                  </SelectContent>
+                </Select>
+              ) : (
+                <FormControl>
+                  <Input placeholder="Select a sector first" disabled />
+                </FormControl>
+              )}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
       )}
-    />
+    </>
   );
 }
 
@@ -275,21 +310,42 @@ export default function ImportGoods() {
               <FormField
                 control={control}
                 name={`importGoods.${index}.hsCode`}
-                render={({ field: formField }) => (
-                  <FormItem>
-                    <FormLabel>HS Code (Auto-filled)</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="Will be auto-filled when you select a product"
-                        {...formField}
-                        readOnly={!!formField.value}
-                        className={formField.value ? "bg-muted" : ""}
-                      />
-                    </FormControl>
+                render={({ field: formField }) => {
+                  const isOtherGoodsTellUs =
+                    watchedSectors?.[index]?.sector === "SECTOR_016";
 
-                    <FormMessage />
-                  </FormItem>
-                )}
+                  return (
+                    <FormItem>
+                      <FormLabel>
+                        {isOtherGoodsTellUs
+                          ? "HS Code (Not Required)"
+                          : "HS Code (Auto-filled)"}
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder={
+                            isOtherGoodsTellUs
+                              ? "HS code not required for custom products"
+                              : "Will be auto-filled when you select a product"
+                          }
+                          {...formField}
+                          readOnly={
+                            isOtherGoodsTellUs ||
+                            (!isOtherGoodsTellUs && !!formField.value)
+                          }
+                          className={
+                            isOtherGoodsTellUs
+                              ? "bg-muted"
+                              : !isOtherGoodsTellUs && formField.value
+                              ? "bg-muted"
+                              : ""
+                          }
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  );
+                }}
               />
 
               <FormField
