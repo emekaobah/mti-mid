@@ -130,7 +130,7 @@ export default function MultistepFormWrapper() {
         { shouldValidate: false, shouldDirty: true }
       );
     }
-  }, [urlTradeDirection, setValue]); // Removed tradeDirection from dependencies
+  }, [urlTradeDirection, setValue, tradeDirection]);
 
   // NEW: Get filtered steps based on trade direction
   const getFilteredSteps = () => {
@@ -328,7 +328,7 @@ export default function MultistepFormWrapper() {
             ? data.importGoods?.map((item) => ({
                 sectorId: item.sector || null,
                 productId: item.productId || null,
-                productName: item.product || null,
+                productName: item.otherProduct ? null : item.product || null, // Use productName only if otherProduct is empty
                 hsCode: item.hsCode || null,
                 quantity: item.quantity ? parseFloat(item.quantity) : null,
                 unitCode: item.unit || null,
@@ -340,11 +340,12 @@ export default function MultistepFormWrapper() {
                     : 3, // 1=Monthly, 2=Quarterly, 3=Annually
                 standardsAndCerts: item.standards || null,
                 regulatoryAuthority: item.authority || null,
+                otherProduct: item.otherProduct || null,
               })) || null
             : data.exportGoods?.map((item) => ({
                 sectorId: item.sector || null,
                 productId: item.productId || null,
-                productName: item.product || null,
+                productName: item.otherProduct ? null : item.product || null, // Use productName only if otherProduct is empty
                 hsCode: item.hsCode || null,
                 quantity: item.quantity ? parseFloat(item.quantity) : null,
                 unitCode: item.unit || null,
@@ -356,15 +357,20 @@ export default function MultistepFormWrapper() {
                     : 3,
                 standardsAndCerts: item.standards || null,
                 regulatoryAuthority: item.authority || null,
+                otherProduct: item.otherProduct || null,
               })) || null,
         serviceItems:
           data.tradeDirection === "buy_from_nigeria"
             ? data.importServices?.map((item) => ({
                 serviceSectorId: item.sector,
+                otherService:
+                  "otherService" in item ? item.otherService || null : null,
                 description: item.description || null,
               })) || null
             : data.exportServices?.map((item) => ({
                 serviceSectorId: item.sector,
+                otherService:
+                  "otherService" in item ? item.otherService || null : null,
                 description: item.description || null,
               })) || null,
       };

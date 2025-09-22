@@ -22,7 +22,7 @@ export const exportServicesSchema = z.object({
     .array(
       z.object({
         sector: z.string().min(1, "Service sector is required"),
-        otherSector: z.string().optional(),
+        otherService: z.string().optional(),
         description: z.string().min(1, "Service description is required"),
       })
     )
@@ -34,12 +34,13 @@ export type ExportServicesType = z.infer<typeof exportServicesSchema>;
 // Service sectors will be fetched from API
 
 export default function ExportServices() {
-  const { control, setValue, getValues } = useFormContext<ExportServicesType>();
+  const { control } = useFormContext<ExportServicesType>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "exportServices",
   });
   const { data: sectors, isLoading: sectorsLoading } = useServiceSectors();
+  console.log("data from sectors", sectors);
 
   return (
     <div className="space-y-8">
@@ -120,19 +121,22 @@ export default function ExportServices() {
                 </div>
                 <FormMessage />
                 {sectors?.data?.find((s) => s.id === formField.value)?.name ===
-                  "Other Services: Tell Us!" && (
+                  "Other Service: Tell Us!" && (
                   <div className="mt-3">
-                    <Input
-                      placeholder="Please specify other service"
-                      value={
-                        getValues(`exportServices.${index}.otherSector`) || ""
-                      }
-                      onChange={(e) =>
-                        setValue(
-                          `exportServices.${index}.otherSector`,
-                          e.target.value
-                        )
-                      }
+                    <FormField
+                      control={control}
+                      name={`exportServices.${index}.otherService`}
+                      render={({ field: otherServiceField }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input
+                              placeholder="Please specify other service"
+                              {...otherServiceField}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
                   </div>
                 )}
@@ -175,7 +179,7 @@ export default function ExportServices() {
       {fields.length < 5 && (
         <Button
           type="button"
-          variant="outline"
+          variant="default"
           onClick={() =>
             append({
               sector: "",

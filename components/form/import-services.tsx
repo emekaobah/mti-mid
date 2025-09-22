@@ -22,7 +22,7 @@ export const importServicesSchema = z.object({
     .array(
       z.object({
         sector: z.string().min(1, "Service sector is required"),
-        otherSector: z.string().optional(),
+        otherService: z.string().optional(),
         description: z.string().min(1, "Service description is required"),
       })
     )
@@ -34,7 +34,7 @@ export type ImportServicesType = z.infer<typeof importServicesSchema>;
 // Service sectors will be fetched from API
 
 export default function ImportServices() {
-  const { control, setValue, getValues } = useFormContext<ImportServicesType>();
+  const { control } = useFormContext<ImportServicesType>();
   const { fields, append, remove } = useFieldArray({
     control,
     name: "importServices",
@@ -129,19 +129,22 @@ export default function ImportServices() {
                   </div>
                   <FormMessage />
                   {importServicesData?.find((s) => s.id === formField.value)
-                    ?.name === "Other Services: Tell Us!" && (
+                    ?.name === "Other Service: Tell Us!" && (
                     <div className="mt-3">
-                      <Input
-                        placeholder="Please specify other service"
-                        value={
-                          getValues(`importServices.${index}.otherSector`) || ""
-                        }
-                        onChange={(e) => {
-                          setValue(
-                            `importServices.${index}.otherSector`,
-                            e.target.value
-                          );
-                        }}
+                      <FormField
+                        control={control}
+                        name={`importServices.${index}.otherService`}
+                        render={({ field: otherServiceField }) => (
+                          <FormItem>
+                            <FormControl>
+                              <Input
+                                placeholder="Please specify other service"
+                                {...otherServiceField}
+                              />
+                            </FormControl>
+                            <FormMessage />
+                          </FormItem>
+                        )}
                       />
                     </div>
                   )}
@@ -185,7 +188,7 @@ export default function ImportServices() {
       {fields.length < 5 && (
         <Button
           type="button"
-          variant="outline"
+          variant="default"
           onClick={() =>
             append({
               sector: "",

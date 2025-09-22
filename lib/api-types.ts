@@ -1572,6 +1572,7 @@ export interface components {
       frequency: components["schemas"]["Frequency"];
       standardsAndCerts?: string | null;
       regulatoryAuthority?: string | null;
+      otherProduct?: string | null;
     };
     TradeInterestContactDto: {
       fullName: string;
@@ -1583,6 +1584,7 @@ export interface components {
     };
     TradeServiceItemDto: {
       serviceSectorId: string;
+      otherService?: string | null;
       description?: string | null;
     };
     TradeSubmissionDto: {

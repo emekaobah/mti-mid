@@ -136,17 +136,32 @@ function ProductField({
 export const importGoodsSchema = z.object({
   importGoods: z
     .array(
-      z.object({
-        sector: z.string().min(1, "Sector is required"),
-        product: z.string().min(1, "Product is required"),
-        productId: z.string().optional(),
-        hsCode: z.string().optional(),
-        quantity: z.string().optional(),
-        unit: z.string().optional(),
-        frequency: z.enum(["Monthly", "Quarterly", "Annually"]).optional(),
-        standards: z.string().optional(),
-        authority: z.string().optional(),
-      })
+      z
+        .object({
+          sector: z.string().min(1, "Sector is required"),
+          product: z.string().optional(),
+          productId: z.string().optional(),
+          hsCode: z.string().optional(),
+          quantity: z.string().optional(),
+          unit: z.string().optional(),
+          frequency: z.enum(["Monthly", "Quarterly", "Annually"]).optional(),
+          standards: z.string().optional(),
+          authority: z.string().optional(),
+          otherProduct: z.string().optional(),
+        })
+        .refine(
+          (data) => {
+            // Either product or otherProduct must be provided
+            return (
+              (data.product && data.product.length > 0) ||
+              (data.otherProduct && data.otherProduct.length > 0)
+            );
+          },
+          {
+            message: "Product name is required",
+            path: ["product"], // This will show the error on the product field
+          }
+        )
     )
     .max(5, "You can only add up to 5 goods"),
 });
@@ -392,7 +407,7 @@ export default function ImportGoods() {
       {fields.length < 5 && (
         <Button
           type="button"
-          variant="outline"
+          variant="default"
           onClick={() =>
             append({
               sector: "",
@@ -404,6 +419,7 @@ export default function ImportGoods() {
               frequency: undefined,
               standards: "",
               authority: "",
+              otherProduct: "",
             })
           }
           className="w-full"
