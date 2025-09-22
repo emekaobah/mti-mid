@@ -2,6 +2,7 @@ import { jwtDecode } from "jwt-decode";
 
 export const AUTH_STORAGE_KEYS = {
   USER: "auth_user",
+  INTENDED_DESTINATION: "intendedDestination",
 } as const;
 
 export interface AuthenticatedUser {
@@ -29,6 +30,25 @@ export const authStorage = {
   clearAuth: () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem(AUTH_STORAGE_KEYS.USER);
+    }
+  },
+
+  setIntendedDestination: (destination: string) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(AUTH_STORAGE_KEYS.INTENDED_DESTINATION, destination);
+    }
+  },
+
+  getIntendedDestination: (): string | null => {
+    if (typeof window !== "undefined") {
+      return localStorage.getItem(AUTH_STORAGE_KEYS.INTENDED_DESTINATION);
+    }
+    return null;
+  },
+
+  clearIntendedDestination: () => {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem(AUTH_STORAGE_KEYS.INTENDED_DESTINATION);
     }
   },
 

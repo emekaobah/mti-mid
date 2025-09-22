@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import GatewayCard from "@/components/landing/gateway-card";
 import { FaqItem } from "@/components/faq";
@@ -71,12 +70,13 @@ export default function Home() {
   const handleTradeAction = (tradeDirection: string) => {
     // Check if user is authenticated (includes token expiration check)
     if (!authStorage.isAuthenticated()) {
+      // Store the intended destination before redirecting to login
+      authStorage.setIntendedDestination(
+        `/form?tradeDirection=${tradeDirection}`
+      );
       router.push("/login");
       return;
     }
-
-    // Get current user data directly from localStorage
-    const currentUser = authStorage.getUser();
 
     // If authenticated, navigate to the form with the trade direction
     router.push(`/form?tradeDirection=${tradeDirection}`);

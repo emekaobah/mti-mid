@@ -60,6 +60,20 @@ export const LoginForm = () => {
   const authenticateMutation = useAuthenticate();
   const requestEmailLinkMutation = useRequestEmailLink();
 
+  // Helper function to get intended destination and redirect
+  const redirectAfterLogin = () => {
+    const intendedDestination = authStorage.getIntendedDestination();
+    if (intendedDestination) {
+      // Clear the stored destination
+      authStorage.clearIntendedDestination();
+      // Redirect to the intended destination
+      router.push(intendedDestination);
+    } else {
+      // Default redirect to homepage
+      router.push("/");
+    }
+  };
+
   const onSubmit = (data: LoginFormData) => {
     setSubmitMessage(null);
 
@@ -91,7 +105,7 @@ export const LoginForm = () => {
             authResponse.data?.message || "Authentication successful!"
           );
           setTimeout(() => {
-            router.push("/");
+            redirectAfterLogin();
           }, 2000);
         } else if (authResponse.data?.code === "99") {
           // User's email is not verified, request email verification link
@@ -155,7 +169,7 @@ export const LoginForm = () => {
         }
       },
 
-      onError: (error: Error) => {
+      onError: () => {
         toast.error("Something went wrong, please try again later.");
         setSubmitMessage({
           type: "error",
